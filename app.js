@@ -56,7 +56,6 @@ if (F.whatsappGroup) $("#waGroup").href = F.whatsappGroup; else $("#waGroup").hi
 $("#updated").textContent = F.updated ? `അവസാനം പുതുക്കിയത്: ${F.updated}` : "";
 $("#heroDates").innerHTML = DAYS.map(d => { const dt = pd(d.date);
   return `<a class="date-pill" href="#schedule" data-day="${d.id}" style="--c:${d.color}"><b>${dt.getDate()}</b><span>${ML_SHORT[dt.getMonth()]}<br>${d.name}</span></a>`; }).join("");
-$("#foot").textContent = `© ${F.year} ${F.churchName}, ${F.place} · ${F.diocese}`;
 
 /* ---------- countdown ---------- */
 function tick() {

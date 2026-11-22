@@ -639,3 +639,64 @@ section{padding-block:56px}
 .qr-link button{padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card2);font-family:var(--ml-display);font-weight:700}
 .qr-text .btns .btn{padding:10px 16px;font-size:14px}
 @media (max-width:760px){.qr-card{grid-template-columns:1fr;justify-items:center;text-align:center}.qr-text .btns{justify-content:center}}
+
+/* ===== mobile layout fixes ===== */
+html{overflow-x:clip}
+html,body{max-width:100%}
+.qr-text,.qr-link,.bs-text,.rp-head,.about-text,.day-panel>*,.map-layout>*{min-width:0}
+@media (max-width:980px){
+  .hero .wrap,.about,.map-layout,.melam-hero,.day-panel,.bandstage{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .qr-card{grid-template-columns:minmax(0,1fr);padding:22px 16px}
+  .qr-img{justify-self:center}
+  .qr-link{flex-wrap:nowrap}
+  .qr-link code{flex:1 1 0;font-size:12px}
+  .qr-text .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;justify-content:stretch}
+  .qr-text .btns .btn{justify-content:center;padding:10px 8px;font-size:13px;text-align:center}
+  .qr-text .btns .btn.primary{grid-column:1/-1}
+}
+@media (max-width:600px){
+  .lr{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){ .qr-card{justify-items:stretch} .qr-text{justify-self:stretch;width:100%} }
+
+/* ===== mobile polish ===== */
+@media (max-width:760px){
+  /* day tabs and filter chips: one swipeable row instead of a tall stack */
+  .tabs,.filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:2px 16px 6px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar,.filters::-webkit-scrollbar{display:none}
+  .tabs .tab,.filters .chip{flex:none;scroll-snap-align:start}
+  .filters .lbl{flex:none}
+  .filters:has(.search){flex-wrap:wrap;overflow:visible}
+  .search{min-width:0;width:100%;max-width:none}
+  /* units timing chart */
+  .gantt{padding:16px 12px}
+  .g-inner{min-width:640px}
+  .g-axis,.g-row{grid-template-columns:104px minmax(0,1fr)}
+  .g-lines{left:104px}
+  .g-row .nm{font-size:13px}
+  .gantt .sub::after{content:"  ← വശത്തേക്ക് നീക്കി നോക്കൂ →";color:var(--gold);white-space:nowrap}
+  /* sponsors & team: two per row */
+  .sp-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .logo{min-height:90px;padding:12px}
+  .logo .ph{font-size:15px}
+  .sp-main .logo{min-height:120px}
+  .people{gap:10px}
+  .person{width:calc(50% - 5px);padding:14px 8px}
+  .person .av{width:64px;height:64px;font-size:26px}
+  /* mini drummer: smaller so it covers less */
+  .bb-btn{width:56px;height:56px;padding:5px 6px 3px}
+  .bb-state{width:22px;height:22px;font-size:10px}
+  .bb-bubble{font-size:12px;max-width:160px}
+  /* 3D blocks a little shorter on phones */
+  #churchStage{height:62vh}
+  #mapStage{height:66vh}
+  .ctrl{gap:6px}
+  .ctrl button{padding:7px 11px;font-size:13px}
+  /* schedule timeline */
+  .ev .box{padding:10px 12px}
+  .ev .box b{font-size:16px}
+  .day-card{padding:16px}
+  .day-card .btn{width:auto}
+}

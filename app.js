@@ -4,7 +4,7 @@
 const F = window.FEAST, DAYS = window.DAYS, MT = window.MELAM_TYPES;
 const $ = s => document.querySelector(s);
 const mins = t => { if (!t) return null; const [h, m] = t.split(":").map(Number); return h * 60 + m; };
-const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+const hhmm = m => { m = Math.floor(m); return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; };
 function tf(t) {
   if (!t) return { main: "—", part: "സമയം ഉടൻ", full: "സമയം ഉടൻ അറിയിക്കും" };
   let [h, m] = t.split(":").map(Number);
@@ -713,6 +713,7 @@ function palm(scene, x, z, h, mat) {
   Object.assign(sun.shadow.camera, { left: -40, right: 40, top: 40, bottom: -40 }); scene.add(sun);
   const warm = new THREE.PointLight(0xffa94d, 0, 60); warm.position.set(0, 8, 26); scene.add(warm);
   const O = orbit(S.r.domElement, S.cam, { theta: .55, phi: 1.2, r: 64, minR: 28, maxR: 120, target: new V3(0, 8, 0) });
+  if (S.cam.aspect < 1) O.r = Math.min(O.maxR, 64 / Math.max(.5, S.cam.aspect) * .85);
   let night = true, spin = true;
   function setNight(v) { night = v; $("#chNight").classList.toggle("on", v); $("#chDay").classList.toggle("on", !v);
     scene.background = new THREE.Color(v ? 0x090614 : 0x8ec9ff); scene.fog = new THREE.Fog(v ? 0x090614 : 0x8ec9ff, 90, 200);
@@ -810,7 +811,7 @@ function palm(scene, x, z, h, mat) {
   $("#mapNight").onclick = () => setNight(!night);
   $("#mapFollow").onclick = () => { follow = !follow; $("#mapFollow").classList.toggle("on", follow); if (!follow) frame(); };
   function frame() {
-    if (sel === "all") { goal.target = new V3(0, 0, 0); goal.r = 210; return; }
+    if (sel === "all") { goal.target = new V3(0, 0, 0); goal.r = S.cam.aspect < 1 ? 270 : 210; return; }
     const b = new THREE.Box3(); rObjs[sel].r.path.forEach(([x, z]) => b.expandByPoint(new V3(x, 0, z))); const s = b.getSize(new V3());
     goal.target = b.getCenter(new V3()); goal.r = Math.max(80, Math.max(s.x, s.z) * 1.7);
   }

@@ -328,8 +328,16 @@ $("#lightbox").onclick = e => { if (e.target.id === "lightbox") $("#lightbox").c
 document.addEventListener("keydown", e => { if (e.key === "Escape") $("#lightbox").classList.remove("on"); });
 
 /* ---------- sponsors + team ---------- */
-const logo = s => { const inner = s.logo ? `<img src="${s.logo}" alt="${s.name}">` : `<span class="ph">${s.name}</span>`;
+const AD = window.ADVERTISE || {};
+const adLink = slot => AD.whatsapp ? `https://wa.me/${AD.whatsapp}?text=${encodeURIComponent((AD.message || "") + (slot ? `
+
+സ്ഥലം: ${slot}` : ""))}` : "";
+const logo = s => {
+  if (s.open && AD.whatsapp) return `<a class="logo open" href="${adLink(s.sub)}" target="_blank" rel="noopener" aria-label="ഈ സ്ഥലത്ത് പരസ്യം ചെയ്യാൻ വാട്ട്സാപ്പ്">
+    <span class="plus">＋</span><span class="ph">നിങ്ങളുടെ ലോഗോ ഇവിടെ</span><small>${s.sub || ""} · ഒഴിവുണ്ട്</small><em>💬 പരസ്യം ചെയ്യാൻ</em></a>`;
+  const inner = s.logo ? `<img src="${s.logo}" alt="${s.name}">` : `<span class="ph">${s.name}</span>`;
   const tag = s.link ? "a" : "div"; return `<${tag} class="logo" ${s.link ? `href="${s.link}" target="_blank" rel="noopener"` : ""}>${inner}<small>${s.sub || ""}</small></${tag}>`; };
+if (AD.whatsapp) { $("#adWa").href = adLink(""); $("#adNum").textContent = AD.show || ""; } else $("#adCta").remove();
 $("#spMain").innerHTML = window.SPONSORS.filter(s => s.tier === "main").map(logo).join("");
 $("#spGrid").innerHTML = window.SPONSORS.filter(s => s.tier !== "main").map(logo).join("");
 const person = p => `<div class="person"><div class="av">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : [...p.name][0]}</div><b>${p.name}</b><span>${p.role}</span></div>`;

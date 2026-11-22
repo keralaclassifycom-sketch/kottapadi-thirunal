@@ -218,13 +218,22 @@ window.FLOW = [
    logo "" ആണെങ്കിൽ പേര് മാത്രം കാണിക്കും. tier: "main" / "co"
    -------------------------------------------------------------- */
 window.SPONSORS = [
-  { name: "പ്രധാന സ്പോൺസർ", sub: "Title Sponsor", logo: "", tier: "main", link: "" },
-  { name: "സ്പോൺസർ 2", sub: "Co-Sponsor", logo: "", tier: "co", link: "" },
-  { name: "സ്പോൺസർ 3", sub: "Co-Sponsor", logo: "", tier: "co", link: "" },
-  { name: "സ്പോൺസർ 4", sub: "Co-Sponsor", logo: "", tier: "co", link: "" },
-  { name: "സ്പോൺസർ 5", sub: "Co-Sponsor", logo: "", tier: "co", link: "" },
-  { name: "സ്പോൺസർ 6", sub: "Co-Sponsor", logo: "", tier: "co", link: "" },
+  // open: true = ഒഴിവുള്ള സ്ഥലം ("നിങ്ങളുടെ ലോഗോ ഇവിടെ" — തൊട്ടാൽ പരസ്യത്തിന് വാട്ട്സാപ്പ്)
+  // സ്പോൺസർ കിട്ടിയാൽ: name, logo, link ചേർത്ത് open: false ആക്കുക
+  { name: "പ്രധാന സ്പോൺസർ", sub: "Title Sponsor", logo: "", tier: "main", link: "", open: true },
+  { name: "സ്പോൺസർ 2", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
+  { name: "സ്പോൺസർ 3", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
+  { name: "സ്പോൺസർ 4", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
+  { name: "സ്പോൺസർ 5", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
+  { name: "സ്പോൺസർ 6", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
 ];
+
+/* പരസ്യം / സ്പോൺസർഷിപ്പ് അന്വേഷണം — ഈ വാട്ട്സാപ്പ് നമ്പറിലേക്ക് */
+window.ADVERTISE = {
+  whatsapp: "918848576020",
+  show: "+91 88485 76020",
+  message: "നമസ്കാരം 🙏 കോട്ടപ്പടി തിരുനാൾ 2027 വെബ്സൈറ്റിൽ പരസ്യം ചെയ്യാൻ / സ്പോൺസർ ലോഗോ നൽകാൻ എനിക്ക് താല്പര്യമുണ്ട്. (I'd like to advertise on the Kottapadi Thirunal 2027 website.)",
+};
 
 /* --------------------------------------------------------------
    Designed, Developed & Coordinated by

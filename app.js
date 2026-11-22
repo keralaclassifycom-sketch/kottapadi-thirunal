@@ -257,6 +257,62 @@ const person = p => `<div class="person"><div class="av">${p.photo ? `<img src="
 $("#coordinators").innerHTML = window.TEAM.coordinators.map(person).join("");
 $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
 
+/* ---------- vicar message + liturgy schedule (data-liturgy.js) ---------- */
+{
+  const preview = /[?&]preview\b/.test(location.search);
+  const WD = ["ഞായർ", "തിങ്കൾ", "ചൊവ്വ", "ബുധൻ", "വ്യാഴം", "വെള്ളി", "ശനി"];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // "പേര് & ഫാമിലി (കൂട്ടായ്മ)" → highlight the koottayma in brackets
+  const fam = s => esc(s).replace(/\(([^)]+)\)\s*$/, '<em>($1)</em>');
+  const tt = (a, b) => b ? `${tf(a).main} & ${tf(b).main} ${tf(b).part}` : tf(a).full;
+
+  const M = window.MESSAGE;
+  if (M && (M.published || preview)) {
+    $("#message").hidden = false;
+    if (!M.published) $("#message .sample-tag").hidden = false;
+    $("#msgGreet").textContent = M.greeting || "";
+    $("#msgBody").innerHTML = (M.body || []).map(p => `<p>${esc(p)}</p>`).join("");
+    $("#msgSignWord").textContent = M.sign || "";
+    $("#msgName").textContent = M.name || ""; $("#msgRole").textContent = M.role || "";
+    if (M.photo) { $("#msgPhoto").src = M.photo; $("#msgPhoto").alt = M.name || ""; } else $(".msg-photo").textContent = [...(M.name || "✝")][0];
+  }
+
+  const L = window.LITURGY;
+  const navLink = document.querySelector("[data-lit-nav]");
+  if (L && L.days && L.days.length && (L.published || preview)) {
+    $("#liturgy").hidden = false;
+    if (!L.published) { const t = $("#litSample"); t.hidden = false; t.textContent = "👁 " + (L.note || "മാതൃക"); }
+    const days = L.days.map(d => ({ ...d, dt: pd(d.date) }));
+    const today = new Date().toDateString();
+    let cur = (days.find(d => d.dt.toDateString() === today) || days.find(d => d.dt >= new Date()) || days[0]).date;
+    $("#litStrip").innerHTML = days.map(d => `<button class="lit-day" role="tab" data-lit="${d.date}">
+      <small>${ML_SHORT[d.dt.getMonth()]}</small><b>${d.dt.getDate()}</b><span>${WD[d.dt.getDay()]}</span>${d.title ? `<i>${esc(d.title)}</i>` : ""}</button>`).join("");
+    const rowsHTML = rows => (rows || []).map(([k, v, note]) => {
+      const vals = Array.isArray(v) ? v : [v];
+      return `<div class="lr"><span class="lk">${esc(k)}</span><span class="lc">:</span><div class="lv">${vals.map(x => `<div>${fam(x)}</div>`).join("")}${note ? `<small>${esc(note)}</small>` : ""}</div></div>`;
+    }).join("");
+    const blockHTML = b => `<div class="lb-block"><div class="lr lr-time"><span class="lk lt">${tt(b.t, b.t2)}</span><span class="lc">:</span>
+      <div class="lv"><div class="ltitle ${b.big ? "big" : ""}">${esc(b.title)}</div>${b.sub ? `<div class="lsub">${esc(b.sub)}</div>` : ""}</div></div>${rowsHTML(b.rows)}</div>`;
+    function show(date) {
+      cur = date; const d = days.find(x => x.date === date);
+      document.querySelectorAll(".lit-day").forEach(b => b.classList.toggle("on", b.dataset.lit === date));
+      $("#litPanel").innerHTML = `<article class="lit-card">
+        <div class="lit-date"><span>${d.dt.getFullYear()} ${ML_MONTHS[d.dt.getMonth()]} ${d.dt.getDate()} ${WD[d.dt.getDay()]}</span></div>
+        ${d.title ? `<h3 class="lit-title">${esc(d.title)}</h3>` : ""}
+        ${(d.blocks || []).map(blockHTML).join("")}
+        ${d.rows ? `<div class="lb-block">${rowsHTML(d.rows)}</div>` : ""}
+        ${(d.after || []).map(blockHTML).join("")}
+        ${d.highlight ? `<p class="lit-hl">${esc(d.highlight)}</p>` : ""}
+        ${(d.notes || []).map(n => `<p class="lit-note">${esc(n)}</p>`).join("")}
+        ${d.badges ? `<div class="lit-badges">${d.badges.map(b => `<div class="lit-badge"><b>${esc(b.name)}</b>${b.t ? `<span>${b.t2 ? tf(b.t).main + " – " + tf(b.t2).full : tf(b.t).full}</span>` : ""}</div>`).join("")}</div>` : ""}
+      </article>`;
+    }
+    $("#litStrip").addEventListener("click", e => { const b = e.target.closest("[data-lit]"); if (b) show(b.dataset.lit); });
+    show(cur);
+    const on = $("#litStrip").querySelector(".on"); if (on) $("#litStrip").scrollLeft = on.offsetLeft - 40;
+  } else if (navLink) navLink.remove();
+}
+
 /* ---------- nav, reveal ---------- */
 $("#menuBtn").onclick = () => $("#links").classList.toggle("open");
 $("#links").onclick = e => { if (e.target.tagName === "A") $("#links").classList.remove("open"); };

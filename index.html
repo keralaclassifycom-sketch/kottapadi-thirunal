@@ -25,6 +25,7 @@
     <button class="menu-btn" id="menuBtn" aria-label="മെനു">☰</button>
     <nav class="links" id="links">
       <a href="#schedule">പരിപാടികൾ</a>
+      <a href="#liturgy" data-lit-nav>തിരുകർമ്മങ്ങൾ</a>
       <a href="#melam">മേളങ്ങൾ</a>
       <a href="#map">3D മാപ്പ്</a>
       <a href="#samooham">യൂണിറ്റുകൾ</a>
@@ -96,6 +97,21 @@
     </div>
   </section>
 
+  <!-- VICAR MESSAGE (data-liturgy.js → MESSAGE) -->
+  <section id="message" hidden>
+    <div class="wrap">
+      <div class="msg-card reveal">
+        <div class="msg-head"><p class="eyebrow">Message from the Vicar</p><span class="sample-tag" hidden>മാതൃക</span></div>
+        <p class="msg-greet" id="msgGreet"></p>
+        <div class="msg-body" id="msgBody"></div>
+        <div class="msg-sign">
+          <div class="msg-photo"><img id="msgPhoto" alt=""></div>
+          <div><span id="msgSignWord"></span><b id="msgName"></b><span id="msgRole"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SCHEDULE -->
   <section id="schedule">
     <div class="wrap">
@@ -108,6 +124,22 @@
       </div>
       <div class="tabs" id="dayTabs" role="tablist"></div>
       <div class="day-panel" id="dayPanel"></div>
+    </div>
+  </section>
+
+  <!-- LITURGY (data-liturgy.js → LITURGY) -->
+  <section id="liturgy" hidden>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Novena &amp; Holy Mass</p>
+          <h2>തിരുകർമ്മ <em>ക്രമം</em></h2>
+          <p>നൊവേന, വി. കുർബ്ബാന, കാർമ്മികർ, നിയോഗം, സമർപ്പണം — ദിവസം തിരിച്ച്.</p>
+        </div>
+        <span class="sample-tag" id="litSample" hidden></span>
+      </div>
+      <div class="lit-strip" id="litStrip" role="tablist"></div>
+      <div class="lit-panel" id="litPanel"></div>
     </div>
   </section>
 
@@ -294,6 +326,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="data.js"></script>
+<script src="data-liturgy.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

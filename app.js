@@ -8,10 +8,11 @@ const hhmm = m => { m = Math.floor(m); return `${String(Math.floor(m / 60)).padS
 function tf(t) {
   if (!t) return { main: "—", part: "സമയം ഉടൻ", full: "സമയം ഉടൻ അറിയിക്കും" };
   let [h, m] = t.split(":").map(Number);
-  const h12 = ((h + 11) % 12) + 1;
+  m = Math.round(m || 0); if (m >= 60) { h += 1; m -= 60; }      // always whole minutes
+  const h12 = ((h + 11) % 12) + 1, ap = (h % 24) < 12 ? "AM" : "PM";
   const part = h >= 24 || h < 4 ? "രാത്രി" : h < 12 ? "രാവിലെ" : h < 15 ? "ഉച്ചയ്ക്ക്" : h < 19 ? "വൈകീട്ട്" : "രാത്രി";
-  const main = `${h12}:${String(m).padStart(2, "0")}`;
-  return { main, part, full: `${part} ${main}` };
+  const main = `${h12}:${String(m).padStart(2, "0")} ${ap}`;
+  return { main, part, full: main };
 }
 const ML_MONTHS = ["ജനുവരി","ഫെബ്രുവരി","മാർച്ച്","ഏപ്രിൽ","മേയ്","ജൂൺ","ജൂലൈ","ഓഗസ്റ്റ്","സെപ്റ്റംബർ","ഒക്ടോബർ","നവംബർ","ഡിസംബർ"];
 const ML_SHORT = ["ജനു","ഫെബ്രു","മാർ","ഏപ്രി","മേയ്","ജൂൺ","ജൂലൈ","ഓഗ","സെപ്","ഒക്ടോ","നവം","ഡിസം"];
@@ -207,7 +208,7 @@ let lastTick = performance.now();
 // Gantt chart (all units by time)
 {
   const pct = t => ((t - T0) / (T1 - T0) * 100).toFixed(2) + "%";
-  let ticks = "", lines = ""; for (let t = T0; t <= T1; t += 60) { if ((t - T0) % 120 === 0) ticks += `<span style="left:${pct(t)}">${tf(hhmm(t)).main}${t % 720 === 0 ? (t === 720 ? " PM" : " AM") : ""}</span>`; lines += `<i style="left:${pct(t)}"></i>`; }
+  let ticks = "", lines = ""; for (let t = T0; t <= T1; t += 60) { if ((t - T0) % 120 === 0) ticks += `<span style="left:${pct(t)}">${tf(hhmm(t)).main}</span>`; lines += `<i style="left:${pct(t)}"></i>`; }
   $("#gantt").innerHTML = `<h3>📊 അമ്പ്, വള എഴുന്നള്ളിപ്പ് — സമയ ചാർട്ട്</h3><p class="sub">${dLabel(UDAY)} · ${N} യൂണിറ്റുകൾ · ഓരോ യൂണിറ്റും തുടങ്ങുന്നതു മുതൽ അവസാനിക്കുന്നതു വരെ. പേരിൽ അമർത്തിയാൽ 3D റൂട്ട്.</p>
   <div class="g-inner"><div class="g-axis"><div></div><div class="ticks">${ticks}</div></div>
   <div class="g-body"><div class="g-lines">${lines}<b class="g-cursor"></b></div>
@@ -342,7 +343,7 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   // "പേര് & ഫാമിലി (കൂട്ടായ്മ)" → highlight the koottayma in brackets
   const fam = s => esc(s).replace(/\(([^)]+)\)\s*$/, '<em>($1)</em>');
-  const tt = (a, b) => b ? `${tf(a).main} & ${tf(b).main} ${tf(b).part}` : tf(a).full;
+  const tt = (a, b) => b ? `${tf(a).main} & ${tf(b).main}` : tf(a).full;
 
   const M = window.MESSAGE;
   if (M && (M.published || preview)) {

@@ -703,3 +703,19 @@ html,body{max-width:100%}
 
 /* hidden elements stay hidden even when styled as buttons */
 [hidden]{display:none!important}
+
+/* AM/PM times: room in the time columns */
+.ev{grid-template-columns:84px 26px minmax(0,1fr)}
+.events::before{left:96px}
+.ev time{font-size:14px;white-space:nowrap}
+.rail li{grid-template-columns:66px 20px minmax(0,1fr)}
+.rail::before{left:74px}
+.rail time{font-size:12px;white-space:nowrap}
+.lr-time .lt{white-space:nowrap}
+@media (max-width:760px){
+  .ev{grid-template-columns:70px 22px minmax(0,1fr)}
+  .events::before{left:80px}
+  .ev time{font-size:12.5px}
+}
+.rail::before{left:78.5px}
+@media (max-width:760px){.events::before{left:81.5px}}

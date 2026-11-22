@@ -440,6 +440,68 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
       document.querySelectorAll(side ? ".bb-svg .armR" : ".bb-svg .armL").forEach(a => { a.classList.add("hit"); setTimeout(() => a.classList.remove("hit"), 110); });
       if (strong) document.querySelectorAll(".bb-svg .bb-drum").forEach(d => { d.classList.add("boom"); setTimeout(() => d.classList.remove("boom"), 90); });
       if (strong && Math.random() < .45) note();
+      if (stageVisible && (++hitCount % 8 === 0 || (strong && Math.random() < .3))) confetti();
+    }
+    let hitCount = 0;
+
+    /* fireworks: tap anywhere on the band stage → a rocket rises and bursts there */
+    {
+      const box = stageSec.querySelector(".bandstage"), cv = document.createElement("canvas"), g = cv.getContext("2d");
+      cv.className = "bs-fireworks"; cv.setAttribute("aria-hidden", "true"); box.appendChild(cv);
+      const COLS = ["#ffd60a", "#ff3b5c", "#2ec4ff", "#7cff6b", "#ff8fd1", "#ffffff", "#ff9f1c"];
+      let parts = [], rockets = [], running = false, W = 0, H = 0, dpr = 1;
+      const size = () => { dpr = Math.min(2, window.devicePixelRatio || 1); W = box.clientWidth; H = box.clientHeight;
+        cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); };
+      function burst(x, y) {
+        const c1 = COLS[Math.floor(Math.random() * COLS.length)], c2 = COLS[Math.floor(Math.random() * COLS.length)], n = 60;
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2 + Math.random() * .1, sp = 2.6 + Math.random() * 3;
+          parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, decay: .009 + Math.random() * .008, col: i % 3 ? c1 : c2, r: 2.8 });
+        }
+        for (let i = 0; i < 14; i++) parts.push({ x, y, vx: (Math.random() - .5) * 3, vy: (Math.random() - .5) * 3, life: 1, decay: .02, col: "#fff6c8", r: 1.3, tw: 1 });
+      }
+      function launch(x, y) {
+        rockets.push({ x: x + (Math.random() * 30 - 15), y: H, tx: x, ty: y, col: COLS[Math.floor(Math.random() * COLS.length)] });
+        if (!running) { running = true; requestAnimationFrame(tick); }
+      }
+      function tick() {
+        g.globalCompositeOperation = "source-over"; g.clearRect(0, 0, W, H); g.globalCompositeOperation = "lighter";
+        rockets = rockets.filter(r => {
+          r.x += (r.tx - r.x) * .14; r.y += (r.ty - r.y) * .14;
+          g.fillStyle = r.col; g.beginPath(); g.arc(r.x, r.y, 2.6, 0, 7); g.fill();
+          g.fillStyle = "rgba(255,220,150,.5)"; g.beginPath(); g.arc(r.x, r.y + 8, 1.6, 0, 7); g.fill();
+          if (Math.abs(r.y - r.ty) < 4) { burst(r.tx, r.ty); return false; } return true;
+        });
+        parts = parts.filter(p => {
+          p.vx *= .985; p.vy = p.vy * .985 + .05; p.x += p.vx; p.y += p.vy; p.life -= p.decay;
+          if (p.life <= 0) return false;
+          g.globalAlpha = p.tw ? p.life * (Math.random() > .5 ? 1 : .3) : p.life;
+          g.fillStyle = p.col; g.beginPath(); g.arc(p.x, p.y, p.r * (.6 + p.life * .6), 0, 7); g.fill();
+          return true;
+        });
+        g.globalAlpha = 1;
+        if (parts.length || rockets.length) requestAnimationFrame(tick); else { running = false; g.clearRect(0, 0, W, H); }
+      }
+      box.addEventListener("pointerdown", e => {
+        if (calm || e.target.closest(".bs-ctrl, .bs-list")) return;
+        if (!W || W !== box.clientWidth || H !== box.clientHeight) size();
+        const b = box.getBoundingClientRect(); launch(e.clientX - b.left, e.clientY - b.top);
+      });
+      window.addEventListener("resize", () => { W = 0; });
+    }
+    /* stage confetti like the perunnal band set */
+    const CONF = ["#ff3b5c", "#ffd60a", "#2ec4ff", "#7cff6b", "#ff8fd1", "#ffffff"];
+    const calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function confetti() {
+      if (calm || bigBtn.querySelectorAll(".bs-confetti").length > 40) return;
+      const fall = bigBtn.clientHeight * .85;
+      for (let i = 0; i < 7; i++) {
+        const c = document.createElement("span"), t = 1.2 + Math.random() * .8;
+        c.className = "bs-confetti"; c.style.left = (5 + Math.random() * 90) + "%"; c.style.background = CONF[i % CONF.length];
+        c.style.setProperty("--fall", fall + "px"); c.style.setProperty("--dx", (Math.random() * 50 - 25) + "px");
+        c.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg"); c.style.setProperty("--t", t + "s");
+        bigBtn.appendChild(c); setTimeout(() => c.remove(), t * 1000);
+      }
     }
     const NOTES = ["♪", "♫", "🎵", "🥁", "🎺"];
     function note() {
@@ -454,7 +516,7 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
       [miniBtn, bigBtn].forEach(b => b.setAttribute("aria-pressed", playing));
       $("#bbState").textContent = playing ? "⏸" : "▶"; $("#bsPlay").textContent = playing ? "⏸" : "▶";
       $("#bsCta").textContent = playing ? "⏸ നിർത്താൻ തൊടുക" : "▶ തൊടുക";
-      if (playing) bubble.classList.add("hide");
+      if (playing) { bubble.classList.add("hide"); window.dispatchEvent(new CustomEvent("kp:audio", { detail: "band" })); }
       renderList(); setTitle(); updateBot();
     }
     const setProg = p => { miniBtn.style.setProperty("--p", p); $("#bsProg").style.width = (p * 100) + "%"; };
@@ -537,7 +599,9 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
     }
     function pause() { playing = false; if (mode === "file") audio.pause(); if (mode === "synth") stopSynth();
       bars.forEach(b => b.style.height = "12%"); setUI(); }
-    const toggle = () => playing ? pause() : (mode === "synth" ? (playing = true, startSynth(), setUI()) : playSong(cur));
+    // only one sound on the page at a time: the band song stops when amittu is fired, and silences amittu when it starts
+    window.addEventListener("kp:audio", e => { if (e.detail !== "band" && playing) pause(); });
+    const toggle = () => playing ? pause(): (mode === "synth" ? (playing = true, startSynth(), setUI()) : playSong(cur));
     [miniBtn, bigBtn, $("#bsPlay")].forEach(b => b.addEventListener("click", toggle));
     $("#bsNext").addEventListener("click", () => songs.length > 1 ? playSong(cur + 1) : toggle());
     $("#bsPrev").addEventListener("click", () => songs.length > 1 ? playSong(cur - 1) : toggle());
@@ -737,6 +801,75 @@ function palm(scene, x, z, h, mat) {
     O.apply();
     if (night) { ch.animate(t); for (let i = 0; i < bcol.length / 3; i++) { const C = PALETTE[(i + Math.floor(t * 4)) % 7]; bcol.set([C.r, C.g, C.b], i * 3); } bgeo.attributes.color.needsUpdate = true; }
     S.r.render(scene, S.cam); })();
+}
+
+
+/* ---------- AMITTU backdrop: the real (white) 3D church, only its domes and tower tops peeping up at the bottom,
+   floodlit for the night, with LEDs running along its edges — the fireworks get the sky ---------- */
+{
+  const host = $("#amStage");
+  if (host) {
+    const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.setClearColor(0x000000, 0);
+    r.domElement.className = "am-church3d"; r.domElement.setAttribute("aria-hidden", "true");
+    host.insertBefore(r.domElement, host.querySelector(".am-tip"));
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(26, 1, 1, 600);   // long lens: true proportions, little distortion
+    const ch = buildChurch(1); ch.lights.visible = false; scene.add(ch.group);
+    ch.group.updateMatrixWorld(true);
+    // real colours (white walls, tiled roof, gold domes), floodlit warm from the front like on feast night
+    scene.add(new THREE.HemisphereLight(0x9fb4ff, 0x2a1830, .55));
+    const key = new THREE.DirectionalLight(0xfff0dc, .75); key.position.set(30, 40, 60); scene.add(key);
+    const flood = new THREE.PointLight(0xffb070, 1.3, 160); flood.position.set(10, 6, 45); scene.add(flood);
+    ch.glass.emissiveIntensity = 1.1;
+    const pts = [], grp = [];
+    let gid = 0;
+    ch.group.children.forEach(m => {
+      if (!m.isMesh) return;
+      const skip = m.material === ch.glass || (m.material.color && [0x6b3d1f, 0xd8cfc0, 0xcbbca6].includes(m.material.color.getHex()));
+      m.castShadow = m.receiveShadow = false;
+      m.material = m.material.clone(); Object.assign(m.material, { polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });   // edge LEDs sit in front
+      if (skip) return;
+      // only the real outline edges (corners, rims, roof lines)
+      const e = new THREE.EdgesGeometry(m.geometry, 35), p = e.attributes.position, a = new V3(), b = new V3();
+      gid++;
+      for (let i = 0; i < p.count; i += 2) {
+        a.fromBufferAttribute(p, i).applyMatrix4(m.matrixWorld); b.fromBufferAttribute(p, i + 1).applyMatrix4(m.matrixWorld);
+        const n = Math.max(1, Math.round(a.distanceTo(b) / .42));
+        for (let k = 0; k <= n; k++) { const t = k / n; pts.push(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t); grp.push(gid); }
+      }
+      e.dispose();
+    });
+    const geo = new THREE.BufferGeometry(); geo.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
+    const col = new Float32Array(pts.length); geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ size: 1.3, map: dotTex, vertexColors: true, transparent: true, depthWrite: false })));
+    const n = grp.length;
+
+    // fixed three-quarter view; only the top of the church (roof, towers, domes, crosses) rises into the bottom of the frame
+    const fit = () => {
+      const w = host.clientWidth, h = host.clientHeight; if (!w || !h) return;
+      r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+      const d = Math.max(72, 100 / cam.aspect), half = d * Math.tan(13 * Math.PI / 180);
+      view.d = d; view.ty = 3.5 + half;          // y ≈ 3.5 sits on the bottom edge (the crowd covers the lowest part)
+    };
+    const view = { d: 46, ty: 14 };
+    new ResizeObserver(fit).observe(host); fit();
+    let visible = false; new IntersectionObserver(es => visible = es[0].isIntersecting).observe(host);
+    const clock = new THREE.Clock();
+    (function loop() {
+      requestAnimationFrame(loop); if (!visible) return;
+      const t = clock.getElapsedTime(), th = .62 + Math.sin(t * .15) * .05, ph = 1.5;
+      cam.position.set(view.d * Math.sin(ph) * Math.sin(th), view.ty + view.d * Math.cos(ph), view.d * Math.sin(ph) * Math.cos(th) - 2);
+      cam.lookAt(0, view.ty, -2);
+      // running LEDs: a bright pulse chases along every edge; each part changes colour every few seconds
+      const shift = Math.floor(t / 4);
+      for (let i = 0; i < n; i++) {
+        const C = PALETTE[(grp[i] + shift) % PALETTE.length], run = ((i - t * 22) % 9 + 9) % 9, k = run < 3 ? 1.15 : .45;
+        col[i * 3] = C.r * k; col[i * 3 + 1] = C.g * k; col[i * 3 + 2] = C.b * k;
+      }
+      geo.attributes.color.needsUpdate = true;
+      r.render(scene, cam);
+    })();
+  }
 }
 
 

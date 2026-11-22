@@ -753,3 +753,109 @@ html,body{max-width:100%}
   .cd span{font-size:11px}
 }
 @media (max-width:380px){ .cd b{font-size:22px} .cd span{font-size:10px} }
+
+/* ---- band-set side-drummer style: tilted hip drums, dance sway, hair swing, confetti ---- */
+.bb-svg .bb-drum{transform:rotate(-9deg)}
+.bb-svg .bb-drum.boom{transform:rotate(-9deg) scale(1.06)}
+.bb-svg.bb-b .bb-drum,.bb-svg.bb-d .bb-drum{transform:rotate(9deg)}
+.bb-svg.bb-b .bb-drum.boom,.bb-svg.bb-d .bb-drum.boom{transform:rotate(9deg) scale(1.06)}
+.bb-svg .bb-hair{transform-box:fill-box;transform-origin:50% 10%}
+.is-playing .bb-svg .bb-body{animation:bbDance .52s ease-in-out infinite}
+.is-playing .bb-svg .bb-head{animation:bbBang .52s ease-in-out infinite}
+.is-playing .bb-svg .bb-hair{animation:bbHair .52s ease-in-out infinite}
+@keyframes bbDance{0%,100%{transform:translate(-1.5px,0) rotate(-3deg)}50%{transform:translate(1.5px,-3.5px) rotate(3deg)}}
+@keyframes bbBang{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(6deg) translateY(1.5px)}}
+@keyframes bbHair{0%,100%{transform:rotate(5deg)}50%{transform:rotate(-6deg) scaleY(1.04)}}
+.bs-confetti{position:absolute;top:2%;width:6px;height:10px;border-radius:1.5px;pointer-events:none;z-index:2;
+  animation:confFall var(--t,1.5s) cubic-bezier(.25,.6,.45,1) forwards}
+@keyframes confFall{from{opacity:1;transform:translate(0,0) rotate(0)}85%{opacity:1}to{opacity:0;transform:translate(var(--dx,0),var(--fall,240px)) rotate(var(--rot,540deg))}}
+.bs-fireworks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+
+/* ---- amittu (colour shells) section ---- */
+.amittu-sec{padding-block:18px 30px}
+.am-head{text-align:center;margin-bottom:14px}
+.am-head h2{font-family:var(--ml-display);font-weight:800;font-size:clamp(26px,3.4vw,40px);margin:0 0 6px;line-height:1.2}
+.am-help{margin:0;color:var(--dim);font-size:14px}
+.am-help b{color:var(--gold)}
+.am-stage{position:relative;height:clamp(380px,62vh,620px);border-radius:30px;overflow:hidden;border:1px solid rgba(255,207,74,.3);
+  background:radial-gradient(ellipse at 50% 120%,#2a1236 0%,transparent 60%),linear-gradient(#020208,#0a0716 55%,#160b22);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);cursor:crosshair;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.am-stage::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:radial-gradient(1px 1px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 33% 9%,#fff,transparent),radial-gradient(1px 1px at 58% 22%,#fff,transparent),radial-gradient(1px 1px at 81% 12%,#fff,transparent),radial-gradient(1px 1px at 91% 34%,#fff,transparent),radial-gradient(1px 1px at 22% 40%,#fff,transparent),radial-gradient(1px 1px at 70% 44%,#fff,transparent)}
+.am-smoke,.am-fx{position:absolute;inset:0;width:100%;height:100%;display:block}
+.am-smoke{z-index:1;pointer-events:none}
+.am-church,.am-tip,.am-count{z-index:2}
+.am-church{position:absolute;left:0;right:0;bottom:0;width:100%;height:24%;pointer-events:none}
+.am-tip{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);padding:8px 16px;border-radius:999px;background:rgba(11,7,22,.7);border:1px solid var(--line);
+  font-family:var(--ml-display);font-weight:700;pointer-events:none;transition:opacity .5s;animation:amTip 1.6s ease-in-out infinite}
+.am-tip.hide{opacity:0}
+@keyframes amTip{50%{transform:translate(-50%,-58%)}}
+.am-count{position:absolute;right:16px;top:14px;font-size:12px;color:var(--dim);pointer-events:none}
+.am-ctrl{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+.am-ctrl .am-snd{width:46px;padding-inline:0;justify-content:center}
+.am-ctrl .am-snd[aria-pressed="false"]{opacity:.55}
+@media (max-width:560px){.am-stage{height:min(72vh,560px);border-radius:22px}.am-ctrl .btn{font-size:13px;padding:9px 12px}}
+.am-church{left:0;right:0;width:100%;height:64%}
+@keyframes amTwinkle{from{opacity:.45}to{opacity:1}}
+@media (max-width:560px){.am-church{height:46%}}
+
+/* ---- ther malsaram (LED chariots) ---- */
+.ther-sec{padding-block:18px 30px}
+.th-stage{position:relative;height:clamp(360px,58vh,560px);border-radius:30px;overflow:hidden;border:1px solid rgba(255,207,74,.3);
+  background:radial-gradient(ellipse at 50% 100%,rgba(60,30,110,.55),transparent 65%),linear-gradient(#020208,#07051a 60%,#0d0824);box-shadow:0 24px 60px rgba(0,0,0,.45);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.th-stage .th-church{position:absolute;left:0;right:0;bottom:14%;width:100%;height:52%;opacity:.42;pointer-events:none}
+.th-fx{position:absolute;inset:0;width:100%;height:100%;display:block}
+.th-mode{position:absolute;left:14px;top:12px;font-size:12px;color:var(--dim);padding:4px 10px;border-radius:999px;background:rgba(11,7,22,.6);border:1px solid var(--line);pointer-events:none}
+.th-name{position:absolute;left:50%;top:12px;transform:translate(-50%,-8px);opacity:0;transition:.35s;padding:6px 14px;border-radius:999px;background:var(--gold);color:#2a1600;
+  font-family:var(--ml-display);font-weight:800;font-size:14px;white-space:nowrap;pointer-events:none}
+.th-name.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:560px){.th-stage{height:min(50vh,360px);border-radius:22px}.th-stage .th-church{height:46%}.th-name{top:44px;font-size:12px}}
+
+/* ---- church illumination: LED patterns change colour every few seconds, strings twinkle ---- */
+.am-church.lit .am-ln{opacity:.18}
+.am-church.lit .am-wn{opacity:.45}
+
+/* ---- festival-poster touches: blue sky, beams, festoons, crowd, balloons ---- */
+.am-stage{background:linear-gradient(#050c30,#0c1a55 55%,#1c2270 85%,#3a2660)}
+.am-church{overflow:visible}
+.am-beams{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}
+.am-beams i{position:absolute;bottom:22%;width:16px;height:95%;margin-left:-8px;transform-origin:50% 100%;border-radius:8px;
+  background:linear-gradient(to top,rgba(255,255,255,.55),rgba(220,235,255,.18) 55%,transparent);filter:blur(3px);animation:amBeam 7s ease-in-out infinite alternate}
+@keyframes amBeam{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+.am-crowd{position:absolute;left:0;right:0;bottom:0;width:100%;height:15%;z-index:3;pointer-events:none;overflow:visible}
+.am-bal{animation:amBob 3.2s ease-in-out infinite alternate}
+@keyframes amBob{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+@media (max-width:560px){.am-crowd{height:15%}.am-beams i{width:10px}}
+
+/* church lights: class "tw" is flipped twice a second by JS (cheap: no per-frame repaint) */
+.am-church.tw .am-bulbs path:nth-child(1){stroke-dashoffset:-14}
+.am-church.tw .am-bulbs path:nth-child(2){stroke-dashoffset:-28}
+.am-church.tw .am-bulbs path:nth-child(3){stroke-dashoffset:-42}
+.am-church .am-lt .a{opacity:1}.am-church .am-lt .b{opacity:.55}
+.am-church.tw .am-lt .a{opacity:.55}.am-church.tw .am-lt .b{opacity:1}
+.am-church.tw .am-fest .fb{stroke-dashoffset:-12}
+.am-church.tw .am-cols{opacity:.7}
+.am-beams i{will-change:transform}
+
+.am-church,.am-crowd{will-change:transform}
+
+/* ---- ther ground: ring layout, judge panel ---- */
+.th-stage{height:clamp(400px,64vh,620px);background:#000}
+.th-stage .th-church{bottom:auto;top:6%;height:44%;opacity:.55}
+.th-judge{position:absolute;left:50%;bottom:12px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.3s;z-index:4;width:min(94%,520px);
+  padding:10px 12px;border-radius:18px;background:rgba(11,7,22,.88);border:1px solid rgba(255,207,74,.45);text-align:center;font-size:14px}
+.th-judge.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.th-judge p{margin:0 0 8px}.th-judge b{color:var(--gold);font-family:var(--ml-display)}
+.th-judge ol{list-style:none;margin:0 0 6px;padding:0;font-family:var(--ml-display);font-weight:700;line-height:1.7}
+.th-note{font-size:11px;color:var(--dim)}
+.th-pts{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.th-pts button,.th-judge [data-jclose]{min-width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--card2);font-weight:800;color:inherit}
+.th-pts button:hover,.th-judge [data-jclose]{background:var(--gold);color:#2a1600;border:0}
+.th-judge [data-jclose]{padding:0 18px}
+@media (max-width:560px){.th-stage{height:min(66vh,520px)}.th-stage .th-church{top:10%;height:30%}.th-pts button{min-width:30px;height:32px}}
+.th-done{margin-top:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--gold);font-family:var(--ml-display);font-weight:700}
+
+/* amittu: 3D church backdrop (black body, LEDs on the edges) */
+.am-church3d{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;display:block}
+.th-next{display:none}
+@media (max-width:599px){.th-next{display:inline-flex}}

@@ -18,6 +18,7 @@
   const SKIN = ["#6b4429", "#55341f", "#7a5034", "#4a2e1c"];
   // the only shops on the street, right after the church: Family Bakery, Lasarettan's shop, Eeyappettan's shop (the rest are homes)
   const NEAR_CHURCH = ["ഫാമിലി ബേക്കറി", "ലാസറേട്ടന്റെ കട", "ഈയപ്പേട്ടന്റെ കട"];
+  const SHOP_AT = { 11: 0, 3: 1, 6: 2 };   // place in the 12-building stretch: bakery by the church, then houses, Lazarettan's, more houses, Eeyappettan's
 
   /* ---------- size ---------- */
   let W = 0, H = 0, dpr = 1, u = 1, roadTop = 0, roadBot = 0, walkY = 0, nearY = 0, bikeX = 0;
@@ -182,10 +183,10 @@
     const md = (a, m) => ((a % m) + m) % m;
     for (let i = i0 - 2; i < i0 + W / seg + 3; i++) if (md(i, 12) === 9) church(i * seg - off + seg, roadTop - 6 * u);   // the church shows through its gap
     for (let i = i0; i < i0 + W / seg + 3; i++) { const R = hashR(i * 13 + 5), j = md(i, 12); if (j === 9 || j === 10) continue;
-      const ord = j === 11 ? 0 : j + 1, block = Math.floor((i + 1) / 12);
+      const ord = SHOP_AT[j], block = Math.floor((i + 1) / 12);
       const w = (160 + R() * 30) * u, h = (118 + R() * 30) * u;
-      if (ord < 3) shop(i * seg - off, w, h, R, md(i, 6), NEAR_CHURCH[ord]);          // the three real shops next to the church
-      else house(i * seg - off, w, h, R, md(i, 6), md(ord + block, 3)); }             // everything else: homes, three kinds
+      if (ord != null) shop(i * seg - off, w, h, R, md(i, 6), NEAR_CHURCH[ord]);      // the three real shops, each on its own stretch with houses in between
+      else house(i * seg - off, w, h, R, md(i, 6), md(j + block, 3)); }               // everything else: homes, three kinds
     const ps = 300 * u, j0 = Math.floor(off / ps) - 1, poleTop = roadTop - 190 * u;
     g.strokeStyle = "rgba(20,18,30,.9)"; g.lineWidth = 1.2;
     for (let j = j0; j < j0 + W / ps + 3; j++) { const x0 = j * ps - off + 40 * u, x1 = x0 + ps;

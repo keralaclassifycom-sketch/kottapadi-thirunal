@@ -313,6 +313,163 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
   } else if (navLink) navLink.remove();
 }
 
+/* ---------- band set drummers: one tap = play, tap again = pause ---------- */
+{
+  const B = window.BAND_PLAYER || {}, bot = $("#bandBot"), stageSec = $("#bandstage");
+  if (B.enabled === false) { bot && bot.remove(); stageSec && stageSec.remove(); document.querySelectorAll("[data-band-toggle]").forEach(b => b.remove()); }
+  else if (bot && stageSec) {
+    // stage: drummer A (cloned from the mini button) + drummer B (template)
+    const slot = $("#bsSlot");
+    slot.appendChild(bot.querySelector(".bb-svg").cloneNode(true));
+    document.querySelectorAll("template[data-drummer]").forEach(t => slot.appendChild(t.content.firstElementChild.cloneNode(true)));
+
+    const miniBtn = $("#bbBtn"), bigBtn = $("#bsBtn"), bubble = $("#bbBubble"), list = $("#bsList");
+    const eq = $("#bsEq"); for (let i = 0; i < 18; i++) eq.appendChild(document.createElement("i"));
+    const bars = [...eq.children];
+    let songs = (B.songs || []).filter(s => s.file);
+    let cur = 0, ctx = null, analyser, master, freq, mode = null, playing = false;
+    const audio = new Audio(); audio.preload = "none";
+    let mediaSrc = null, synthTimer = null, nextT = 0, step = 0, lastHit = 0, avg = 0, side = 0, synthStart = 0, stageVisible = true;
+
+    function renderList() {
+      list.innerHTML = songs.map((s, i) => `<li class="${i === cur ? "on" : ""}"><button data-song="${i}"><i>${i === cur && playing ? "⏸" : i + 1}</i>
+        <span><b>${s.title}</b><br><span>${s.artist || ""}</span></span></button></li>`).join("")
+        || `<li class="on"><button data-song="-1"><i>${playing ? "⏸" : "▶"}</i><span><b>${B.demoTitle || "ബാൻഡ് താളം"}</b><br><span>ഡെമോ താളം</span></span></button></li>`;
+    }
+    function setTitle() {
+      const s = mode === "synth" || !songs.length ? { title: B.demoTitle || "ബാൻഡ് താളം", artist: "ഡെമോ താളം" } : songs[cur];
+      $("#bsTitle").textContent = s.title; $("#bsArtist").textContent = s.artist || "";
+      $("#bbTitle").textContent = `🎵 ${s.title}${s.artist ? " · " + s.artist : ""}`;
+    }
+    bubble.textContent = B.hint || "🎺 തൊട്ടാൽ ബാൻഡ് മേളം!";
+
+    function ensureCtx() {
+      if (!ctx) { const AC = window.AudioContext || window.webkitAudioContext; ctx = new AC();
+        analyser = ctx.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = .6; freq = new Uint8Array(analyser.frequencyBinCount);
+        analyser.connect(ctx.destination); }
+      if (ctx.state === "suspended") ctx.resume();
+    }
+    function hit(strong) {
+      side ^= 1;
+      document.querySelectorAll(side ? ".bb-svg .armR" : ".bb-svg .armL").forEach(a => { a.classList.add("hit"); setTimeout(() => a.classList.remove("hit"), 110); });
+      if (strong) document.querySelectorAll(".bb-svg .bb-drum").forEach(d => { d.classList.add("boom"); setTimeout(() => d.classList.remove("boom"), 90); });
+      if (strong && Math.random() < .45) note();
+    }
+    const NOTES = ["♪", "♫", "🎵", "🥁", "🎺"];
+    function note() {
+      const host = stageVisible ? bigBtn : $("#bbNotes"), n = document.createElement("span");
+      n.className = "bs-note"; n.textContent = NOTES[Math.floor(Math.random() * NOTES.length)];
+      n.style.left = (stageVisible ? 15 + Math.random() * 70 : 0) + "%"; n.style.top = stageVisible ? "25%" : "0";
+      n.style.setProperty("--dx", (Math.random() * 60 - 30) + "px"); n.style.setProperty("--rot", (Math.random() * 50 - 25) + "deg");
+      host.appendChild(n); setTimeout(() => n.remove(), 1600);
+    }
+    function setUI() {
+      [bot, bigBtn, stageSec.querySelector(".bandstage")].forEach(el => el.classList.toggle("is-playing", playing));
+      [miniBtn, bigBtn].forEach(b => b.setAttribute("aria-pressed", playing));
+      $("#bbState").textContent = playing ? "⏸" : "▶"; $("#bsPlay").textContent = playing ? "⏸" : "▶";
+      $("#bsCta").textContent = playing ? "⏸ നിർത്താൻ തൊടുക" : "▶ തൊടുക";
+      if (playing) bubble.classList.add("hide");
+      renderList(); setTitle(); updateBot();
+    }
+    const setProg = p => { miniBtn.style.setProperty("--p", p); $("#bsProg").style.width = (p * 100) + "%"; };
+    (function frame() {
+      requestAnimationFrame(frame);
+      if (!playing || !analyser) return;
+      analyser.getByteFrequencyData(freq);
+      for (let i = 0; i < bars.length; i++) bars[i].style.height = Math.max(8, freq[2 + i * 5] / 255 * 100) + "%";
+      if (mode === "file") {
+        let low = 0; for (let i = 1; i <= 6; i++) low += freq[i]; low /= 6;
+        const now = performance.now();
+        let mid = 0; for (let i = 8; i <= 30; i++) mid += freq[i]; mid /= 23;
+        const energy = low * .6 + mid * .4;
+        if ((energy > avg * 1.04 && energy > 55 && now - lastHit > 150) || (energy > 40 && now - lastHit > 420)) { lastHit = now; hit(energy > avg * 1.15); }
+        avg = avg * .9 + energy * .1;
+        setProg(audio.duration ? audio.currentTime / audio.duration : 0);
+      } else setProg(((ctx.currentTime - synthStart) % 32) / 32);
+    })();
+
+    /* original band rhythm generated in the browser (used when no song file loads) */
+    const BPM = 116, S16 = 60 / BPM / 4;
+    let noiseBuf = null;
+    const noise = () => { if (noiseBuf) return noiseBuf; noiseBuf = ctx.createBuffer(1, ctx.sampleRate * .5, ctx.sampleRate);
+      const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return noiseBuf; };
+    const env = (g, t, a, peak, dec) => { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec); };
+    function kick(t) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(42, t + .14);
+      env(g, t, .002, .95, .22); o.connect(g).connect(master); o.start(t); o.stop(t + .3); }
+    function snare(t, v = .5) { const n = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); n.buffer = noise(); f.type = "highpass"; f.frequency.value = 1400;
+      env(g, t, .002, v, .14); n.connect(f).connect(g).connect(master); n.start(t); n.stop(t + .2);
+      const o = ctx.createOscillator(), g2 = ctx.createGain(); o.type = "triangle"; o.frequency.value = 185; env(g2, t, .002, v * .5, .08); o.connect(g2).connect(master); o.start(t); o.stop(t + .12); }
+    function hat(t, v = .12) { const n = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); n.buffer = noise(); f.type = "highpass"; f.frequency.value = 7500;
+      env(g, t, .001, v, .035); n.connect(f).connect(g).connect(master); n.start(t); n.stop(t + .06); }
+    const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+    function brass(t, m, len, v = .16) { const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = "lowpass"; f.frequency.setValueAtTime(900, t); f.frequency.linearRampToValueAtTime(2600, t + .06);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .03); g.gain.setValueAtTime(v, t + len * .75); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      [0, 7].forEach(dt => { const o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = mtof(m); o.detune.value = dt; o.connect(f); o.start(t); o.stop(t + len + .02); });
+      f.connect(g).connect(master); }
+    function tuba(t, m, len) { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "triangle"; o.frequency.value = mtof(m); env(g, t, .01, .35, len); o.connect(g).connect(master); o.start(t); o.stop(t + len + .05); }
+    const RIFF = [[[0,62,2],[2,66,2],[4,69,4],[8,71,2],[10,69,2],[12,66,4]], [[0,67,2],[2,66,2],[4,64,2],[6,62,2],[8,64,6],[14,66,2]],
+                  [[0,62,2],[2,66,2],[4,69,4],[8,74,2],[10,71,2],[12,69,4]], [[0,71,2],[2,69,2],[4,67,2],[6,66,2],[8,64,2],[10,62,6]]];
+    const BASS = [50, 43, 50, 45];
+    function scheduleStep(s, t) {
+      const bar = Math.floor(s / 16) % 4, i = s % 16;
+      if (i % 2 === 0) hat(t, i % 4 === 0 ? .14 : .08);
+      let strong = false;
+      if (i === 0 || i === 8 || (i === 10 && bar % 2)) { kick(t); strong = true; }
+      if (i === 4 || i === 12) { snare(t); strong = true; }
+      if (bar === 3 && i >= 13) snare(t, .32);
+      if (i === 0 || i === 8) tuba(t, BASS[bar] - 12 + (i === 8 ? 7 : 0), S16 * 6);
+      RIFF[bar].forEach(([st, m, l]) => { if (st === i) brass(t, m, l * S16 * .95); });
+      if (strong || i % 4 === 2) setTimeout(() => playing && mode === "synth" && hit(strong), Math.max(0, (t - ctx.currentTime) * 1000));
+    }
+    function startSynth() {
+      mode = "synth"; ensureCtx();
+      master = ctx.createGain(); master.gain.value = .7; master.connect(analyser);
+      nextT = ctx.currentTime + .06; synthStart = nextT; step = 0;
+      synthTimer = setInterval(() => { while (nextT < ctx.currentTime + .14) { scheduleStep(step, nextT); nextT += S16; step++; } }, 25);
+    }
+    function stopSynth() { clearInterval(synthTimer); synthTimer = null;
+      if (master) { const m = master; m.gain.setTargetAtTime(0, ctx.currentTime, .03); setTimeout(() => m.disconnect(), 300); master = null; } }
+
+    audio.addEventListener("ended", () => { if (songs.length > 1) playSong((cur + 1) % songs.length); else { playing = false; setProg(0); setUI(); } });
+
+    async function playSong(i) {
+      ensureCtx(); if (mode === "synth") stopSynth();
+      playing = true;
+      if (!songs.length) { setUI(); startSynth(); setUI(); return; }
+      cur = (i + songs.length) % songs.length; setUI();
+      const s = songs[cur];
+      if (!audio.src.endsWith(s.file)) { audio.src = s.file; audio.currentTime = 0; avg = 0; }
+      try {
+        if (!mediaSrc) { mediaSrc = ctx.createMediaElementSource(audio); mediaSrc.connect(analyser); }
+        await audio.play(); mode = "file"; setUI();
+      } catch (e) {
+        if (!playing) return;                    // paused while loading
+        if (e && e.name === "NotAllowedError") { playing = false; setUI(); return; }   // browser blocked sound, keep the song
+        songs.splice(cur, 1);                    // file missing → drop it, try the next, else demo beat
+        if (songs.length) playSong(cur); else { mode = null; startSynth(); setUI(); }
+      }
+    }
+    function pause() { playing = false; if (mode === "file") audio.pause(); if (mode === "synth") stopSynth();
+      bars.forEach(b => b.style.height = "12%"); setUI(); }
+    const toggle = () => playing ? pause() : (mode === "synth" ? (playing = true, startSynth(), setUI()) : playSong(cur));
+    [miniBtn, bigBtn, $("#bsPlay")].forEach(b => b.addEventListener("click", toggle));
+    $("#bsNext").addEventListener("click", () => songs.length > 1 ? playSong(cur + 1) : toggle());
+    $("#bsPrev").addEventListener("click", () => songs.length > 1 ? playSong(cur - 1) : toggle());
+    list.addEventListener("click", e => { const b = e.target.closest("[data-song]"); if (!b) return; const i = +b.dataset.song;
+      if (i < 0 || (i === cur && playing)) toggle(); else playSong(i); });
+    document.addEventListener("click", e => { if (e.target.closest("[data-band-toggle]")) toggle(); });
+
+    // live site: hide songs whose file isn't uploaded
+    songs.forEach(s => fetch(s.file, { method: "HEAD", cache: "no-store" }).then(r => { if (!r.ok) throw 0; }).catch(() => {
+      if (playing) return; const k = songs.indexOf(s); if (k >= 0) { songs.splice(k, 1); if (cur >= songs.length) cur = 0; renderList(); setTitle(); } }));
+
+    function updateBot() { bot.classList.toggle("away", stageVisible); }
+    new IntersectionObserver(es => { stageVisible = es[0].isIntersecting; updateBot(); }, { threshold: .3 }).observe(bigBtn);
+    setTimeout(() => bubble.classList.add("hide"), 9000);
+    renderList(); setTitle();
+  }
+}
+
 /* ---------- nav, reveal ---------- */
 $("#menuBtn").onclick = () => $("#links").classList.toggle("open");
 $("#links").onclick = e => { if (e.target.tagName === "A") $("#links").classList.remove("open"); };

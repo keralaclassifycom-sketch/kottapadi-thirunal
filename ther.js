@@ -344,7 +344,9 @@
   let progShift = 0;   // the 💡 button jumps every ther to its next move
   function cueAt(t, now) {
     const P = t.d.prog, total = P.reduce((a, c) => a + c[1], 0);
-    let tt = ((now / 1000 + t.idx * 3.7 + progShift) % total + total) % total;
+    // phone (one ther at a time): each ther starts its programme from the beginning when it parks
+    const run = small && t.p0 ? (now - t.p0) / 1000 + progShift - t.sh0 : now / 1000 + t.idx * 3.7 + progShift;
+    let tt = (run % total + total) % total;
     for (const [type, dur] of P) { if (tt < dur) return { type, el: tt, u: tt / dur, dur }; tt -= dur; }
     return { type: "hold", el: 0, u: 0, dur: 1 };
   }
@@ -474,7 +476,7 @@
       if (t.state === "drive") {
         const tx = slotX(t.slot), d = tx - t.x, sp = Math.max(baseU * .4, Math.abs(d) * 2.2) * dt / 1000;
         t.x += Math.sign(d) * Math.min(Math.abs(d), sp); t.on = Math.max(t.on, .5);
-        if (Math.abs(tx - t.x) < .5) { t.x = tx; t.state = "parked"; }
+        if (Math.abs(tx - t.x) < .5) { t.x = tx; t.state = "parked"; t.p0 = now; t.sh0 = progShift; }
       } else if (t.state === "parked") t.on = Math.min(1, t.on + dt / 500);
       else if (t.state === "leave") { t.x -= Math.max(baseU * 1.2, W * .45) * dt / 1000; if (t.x < -baseU * 1.6) return false; }
       return true;
@@ -483,7 +485,9 @@
     // auto parade: after a pause the group drives off and the next samoohams come in (phone: one by one)
     const allParked = thers.length && thers.every(t => t.state === "parked");
     if (!allParked) allParkedAt = 0; else if (!allParkedAt) allParkedAt = now;
-    if (small && allParked && visible && !judge && focus < 0 && now - allParkedAt > 6000) { allParkedAt = 0; nextSet(); }
+    // phone: the next ther comes only after this one has shown every light effect (or when "അടുത്ത തേര്" is tapped)
+    const shown = t => t.p0 ? (now - t.p0) / 1000 + progShift - t.sh0 >= t.d.prog.reduce((a, c) => a + c[1], 0) : false;
+    if (small && allParked && visible && !judge && focus < 0 && thers.every(shown)) { allParkedAt = 0; nextSet(); }
     drawGround();
     thers.forEach(t => { if (t.state !== "wait") { t.cue = cueAt(t, now); drawTher(t, now); } });
     if (now - labelT > 400) { labelT = now; modeEl.textContent = modeLabel(); }

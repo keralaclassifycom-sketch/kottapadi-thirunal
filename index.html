@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>സെന്റ് ലാസർ ചർച്ച് കോട്ടപ്പടി — തിരുനാൾ</title>
+<meta name="description" content="സെന്റ് ലാസർ ചർച്ച് കോട്ടപ്പടി — വിശുദ്ധ ലാസറിന്റെ തിരുനാൾ: പരിപാടികൾ, സമയം, സമൂഹങ്ങളുടെ അമ്പ്–വള എഴുന്നള്ളിപ്പ് റൂട്ട്, മേളങ്ങൾ, 3D മാപ്പ്.">
+<meta property="og:title" content="സെന്റ് ലാസർ ചർച്ച് കോട്ടപ്പടി — തിരുനാൾ">
+<meta property="og:description" content="പരിപാടികൾ, സമൂഹ റൂട്ടുകൾ, മേളങ്ങൾ — എവിടെ, എപ്പോൾ">
+<meta property="og:image" content="images/church-lights.jpg">
+<meta name="theme-color" content="#0b0716">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23ffcf4a'/><path d='M44 14h12v24h22v12H56v38H44V50H22V38h22z' fill='%232a1600'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,400..800&family=Baloo+Chettan+2:wght@500;600;700;800&family=Manjari:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="sparks" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="x">✝</span><span><span id="navName">സെന്റ് ലാസർ ചർച്ച്</span><small>KOTTAPADI</small></span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="മെനു">☰</button>
+    <nav class="links" id="links">
+      <a href="#schedule">പരിപാടികൾ</a>
+      <a href="#melam">മേളങ്ങൾ</a>
+      <a href="#map">3D മാപ്പ്</a>
+      <a href="#samooham">യൂണിറ്റുകൾ</a>
+      <a href="#church3d">3D പള്ളി</a>
+      <a href="#about">പള്ളി</a>
+      <a href="#gallery">ഗാലറി</a>
+      <a href="#sponsors">സ്പോൺസർമാർ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="wrap">
+      <div class="medal-stage" aria-hidden="true">
+        <div class="medal">
+          <div class="depth"></div>
+          <div class="ring"></div><div class="ring ring2"></div>
+          <div class="disc"><img src="images/church-lights.jpg" alt=""></div>
+        </div>
+      </div>
+      <div>
+        <div class="kt-logo" role="img" aria-label="കോട്ടപ്പടി തിരുനാൾ 2027 — ജനുവരി 1, 2, 3, 4">
+          <svg class="kt-emblem" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="ktg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3c4"/><stop offset=".5" stop-color="#ffcf4a"/><stop offset="1" stop-color="#c27c00"/></linearGradient>
+              <radialGradient id="ktb" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#3a2470"/><stop offset="1" stop-color="#140b28"/></radialGradient>
+            </defs>
+            <g class="kt-dots"></g>
+            <circle cx="60" cy="60" r="46" fill="url(#ktg)"/>
+            <circle cx="60" cy="60" r="41.5" fill="url(#ktb)"/>
+            <g fill="url(#ktg)">
+              <rect x="59" y="27" width="2.4" height="13" rx="1"/><rect x="55.2" y="31" width="10" height="2.4" rx="1"/>
+              <rect x="57.2" y="40" width="6" height="5"/>
+              <path d="M46 61a14 14 0 0 1 28.4 0z"/>
+              <rect x="43" y="61" width="34.4" height="18"/>
+              <rect x="33" y="52" width="8.5" height="27"/><path d="M33 52a4.25 4.25 0 0 1 8.5 0z"/><rect x="36.4" y="42.5" width="1.6" height="6"/><rect x="35" y="44.3" width="4.4" height="1.4"/>
+              <rect x="78.9" y="52" width="8.5" height="27"/><path d="M78.9 52a4.25 4.25 0 0 1 8.5 0z"/><rect x="82.3" y="42.5" width="1.6" height="6"/><rect x="80.9" y="44.3" width="4.4" height="1.4"/>
+              <rect x="29" y="79" width="62.4" height="4" rx="1"/><rect x="25" y="83" width="70.4" height="3" rx="1"/>
+            </g>
+            <g fill="#140b28"><path d="M56 79v-7a4.2 4.2 0 0 1 8.4 0v7z"/><path d="M47 70v-4a2 2 0 0 1 4 0v4z"/><path d="M69.4 70v-4a2 2 0 0 1 4 0v4z"/><rect x="36" y="58" width="2.5" height="5" rx="1.2"/><rect x="82" y="58" width="2.5" height="5" rx="1.2"/></g>
+          </svg>
+          <div class="kt-text">
+            <span class="kt-1">കോട്ടപ്പടി</span>
+            <span class="kt-2">തിരുനാൾ</span>
+            <span class="kt-3"><b>2027</b><i></i>ജനുവരി 1 · 2 · 3 · 4</span>
+          </div>
+        </div>
+        <p class="kicker" id="heroKicker">വിശുദ്ധ ലാസറിന്റെ തിരുനാൾ</p>
+        <h1 class="title3d"><span id="heroTitle">സെന്റ് ലാസർ ചർച്ച്</span><span class="small" id="heroPlace">കോട്ടപ്പടി</span></h1>
+        <p class="en-line" id="heroEn">ST. LAZARUS CHURCH · KOTTAPADI</p>
+        <div class="dates" id="heroDates"></div>
+        <div class="countdown" id="countdown"></div>
+        <div class="btns">
+          <a class="btn primary" href="#schedule">📅 പരിപാടികൾ കാണുക</a>
+          <a class="btn" href="#melam">🥁 മേളങ്ങൾ എവിടെ?</a>
+          <a class="btn" href="#map">🗺️ 3D റൂട്ട് മാപ്പ്</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY GATES -->
+  <section style="padding-top:10px">
+    <div class="wrap">
+      <div class="gates" id="gates"></div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="schedule">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Programme</p>
+          <h2>ദിവസം തിരിച്ചുള്ള <em>പരിപാടികൾ</em></h2>
+          <p>ഏതൊക്കെ സമയം, എവിടെയൊക്കെ — ഓരോ ദിവസത്തെയും പരിപാടികൾ.</p>
+        </div>
+      </div>
+      <div class="tabs" id="dayTabs" role="tablist"></div>
+      <div class="day-panel" id="dayPanel"></div>
+    </div>
+  </section>
+
+  <!-- FLOW -->
+  <section id="flow" style="padding-top:10px">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">From Start to Finish</p>
+          <h2>പെരുന്നാൾ — <em>തുടക്കം മുതൽ ഒടുക്കം വരെ</em></h2>
+        </div>
+      </div>
+      <div class="flow" id="flowRow"></div>
+    </div>
+  </section>
+
+  <!-- MELAM -->
+  <section id="melam">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">The Main Attraction</p>
+          <h2>മേളങ്ങൾ — <em>എവിടെ, എപ്പോൾ?</em></h2>
+          <p>ബാൻഡ് സെറ്റ്, ചെണ്ടമേളം, നാദസ്വരം, ശിങ്കാരിമേളം… ഓരോ സമൂഹവും കൊണ്ടുവരുന്ന മേളങ്ങൾ എവിടെ എത്തും, എപ്പോൾ എത്തും എന്ന് ഇവിടെ നോക്കാം.</p>
+        </div>
+      </div>
+      <div class="melam-hero reveal">
+        <div>
+          <h3>🎉 പെരുന്നാളിന്റെ ഹൃദയം</h3>
+          <p>ജനുവരി 2-ന് 21 യൂണിറ്റുകളിൽ നിന്ന് അമ്പും വളയും — ബാൻഡ് സെറ്റ്, നാദസ്വരം, ചെണ്ടമേളം അകമ്പടിയോടെ. ജനുവരി 3-ന് ക്ലബ്ബുകളുടെ ബാൻഡ് മേളവും വർണ്ണമഴയും. ദിവസം / തരം തിരഞ്ഞെടുക്കുക, അല്ലെങ്കിൽ ബാൻഡിന്റെയോ യൂണിറ്റിന്റെയോ പേര് തിരയുക.</p>
+        </div>
+        <div class="mtypes" id="mtypes"></div>
+      </div>
+      <div class="filters" id="melamDayF"></div>
+      <div class="filters" id="melamTypeF"></div>
+      <div class="filters"><input id="mSearch" class="search" type="search" placeholder="🔍 ബാൻഡ് / യൂണിറ്റ് പേര് തിരയുക… (ഉദാ: ആമേൻ, Grace)"><span class="lbl" id="mCount"></span></div>
+      <div class="mgrid" id="melamGrid"></div>
+    </div>
+  </section>
+
+  <!-- 3D MAP -->
+  <section id="map">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">3D Kottapadi</p>
+          <h2>കോട്ടപ്പടി <em>3D മാപ്പ്</em> — യൂണിറ്റ് എഴുന്നള്ളിപ്പുകൾ</h2>
+          <p>ജനുവരി 2 — ഏത് സമയത്ത് ഏതൊക്കെ യൂണിറ്റുകൾ വഴിയിലുണ്ട് എന്ന് സമയ സ്ലൈഡർ നീക്കി നോക്കാം. തിളങ്ങുന്ന പൊട്ട് = അമ്പ്, വള എഴുന്നള്ളിപ്പ്. യൂണിറ്റിന്റെ പേരിൽ അമർത്തിയാൽ അവരുടെ വഴി മാത്രം.</p>
+        </div>
+      </div>
+      <div class="schips" id="schips"></div>
+      <div class="map-layout">
+        <div>
+        <div class="timebar">
+          <button id="tPlay" aria-label="പ്ലേ">⏸</button>
+          <div class="tb-mid"><div class="tb-top"><b id="tNow">—</b><span id="tCount"></span></div>
+            <input type="range" id="tSlider" aria-label="സമയം"></div>
+          <button id="tReal" class="tb-real">ഇപ്പോൾ</button>
+        </div>
+        <div class="stage3d" id="mapStage">
+          <div class="ctrl">
+            <button id="mapAll" class="on">എല്ലാ റൂട്ടും</button>
+            <button id="mapNight">🌙 രാത്രി</button>
+            <button id="mapFollow">🎯 പിന്തുടരുക</button>
+          </div>
+          <div class="labels" id="mapLabels"></div>
+          <div class="fallback"><img src="images/aerial-crowd.jpg" alt=""><p>3D കാണാൻ ഈ ബ്രൗസറിൽ WebGL ഇല്ല.</p></div>
+          <span class="hint">⟲ വലിച്ച് തിരിക്കുക · ⤢ സൂം · മാപ്പിലെ വഴികൾ ഏകദേശം</span>
+        </div>
+        </div>
+        <aside class="route-panel" id="routePanel"></aside>
+      </div>
+      <div class="gantt reveal" id="gantt"></div>
+    </div>
+  </section>
+
+  <!-- SAMOOHAM CARDS -->
+  <section id="samooham">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">The Units</p>
+          <h2>ഓരോ <em>യൂണിറ്റും</em></h2>
+          <p>സമയക്രമത്തിൽ — കാർഡിൽ തൊട്ടാൽ തിരിഞ്ഞ് വിവരങ്ങൾ കാണാം: സമയം, ബാൻഡ് / നാദസ്വരം / ചെണ്ട ടീം.</p>
+        </div>
+      </div>
+      <div class="sgrid" id="sgrid"></div>
+    </div>
+  </section>
+
+  <!-- 3D CHURCH -->
+  <section id="church3d">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">3D Church</p>
+          <h2>പള്ളി <em>3D</em> യിൽ</h2>
+          <p>ദീപാലങ്കാരത്തോടെ പള്ളി — ചുറ്റും തിരിച്ച് നോക്കാം. പകൽ / രാത്രി മാറ്റാം.</p>
+        </div>
+      </div>
+      <div class="stage3d" id="churchStage">
+        <div class="ctrl">
+          <button id="chNight" class="on">🌙 ദീപാലങ്കാരം</button>
+          <button id="chDay">☀️ പകൽ</button>
+          <button id="chSpin" class="on">⟳ കറങ്ങട്ടെ</button>
+        </div>
+        <div class="fallback"><img src="images/church-day.jpg" alt=""><p>3D കാണാൻ ഈ ബ്രൗസറിൽ WebGL ഇല്ല.</p></div>
+        <span class="hint">⟲ വലിച്ച് തിരിക്കുക · ⤢ സൂം</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-img reveal"><img src="images/church-day.jpg" alt="സെന്റ് ലാസർ ചർച്ച് കോട്ടപ്പടി"></div>
+      <div class="about-text reveal">
+        <p class="eyebrow">About the Church</p>
+        <h3>സെന്റ് ലാസർ ചർച്ച്, കോട്ടപ്പടി</h3>
+        <p>ഗുരുവായൂരിനടുത്ത് കോട്ടപ്പടിയിൽ തെങ്ങിൻതോപ്പുകൾക്ക് നടുവിൽ തലയുയർത്തി നിൽക്കുന്ന ഈ ദേവാലയം തൃശ്ശൂർ അതിരൂപതയിലെ (സീറോ മലബാർ) ഇടവകയാണ്. വെള്ള നിറത്തിലുള്ള മുഖപ്പും ഇരട്ട ഗോപുരങ്ങളും വലിയ താഴികക്കുടവും പള്ളിയുടെ മുഖമുദ്രയാണ്.</p>
+        <p><b>വിശുദ്ധ ലാസർ</b> — ബഥാന്യയിലെ മർത്തായുടെയും മറിയത്തിന്റെയും സഹോദരൻ, യേശുവിന്റെ പ്രിയ സ്നേഹിതൻ. മരിച്ച് നാലാം ദിവസം യേശു അദ്ദേഹത്തെ കല്ലറയിൽ നിന്ന് ഉയിർപ്പിച്ചു (യോഹന്നാൻ 11).</p>
+        <div class="verse">“ഞാനാണ് പുനരുത്ഥാനവും ജീവനും.”<small>— യോഹന്നാൻ 11:25</small></div>
+        <div class="facts">
+          <div class="fact"><b>തൃശ്ശൂർ അതിരൂപത</b><span>സീറോ മലബാർ</span></div>
+          <div class="fact"><b>കോട്ടപ്പടി</b><span>ഗുരുവായൂരിനടുത്ത്</span></div>
+          <div class="fact"><b>വി. ലാസർ</b><span>ഇടവക മധ്യസ്ഥൻ</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="eyebrow">Gallery</p><h2>തിരുനാൾ <em>കാഴ്ചകൾ</em></h2></div>
+      </div>
+      <div class="gallery" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section id="location" style="padding-top:10px">
+    <div class="wrap">
+      <div class="section-head reveal"><div><p class="eyebrow">Reach Us</p><h2>എങ്ങനെ <em>എത്താം</em></h2></div></div>
+      <div class="loc">
+        <div class="card"><b>📍 പള്ളി</b><p>സെന്റ് ലാസർ ചർച്ച്, കോട്ടപ്പടി, ഗുരുവായൂരിനടുത്ത്, തൃശ്ശൂർ ജില്ല</p><a class="btn primary" id="mapsLink" href="#" target="_blank" rel="noopener">Google Maps-ൽ തുറക്കുക</a></div>
+        <div class="card"><b>🚗 പാർക്കിംഗ്</b><p>എഴുന്നള്ളിപ്പ് സമയത്ത് പ്രധാന റോഡുകളിൽ ഗതാഗത നിയന്ത്രണം ഉണ്ടാകും. വോളണ്ടിയർമാരുടെ നിർദ്ദേശങ്ങൾ പാലിക്കുക.</p></div>
+        <div class="card"><b>📝 ലിസ്റ്റിൽ ചേർക്കാൻ</b><p>ലിസ്റ്റ് പൂർണ്ണമല്ല. നിങ്ങളുടെ പരിപാടി ചേർക്കാൻ വാട്ട്സാപ്പ് ചെയ്യുക: <b id="waNum"></b></p>
+          <div class="btns"><a class="btn primary" id="waLink" href="#" target="_blank" rel="noopener">💬 WhatsApp</a><a class="btn" id="waGroup" href="#" target="_blank" rel="noopener">ഗ്രൂപ്പിൽ ചേരുക</a></div>
+          <p id="updated" style="margin:10px 0 0;font-size:12px"></p></div>
+        <div class="card"><b>📺 ലൈവ്</b><p id="liveText">തിരുകർമ്മങ്ങളുടെ തത്സമയ സംപ്രേഷണ ലിങ്ക് ഉടൻ ചേർക്കും.</p><a class="btn" id="liveLink" href="#" target="_blank" rel="noopener" hidden>ലൈവ് കാണുക</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <!-- SPONSORS (ആദ്യം) -->
+  <section class="sponsors" id="sponsors">
+    <div class="wrap">
+      <p class="sp-title">SPONSORED BY</p>
+      <p class="sp-sub">ഈ തിരുനാളിന് സ്നേഹപൂർവ്വം സഹകരിക്കുന്നവർ</p>
+      <div class="sp-main" id="spMain"></div>
+      <div class="sp-grid" id="spGrid"></div>
+    </div>
+  </section>
+
+  <!-- TEAM (അതിന് ശേഷം) -->
+  <section class="team" id="team">
+    <div class="wrap">
+      <h2 class="team-title"><span>Designed, Developed</span> &amp; <span>Coordinated</span> by</h2>
+      <div class="team-group"><h3>കോർഡിനേഷൻ — സഹകരിച്ചവർ</h3><div class="people" id="coordinators"></div></div>
+      <div class="team-group"><h3>ഡിസൈൻ &amp; ഡെവലപ്മെന്റ്</h3><div class="people" id="designers"></div></div>
+    </div>
+  </section>
+  <div class="foot" id="foot"></div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="x" id="lbClose" aria-label="അടയ്ക്കുക">✕</button>
+  <figure style="margin:0"><img id="lbImg" alt=""><p id="lbCap"></p></figure>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

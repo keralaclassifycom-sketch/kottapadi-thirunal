@@ -244,6 +244,7 @@ window.TEAM = {
   coordinators: [
     { name: "Alvin Christopher", role: "കോർഡിനേറ്റർ", photo: "" },
     { name: "Joel Kochu Lazar", role: "കോർഡിനേറ്റർ", photo: "" },
+    { name: "പേര് 3", role: "കോർഡിനേറ്റർ", photo: "" },
   ],
   designers: [
     { name: "Jopaul MJ", role: "Designed & Developed", photo: "" },

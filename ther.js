@@ -304,6 +304,8 @@
       const key = (l.c || "") + "|" + l.g; if (!secMap.has(key)) secMap.set(key, secMap.size); l.sec = secMap.get(key);
       l.yN = l.y / top; l.keep = l.c === "#f4f8ff" && l.g === 7;            // the white cross never changes
       if (focus) { const dx = l.x - focus[0], dy = l.y - focus[1]; l.rad = Math.hypot(dx, dy) / focus[2]; l.ang = Math.atan2(dy, dx); } else { l.rad = 9; l.ang = 0; }
+      const cy = top * .45; l.angC = Math.atan2(l.y - cy, l.x); l.radC = Math.min(1, Math.hypot(l.x, (l.y - cy) * .8) / (top * .6));
+      l.side = l.x < -.02 ? -1 : l.x > .02 ? 1 : 0; l.rnd = (Math.sin(l.k * 12.9898) * 43758.5453) % 1;
     });
     return { leds, H: top, pal, speed: .8 + R() * .7, wmul: 1.15, nSec: secMap.size, prog: PROG[kind] || PROG.def };
   }
@@ -331,15 +333,14 @@
   let thers = [], cur = 0, mode = 0, modeAuto = true, modeT = 0, focus = -1, focusT = 0;
   // light effects — every ther runs a different one at the same time (ther i shows effect mode + i)
   // each ther's light programme, studied from its video: [move, seconds]
-  const PROG = {
-    8:  [["hold", 2], ["rings", 3.2], ["swap", 3.6], ["rise", 2.4], ["all", 3], ["spin", 3.2], ["chase", 2.4]],   // തേര് 1: rings ripple, wings swap
-    9:  [["hold", 1.6], ["spin", 4], ["all", 3], ["rise", 2.4], ["swap", 3.2], ["rings", 2.8]],                  // തേര് 2: the heart-sun rays spin
-    11: [["hold", 2], ["rings", 3], ["rise", 2.6], ["swap", 3.4], ["all", 3], ["chase", 2.6], ["spin", 3]],   // new തേര് 1
-    12: [["hold", 1.6], ["spin", 3.4], ["swap", 3], ["all", 3.2], ["rise", 2.4], ["rings", 3]],              // new തേര് 2
-    10: [["hold", 1.4], ["all", 4.2], ["rings", 3], ["rise", 2.6], ["swap", 3], ["chase", 2.6], ["all", 2.4]],    // തേര് 3: whole colour scheme steps
-    def: [["hold", 2], ["rise", 2.5], ["spin", 3], ["all", 3]]
-  };
-  const CUE = { hold: "തെളിഞ്ഞ്", rise: "താഴെനിന്ന് മുകളിലേക്ക്", spin: "കറങ്ങൽ", rings: "വളയങ്ങൾ", swap: "ഭാഗം മാറ്റം", all: "മുഴുവൻ നിറം മാറ്റം", chase: "ഓട്ടം" };
+  const ALL = ["rings", "orbit", "rainbow", "rise", "flash", "sweep", "swap", "star", "wave", "spin", "split", "all", "burst", "chase", "fall", "strobe", "breathe", "sparkle"];
+  const order = (seed) => { const a = ALL.slice(), r = rng(seed); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const DUR = { strobe: 1.8, flash: 2.6, spin: 3.4, orbit: 3.6, sweep: 3.2, rings: 3.2, rainbow: 3.6, all: 3, burst: 2.6 };
+  const progOf = seed => [["hold", 1.6]].concat(order(seed).map(m => [m, DUR[m] || 2.8]));
+  const PROG = { 11: progOf(11), 12: progOf(12), 10: progOf(10), 8: progOf(8), 9: progOf(9), def: progOf(1) };
+  const CUE = { hold: "തെളിഞ്ഞ്", rise: "താഴെനിന്ന് മുകളിലേക്ക്", fall: "മുകളിൽനിന്ന് താഴേക്ക്", spin: "കറങ്ങൽ", rings: "വളയങ്ങൾ", swap: "ഭാഗം മാറ്റം",
+    all: "മുഴുവൻ നിറം മാറ്റം", chase: "ഓട്ടം", orbit: "ചുറ്റിയോട്ടം", sweep: "വട്ടം കറക്കം", rainbow: "മഴവില്ല്", flash: "മിന്നൽ", star: "നക്ഷത്രം",
+    wave: "തിരമാല", split: "ഇടത്-വലത്", burst: "നടുവിൽനിന്ന് പൊട്ടൽ", strobe: "ഫ്ലാഷ്", breathe: "ശ്വാസം", sparkle: "വർണ്ണത്തുള്ളി" };
   let progShift = 0;   // the 💡 button jumps every ther to its next move
   function cueAt(t, now) {
     const P = t.d.prog, total = P.reduce((a, c) => a + c[1], 0);
@@ -371,15 +372,29 @@
   function color(t, led, now) {
     const base = led.c || t.d.pal[led.g % t.d.pal.length];
     if (led.keep) return [base, 1];
-    const c = t.cue || cueAt(t, now);
+    const c = t.cue || cueAt(t, now), el = c.el, inC = led.rad <= 1.05;
+    const angD = (a, b) => { const d = Math.abs(((a - b) % 6.283 + 6.283) % 6.283); return Math.min(d, 6.283 - d); };
     switch (c.type) {
-      case "rise": { const lvl = Math.min(1.05, c.u * 1.35); return led.yN <= lvl ? [base, 1] : [base, .12]; }                    // fills from bottom to top
-      case "spin": { if (led.rad > 1.05) return [base, 1]; let d = Math.abs(((led.ang - c.el * 5) % 6.283 + 6.283) % 6.283 - 3.14);   // bright sector turns round
-        return d > 2.5 ? ["#ffffff", 1] : d > 2 ? [COMMON[(Math.floor(c.el * 2)) % 6], 1] : [base, .55]; }
-      case "rings": { if (led.rad > 1.05) return [base, 1]; const step = Math.floor(c.el * 4); return [COMMON[(Math.floor(led.rad * 6) + 6 - step % 6) % 6], 1]; } // colour ripples ring by ring
-      case "swap": { const step = Math.floor(c.el * 1.6), on = led.sec % Math.max(3, Math.min(6, t.d.nSec)) === step % Math.max(3, Math.min(6, t.d.nSec)); return on ? [COMMON[step % 6], 1] : [base, 1]; } // one part changes at a time
-      case "all": { const step = Math.floor(c.el * 2.2); return [COMMON[(led.sec + step) % 6], 1]; }                              // everything steps through colours together
-      case "chase": { const ph = ((led.k - c.el * 40) % 14 + 14) % 14; return [base, ph < 6 ? 1 : .45]; }
+      case "rise": { const lvl = Math.min(1.05, c.u * 1.35); return led.yN <= lvl ? [base, 1] : [base, .12]; }                         // fills from bottom to top
+      case "fall": { const lvl = 1 - Math.min(1.05, c.u * 1.35); return led.yN >= lvl ? [base, 1] : [base, .12]; }                     // pours down from the top
+      case "spin": { if (!inC) { const ph = ((led.k - el * 30) % 14 + 14) % 14; return [base, ph < 7 ? 1 : .5]; }                       // bright sector turns round the circle
+        const d = angD(led.ang, el * 5); return d < .64 ? ["#ffffff", 1] : d < 1.14 ? [COMMON[Math.floor(el * 2) % 6], 1] : [base, .55]; }
+      case "orbit": { const head = el * 6.5, tail = d => d < .25 ? ["#ffffff", 1] : d < 1.2 ? [COMMON[Math.floor(el * 1.5) % 6], 1 - d * .5] : [base, .3];   // a comet runs round and round
+        if (inC) return led.rad > .55 ? tail(angD(led.ang, head)) : [base, .55]; return tail(angD(led.angC, -head * .7)); }
+      case "sweep": { const d = angD(led.angC, el * 3.2); return d < .35 ? ["#ffffff", 1] : d < .9 ? [COMMON[Math.floor(el) % 6], 1] : [base, .35]; }   // a beam turns round the whole ther
+      case "rings": { const r = inC ? led.rad * 6 : 6 + led.radC * 8, step = Math.floor(el * 4); return [COMMON[(Math.floor(r) + 600 - step) % 6], 1]; } // colour ripples ring by ring
+      case "burst": { const r = inC ? led.rad * .5 : .5 + led.radC * .5, front = (el * .9) % 1.15; return Math.abs(r - front) < .12 ? ["#ffffff", 1] : r < front ? [COMMON[Math.floor(el * .9) % 6], 1] : [base, .3]; } // light bursts out from the middle
+      case "swap": { const n = Math.max(3, Math.min(6, t.d.nSec)), step = Math.floor(el * 1.6); return led.sec % n === step % n ? [COMMON[step % 6], 1] : [base, 1]; }   // one part changes at a time
+      case "all": { const step = Math.floor(el * 2.2); return [COMMON[(led.sec + step) % 6], 1]; }                                    // everything steps through colours together
+      case "chase": { const ph = ((led.k - el * 40) % 14 + 14) % 14; return [base, ph < 6 ? 1 : .45]; }                                // lights run along every line
+      case "rainbow": return [HUES[Math.floor(((led.k * 4 + el * 140 + led.y * 300) % 360 + 360) % 360 / 15)], 1];                    // rainbow rolls through
+      case "wave": { const v = .5 + .5 * Math.sin(led.y * 9 - el * 4); return [base, .3 + .7 * v]; }                                   // brightness rolls upward
+      case "flash": { const on = Math.floor(el * 2.5) % 3 === led.g % 3; return [on ? "#ffffff" : base, on ? 1 : .6]; }             // parts flash white in turn
+      case "star": { const tw = Math.sin(led.k * 12.9898 + Math.floor(el * 8) * 78.233) > .72; return [tw ? "#ffffff" : base, tw ? 1 : .6]; } // twinkling stars
+      case "sparkle": { const st = Math.floor(el * 6), h = Math.sin(led.k * 7.13 + st * 3.7); return h > .55 ? [COMMON[(led.k + st) % 6], 1] : [base, .75]; }  // colour drops jump around
+      case "split": { const half = Math.floor(el * 2) % 2 ? 1 : -1; return led.side === 0 || led.side === half ? [base, 1] : [COMMON[Math.floor(el) % 6], .25]; } // left and right take turns
+      case "strobe": return [Math.floor(el * 8) % 2 ? "#ffffff" : base, Math.floor(el * 8) % 2 ? 1 : .2];                             // the whole ther flashes
+      case "breathe": return [base, .25 + .75 * (.5 + .5 * Math.sin(el * 4.2 - 1.57))];                                               // slow fade in and out
       default: return [base, 1];
     }
   }

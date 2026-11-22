@@ -859,3 +859,32 @@ html,body{max-width:100%}
 .am-church3d{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;display:block}
 .th-next{display:none}
 @media (max-width:599px){.th-next{display:inline-flex}}
+
+/* ---- angadi procession ---- */
+.ride-sec{padding-block:18px 30px}
+.rd-stage{position:relative;height:clamp(380px,60vh,580px);border-radius:30px;overflow:hidden;border:1px solid rgba(255,207,74,.3);background:#060a22;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.rd-fx{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (max-width:560px){.rd-stage{height:min(62vh,460px);border-radius:22px}}
+
+.rd-song{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:2;padding:9px 18px;border-radius:999px;border:0;background:var(--gold);color:#2a1600;
+  font-family:var(--ml-display);font-weight:800;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.45);animation:amTip 1.6s ease-in-out infinite;cursor:pointer;transition:opacity .3s}
+.rd-song.hide{opacity:0;pointer-events:none}
+
+.rd-song{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:2;padding:9px 18px;border-radius:999px;border:0;background:var(--gold);color:#2a1600;
+  font-family:var(--ml-display);font-weight:800;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.45);animation:amTip 1.6s ease-in-out infinite;cursor:pointer;transition:opacity .3s}
+.rd-song.hide{opacity:0;pointer-events:none}
+
+/* amittu: the decorated church sketched from the feast-night photo, on a dark black sky */
+.am-stage{background:#010104}
+.am-beams{display:none}
+.am-sketch{position:absolute;left:0;right:0;bottom:0;width:100%;height:74%;z-index:2;pointer-events:none;will-change:transform}
+.am-sketch .k-run{stroke-dashoffset:0}.am-sketch.k-on .k-run{stroke-dashoffset:-3}
+@media (max-width:560px){.am-sketch{height:52%}}
+
+/* amittu: the real church photo is the backdrop; only the people are drawn in front */
+.am-sketch{display:none}
+.am-crowd{height:13%}
+@media (max-width:560px){.am-crowd{height:9%}}
+
+/* amittu: no drawn crowd — just the church top and the fireworks */
+.am-crowd{display:none}

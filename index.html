@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,400..800&family=Baloo+Chettan+2:wght@500;600;700;800&family=Manjari:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=35">
+<link rel="stylesheet" href="style.css?v=40">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -45,6 +45,7 @@
       <a href="#melam">മേളങ്ങൾ</a>
       <a href="#ther">തേര്</a>
       <a href="#rapakal" data-rp-nav>രാപകൽ</a>
+      <a href="#angadi">അങ്ങാടി</a>
       <a href="#map">3D മാപ്പ്</a>
       <a href="#samooham">യൂണിറ്റുകൾ</a>
       <a href="#clubs">ക്ലബ്ബുകൾ</a>
@@ -219,6 +220,7 @@
         <button class="btn" data-am="volley">💥 കൂട്ടമായി</button>
         <button class="btn" data-am="chain">🔁 ഓരോന്നോരോന്നായി</button>
         <button class="btn" data-am="finale">🌈 കലാശം</button>
+        <button class="btn" id="amAuto" aria-label="ഓട്ടോമാറ്റിക് വെടിക്കെട്ട് നിർത്തുക / തുടരുക">⏸ ഓട്ടോ</button>
         <button class="btn am-snd" id="amSnd" aria-pressed="true" aria-label="ശബ്ദം ഓൺ / ഓഫ്">🔊</button>
       </div>
     </div>
@@ -287,6 +289,29 @@
         </header>
         <div class="rp-sessions" id="rpSessions"></div>
         <p class="rp-more" id="rpMore"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERUNNAL ANGADI: feast night in Kottapadi angadi (ride.js) -->
+  <section class="ride-sec" id="angadi">
+    <div class="wrap">
+      <div class="am-head">
+        <p class="eyebrow">Perunnal Angadi · പെരുന്നാൾ അങ്ങാടി</p>
+        <h2>രാത്രിയിലെ <em>കോട്ടപ്പടി അങ്ങാടി</em></h2>
+        <p class="am-help">ബാൻഡ് സെറ്റും ദീപാലങ്കാര തേരും മുത്തുക്കുടകളും പൂത്തിരികളുമായി <b>പെരുന്നാൾ രാവിലെ</b> കോട്ടപ്പടി അങ്ങാടി</p>
+      </div>
+      <div class="rd-stage" id="rdStage">
+        <canvas class="rd-fx" id="rdFx" role="img" aria-label="പെരുന്നാൾ രാവിലെ കോട്ടപ്പടി അങ്ങാടി: ബാൻഡ് സെറ്റ്, തേര്, മുത്തുക്കുടകൾ, ദീപാലങ്കാരം"></canvas>
+        <button class="rd-song" id="rdSong">🎵 ബാൻഡ് പാട്ട് കേൾക്കാം</button>
+      </div>
+      <div class="am-ctrl">
+        <button class="btn primary" id="rdPlay" data-rd="play">⏸ നിർത്തുക</button>
+        <button class="btn" data-rd="ther">🎆 തേര് മാറ്റുക</button>
+        <button class="btn" data-rd="balloon">🎈 ബലൂൺ</button>
+        <button class="btn" data-rd="boom">🧨 പടക്കം</button>
+        <button class="btn" data-rd="speed">🛵 സാധാരണ</button>
+        <button class="btn" id="rdSnd" data-rd="snd">🔇 പാട്ട്</button>
       </div>
     </div>
   </section>
@@ -762,8 +787,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="data.js?v=18"></script>
 <script src="data-liturgy.js?v=18"></script>
-<script src="app.js?v=28"></script>
-<script src="amittu.js?v=14"></script>
-<script src="ther.js?v=33"></script>
+<script src="app.js?v=32"></script>
+<script src="amittu.js?v=23"></script>
+<script src="ther.js?v=38"></script>
+<script src="ride.js?v=24"></script>
 </body>
 </html>

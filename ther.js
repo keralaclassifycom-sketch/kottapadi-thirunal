@@ -11,8 +11,8 @@
   const judgeEl = document.getElementById("thJudge"), sndBtn = document.getElementById("thSnd");
 
 
-  // just three thers, each copied from a real one: തേര് 1 Kunnathangadi · തേര് 2 LED-frames ther · തേര് 3 Kallettumkara
-  const KINDS = [8, 9, 10], COUNT = KINDS.length;
+  // just three thers, each copied from a real one: തേര് 1 domed arch + lotus flames (photo) · തേര് 2 spiral wheels (photo) · തേര് 3 Kallettumkara
+  const KINDS = [11, 12, 10], COUNT = KINDS.length;
   const KPAL = { 0: ["#ff8a1f", "#ffd23f", "#3d8bff", "#ff3fb4"], 2: ["#8a5cff", "#3dff7a", "#ff3348", "#ffd23f"], 3: ["#3dff7a", "#2ec4ff", "#ffd23f", "#ff3fb4"] };
 
   /* ---------- seeded random so a samooham always gets the same ther ---------- */
@@ -53,50 +53,113 @@
     const skirt = w => { const P = [[-w, 0], [w, 0], [w, .07], [-w, .07]]; fillPoly(P, 8, .035); line(-w, .075, w, .075, 2); };
     let top = 1, focus = null;
 
-    if (kind === 10) {                   // തേര് 3 — modelled on the Kallettumkara perunnal ther (three arches + lattice spire), drawn airy
+    if (kind === 11) {                   // തേര് 1 — domed arch with lotus-flame wings (from the photo)
       const C = c => { curC = c; };
-      const WHITE = "#f4f8ff", CYAN = "#3df2ff", PINK = "#ff5fd2", PURPLE = "#a46bff", SUN = "#ffb02e", BLUE = "#3d7bff";
-      // outer frame: rectangle with big rounded top corners (a single clean outline)
-      const frame = s => { const P = [[-.62 * s, .05]], r = .26 * s; P.push([-.62 * s, .72 * s - r + .02]);
-        for (let i = 0; i <= 10; i++) { const a = Math.PI - Math.PI / 2 * i / 10; P.push([-.62 * s + r + Math.cos(a) * r, .72 * s - r + .02 + Math.sin(a) * r]); }
-        for (let i = 0; i <= 10; i++) { const a = Math.PI / 2 - Math.PI / 2 * i / 10; P.push([.62 * s - r + Math.cos(a) * r, .72 * s - r + .02 + Math.sin(a) * r]); }
-        P.push([.62 * s, .05]); return P; };
-      const F = frame(1);
-      C(WHITE); path(F, 1);
-      // the body stays mostly black: only a sparse grid of small dots between the shapes
-      for (let y = .1, r = 0; y < .72; y += .085, r++) for (let x = -.56 + (r % 2) * .0425; x < .57; x += .085) {
-        if (!inPoly(x, y, frame(.94))) continue;
-        if (y < .36 && (Math.abs(x) < .15 || (Math.abs(x) > .3 && Math.abs(x) < .58))) continue;   // keep clear round the picture panels
-        if (y > .37 && [[-.36, .48, .25], [0, .52, .3], [.36, .48, .25]].some(([cx, cy, R]) => Math.hypot(x - cx, y - cy) < R + .02 && y > cy - .02)) continue;
-        C(r % 2 ? PINK : CYAN); add(x, y, 8); }
-      // three arches: clean rings only, a sun in each
-      [[-.36, .48, .23], [0, .52, .28], [.36, .48, .23]].forEach(([cx, cy, R]) => {
-        C(WHITE); path(ellPts(cx, cy, R, R, 30, 0, Math.PI), 1, false);
-        C(PINK); path(ellPts(cx, cy, R * .78, R * .78, 24, 0, Math.PI), 4, false);
-        C(CYAN); path(ellPts(cx, cy, R * .56, R * .56, 18, 0, Math.PI), 6, false);
-        C(SUN); ell(cx, cy + .03, .04, .04, 7); for (let i = 0; i < 7; i++) { const a = Math.PI * (i + .5) / 7; line(cx + Math.cos(a) * .06, cy + .03 + Math.sin(a) * .06, cx + Math.cos(a) * .09, cy + .03 + Math.sin(a) * .09, 7, .022); }
+      const WHITE = "#f4f8ff", BLUE = "#3d6bff", PURPLE = "#a46bff", PINK = "#ff4fd8", GREEN = "#3dff7a", YEL = "#ffd23f", ORG = "#ff8a1f", RED = "#ff3348";
+      // base band: red zigzag between white lines, green dots
+      C(WHITE); line(-.62, .012, .62, .012, 2); line(-.62, .072, .62, .072, 2);
+      C(RED); for (let x = -.6; x <= .6; x += .028) add(x, .025 + Math.abs(((x / .07) % 1 + 1) % 1 - .5) * .06, 9);
+      C(GREEN); for (let x = -.58; x <= .6; x += .07) add(x, .042, 10);
+      // lotus-flame wings: three tall petals each side, leaning out, striped in pink / purple / green / blue
+      for (const sd of [-1, 1]) for (let k = 0; k < 3; k++) {
+        const bx = sd * (.27 + k * .11), h = .6 - k * .13, P = [];
+        for (let i = 0; i <= 20; i++) { const tt = i / 20; P.push([bx + sd * (Math.sin(tt * Math.PI) * .07 + tt * tt * .1), .09 + tt * h]); }
+        for (let i = 20; i >= 0; i--) { const tt = i / 20; P.push([bx + sd * (tt * tt * .1 - Math.sin(tt * Math.PI) * .015) - sd * .045, .09 + tt * h]); }
+        for (let y = .1, r = 0; y < .09 + h; y += .028, r++) for (let x = -.64; x < .64; x += .028) if (inPoly(x, y, P)) { C([PINK, PURPLE, GREEN, BLUE][(r + k) % 4]); add(x, y, 9 + k); }
+        C(WHITE); path(P, 1);
+      }
+      for (const sd of [-1, 1]) {   // round flower + green leaf at the foot of the wings
+        const fx = sd * .35, fy = .19; C(PINK); ell(fx, fy, .085, .085, 4); C(YEL);
+        for (let i = 0; i < 10; i++) { const a = i / 10 * 6.283; line(fx + Math.cos(a) * .03, fy + Math.sin(a) * .03, fx + Math.cos(a) * .07, fy + Math.sin(a) * .07, 6, .02); }
+        C(ORG); ell(fx, fy, .022, .022, 7); C(GREEN); path(ellPts(sd * .46, .09, .08, .035, 14, 0, Math.PI), 4, false);
+      }
+      // central arch: green / blue hex columns, a ribbed yellow-orange dome, a bead wreath round the saint
+      const AR = s => { const P = [[-.22 * s, .08], [-.22 * s, .55]]; for (let i = 0; i <= 20; i++) { const a = Math.PI - Math.PI * i / 20; P.push([Math.cos(a) * .22 * s, .55 + Math.sin(a) * .22 * s]); } P.push([.22 * s, .08]); return P; };
+      const inner = AR(.78);
+      for (let y = .09, r = 0; y < .78; y += .03, r++) for (let x = -.24 + (r % 2) * .015; x < .24; x += .03) if (inPoly(x, y, AR(1)) && !inPoly(x, y, inner)) { C(r % 3 ? GREEN : BLUE); add(x, y, 9); }
+      C(PURPLE); path(AR(1.07), 1); C(WHITE); path(AR(1), 2);
+      for (let i = 0; i <= 12; i++) { const a = Math.PI * i / 12; C(i % 2 ? YEL : ORG); line(Math.cos(a) * .03, .55 + Math.sin(a) * .03, Math.cos(a) * .165, .55 + Math.sin(a) * .165, 6, .022); }
+      C(WHITE); path(ellPts(0, .55, .172, .172, 18, 0, Math.PI), 2, false); line(-.17, .55, .17, .55, 2);
+      for (let y = .11, r = 0; y < .53; y += .036, r++) for (let x = -.15 + (r % 2) * .018; x < .16; x += .036) if (Math.hypot(x, y - .31) > .145) { C(GREEN); add(x, y, 10); }
+      for (let i = 0; i < 16; i++) { const a = i / 16 * 6.283; C(i % 2 ? PINK : GREEN); ell(Math.cos(a) * .115, .31 + Math.sin(a) * .115, .016, .016, 4); }
+      C("#d9e6ff"); fillPoly(ellPts(0, .31, .065, .085, 18), 13, .024); C(WHITE); ell(0, .31, .07, .09, 7);
+      // crown of points above the arch, a central diamond, the flower medallion and the cross
+      const CR = [[-.3, .76], [-.3, .84], [-.24, .82], [-.2, .94], [-.12, .87], [0, 1.0], [.12, .87], [.2, .94], [.24, .82], [.3, .84], [.3, .76]];
+      for (let y = .77, r = 0; y < 1; y += .028, r++) for (let x = -.3; x < .3; x += .028) if (inPoly(x, y, CR) && Math.abs(x) + Math.abs(y - .87) > .1) { C((Math.round(x / .028) + r) % 2 ? RED : GREEN); add(x, y, 11); }
+      C(BLUE); path(CR, 1); path([[0, .77], [.09, .87], [0, .98], [-.09, .87]], 4); C(WHITE); ell(0, .87, .025, .025, 7);
+      C(PURPLE); ell(0, 1.06, .06, .06, 1); C(PINK); star(0, 1.06, .04, 6); C(GREEN); line(-.03, 1.13, .03, 1.13, 6);
+      C("#ffb070"); line(0, 1.14, 0, 1.34, 7); line(-.07, 1.27, .07, 1.27, 7);
+      curC = null; top = 1.34; focus = [0, .31, .14];
+    } else if (kind === 12) {            // തേര് 2 — spiral wheels, rainbow arch, crowned dome (from the photo)
+      const C = c => { curC = c; };
+      const WHITE = "#f4f8ff", BLUE = "#3d6bff", PINK = "#ff4fd8", GREEN = "#3dff7a", YEL = "#ffd23f", ORG = "#ff8a1f", RED = "#ff3348", LIME = "#c6ff3d";
+      C(GREEN); for (let x = -.6; x <= .6; x += .028) { add(x, .02, 9); add(x, .05, 9); }
+      // spiral wheels stacked up each side
+      const WHEELS = [[.47, .6, .14, [BLUE, WHITE, "#7c9cff", PINK]], [.51, .36, .15, [RED, PINK, "#ff9a9a", WHITE]], [.4, .16, .12, [GREEN, LIME, WHITE, PINK]]];
+      for (const sd of [-1, 1]) for (const [wx, wy, R, cols] of WHEELS) {
+        for (let k = 0, r = R; r > .025; r -= .028, k++) { C(cols[k % cols.length]); ell(sd * wx, wy, r, r, 4 + (k % 3)); }
+        C(PINK); ell(sd * wx, wy, .018, .018, 7);
+      }
+      // green vines with pink lilies between the wheels and the tower
+      for (const sd of [-1, 1]) { C(GREEN); const vp = []; for (let i = 0; i <= 30; i++) { const tt = i / 30; vp.push([sd * (.24 + .045 * Math.sin(tt * 9)), .08 + tt * .5]); } path(vp, 6, false);
+        C(PINK); star(sd * .29, .5, .035, 5); star(sd * .27, .28, .03, 5); }
+      // tower: rainbow arch with the chalice, diamond band, yellow pillars + green swirl, striped crown, scalloped dome
+      C(WHITE); path([[-.2, .06], [.2, .06], [.2, .46], [-.2, .46]], 1);
+      [[.17, PINK], [.14, ORG], [.11, YEL]].forEach(([r, c]) => { C(c); path(ellPts(0, .1, r, r * 1.3, 18, 0, Math.PI), 4, false); });
+      C("#ffe9c4"); fillPoly(ellPts(0, .1, .07, .11, 14, 0, Math.PI).concat([[-.07, .1]]), 13, .024);
+      for (let y = .37, r = 0; y < .46; y += .026, r++) for (let x = -.19; x < .2; x += .026) { C((Math.round(x / .026) + r) % 2 ? PINK : WHITE); add(x, y, 10); }
+      C(WHITE); path([[-.15, .46], [.15, .46], [.15, .62], [-.15, .62]], 2);
+      C(YEL); for (const px of [-.11, .11]) for (let y = .48; y < .61; y += .026) { add(px - .015, y, 11); add(px + .015, y, 11); }
+      C(GREEN); const sw = []; for (let i = 0; i <= 24; i++) { const a = i / 24 * 9, r = .008 + i * .0024; sw.push([Math.cos(a) * r, .54 + Math.sin(a) * r]); } sw.forEach(q => add(q[0], q[1], 12));
+      const CRW = [[-.2, .62], [.2, .62], [.26, .7], [-.26, .7]];
+      for (let y = .63, r = 0; y < .7; y += .024, r++) for (let x = -.26; x < .26; x += .026) if (inPoly(x, y, CRW)) { C(r % 2 ? WHITE : RED); add(x, y, 9); }
+      C(BLUE); path(CRW, 1);
+      const DM = []; for (let i = 0; i <= 24; i++) { const a = Math.PI * i / 24; DM.push([Math.cos(a) * .21, .7 + Math.sin(a) * .2 + Math.abs(Math.sin(a * 6)) * .02]); }
+      for (let y = .71, r = 0; y < .92; y += .026, r++) for (let x = -.21; x < .21; x += .026) if (inPoly(x, y, DM.concat([[-.21, .7], [.21, .7]])) && Math.hypot(x, y - .79) > .05) { C((r + Math.round(x / .026)) % 3 ? GREEN : RED); add(x, y, 10); }
+      C(WHITE); path(DM, 1, false); C(ORG); star(0, .79, .045, 8);
+      C(WHITE); line(0, .91, 0, 1.12, 7); line(-.065, 1.05, .065, 1.05, 7);
+      curC = null; top = 1.12; focus = [0, .14, .18];
+    } else if (kind === 10) {                   // തേര് 3 — Kallettumkara ther, redrawn from the photo (sun arches, ray spire, starburst panels)
+      const C = c => { curC = c; };
+      const WHITE = "#f4f8ff", CYAN = "#3df2ff", PINK = "#ff4fd8", PURPLE = "#a46bff", YEL = "#ffd23f", GOLD = "#ffb02e", BLUE = "#3d7bff", GREEN = "#3dff7a";
+      // base: rows of coloured stripes
+      const SC = [PINK, CYAN, GREEN, YEL, WHITE];
+      for (const [y, o] of [[.02, 0], [.05, 2], [.08, 4]]) for (let x = -.62; x <= .62; x += .026) { C(SC[(Math.floor((x + .62) / .08) + o) % SC.length]); add(x, y, 9); }
+      // frame with rounded top corners; a band of yellow squiggle pattern inside the white outline
+      const frame = s => { const P = [[-.62 * s, .11]], r = .26 * s; P.push([-.62 * s, .74 * s - r]);
+        for (let i = 0; i <= 10; i++) { const a = Math.PI - Math.PI / 2 * i / 10; P.push([-.62 * s + r + Math.cos(a) * r, .74 * s - r + Math.sin(a) * r]); }
+        for (let i = 0; i <= 10; i++) { const a = Math.PI / 2 - Math.PI / 2 * i / 10; P.push([.62 * s - r + Math.cos(a) * r, .74 * s - r + Math.sin(a) * r]); }
+        P.push([.62 * s, .11]); return P; };
+      const F = frame(1), Fi = frame(.88);
+      for (let y = .12; y < .76; y += .026) for (let x = -.62; x < .62; x += .026) if (inPoly(x, y, F) && !inPoly(x, y, Fi) && Math.sin(x * 70) * Math.cos(y * 70) > -.25) { C(Math.sin(x * 30 + y * 20) > 0 ? YEL : GOLD); add(x, y, 10); }
+      C(WHITE); path(F, 1); path(Fi, 2);
+      // three sun arches: yellow half-disc, fan of rays, white rim, gold dots outside
+      [[-.31, .48, .17], [0, .5, .2], [.31, .48, .17]].forEach(([cx, cy, R], ai) => {
+        for (let i = 0; i <= 14; i++) { const a = Math.PI * i / 14; C([PINK, CYAN, BLUE, WHITE][(i + ai) % 4]); line(cx + Math.cos(a) * R * .4, cy + Math.sin(a) * R * .4, cx + Math.cos(a) * R * .92, cy + Math.sin(a) * R * .92, 12, .026); }
+        C(YEL); fillPoly(ellPts(cx, cy, R * .32, R * .32, 12, 0, Math.PI).concat([[cx - R * .32, cy]]), 11, .022);
+        C(WHITE); path(ellPts(cx, cy, R, R, 22, 0, Math.PI), 1, false);
+        C(GOLD); path(ellPts(cx, cy, R * 1.12, R * 1.12, 18, 0, Math.PI), 3, false);
       });
-      C(WHITE); line(-.6, .46, .6, .46, 2); C(PINK); line(-.6, .4, .6, .4, 3);
-      // round medallions instead of square panels: swirls at the sides, the saint in an oval window in the middle
-      for (const sd of [-1, 1]) { const cx = sd * .44, cy = .22;
-        C(WHITE); ell(cx, cy, .12, .12, 1); C(PINK); ell(cx, cy, .095, .095, 4);
-        for (let i = 0; i < 3; i++) { C(i % 2 ? "#ff8a1f" : "#2f6bff"); const pts = []; for (let t = 0; t <= 1; t += .07) { const a = t * 5 + i * 2.1, r = .012 + t * .07; pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } pts.forEach(q => add(q[0], q[1], 12)); }
-        C(SUN); ell(cx, cy, .018, .018, 7); }
-      C(WHITE); ell(0, .21, .15, .15, 1); C(CYAN); ell(0, .21, .125, .125, 6);
-      C("#ffe9c4"); fillPoly(ellPts(0, .21, .075, .1, 22), 13, .034); C(SUN); ell(0, .21, .085, .11, 4); ell(0, .26, .025, .028, 7);
-      for (let x = -.52; x <= .53; x += .13) if (Math.abs(x) > .2 || Math.abs(x) < .01) { C(Math.round(x / .13) % 2 ? PINK : CYAN); ell(x, .06, .025, .025, 3); }
-      C(BLUE); for (let x = -.5; x <= .5; x += .04) add(x, .025, 2);
-      // tall stepped spire: outline + a few diamond lattice lines (not a solid block)
-      const SP = [[-.22, .72], [.22, .72], [.16, .86], [.12, .98], [.08, 1.08], [.04, 1.14], [-.04, 1.14], [-.08, 1.08], [-.12, .98], [-.16, .86]];
-      C(WHITE); path(SP, 1);
-      for (let k = -4; k <= 4; k++) for (const dir of [1, -1]) {                    // lines x ± y = const, clipped to the spire
-        const pts = []; for (let t = 0; t <= 1; t += .02) { const y = .74 + t * .4, x = dir * (y - .74) + k * .07 - dir * .2; if (inPoly(x, y, SP) && Math.abs(x) > .02) pts.push([x, y]); }
-        C(dir > 0 ? PINK : CYAN); for (let i = 0; i < pts.length; i += 2) add(pts[i][0], pts[i][1], 10); }
-      C(WHITE); line(0, .72, 0, 1.14, 7);
-      for (const sd of [-1, 1]) { C(PURPLE); path([[sd * .17, .92], [sd * .25, .96], [sd * .17, 1.0], [sd * .13, .96]], 3); }
-      C(CYAN); path([[-.05, 1.14], [.05, 1.14], [0, 1.2]], 4);
-      C(WHITE); line(0, 1.2, 0, 1.4, 7); line(-.08, 1.33, .08, 1.33, 7);
-      curC = null; top = 1.4; focus = [0, .5, .36];
+      C(PINK); for (let x = -.5; x <= .5; x += .026) add(x, .47, 3); C(CYAN); for (let x = -.49; x <= .5; x += .026) add(x, .445, 6);
+      // doorway with the saint, a ray pediment above it, diamond-chain pillars beside it
+      C("#ffe9c4"); fillPoly([[-.06, .14], [.06, .14], [.06, .28], [-.06, .28]], 13, .03); C(WHITE); path([[-.09, .12], [.09, .12], [.09, .33], [-.09, .33]], 2);
+      const T = [[-.13, .34], [.13, .34], [0, .44]]; for (let i = 0; i <= 8; i++) { const tx = -.12 + .24 * i / 8; C(i % 2 ? PINK : CYAN); line(0, .345, tx * .9, .345 + (.44 - .345) * (1 - Math.abs(tx) / .13) * .9, 4, .022); }
+      C(WHITE); path(T, 1);
+      for (const sd of [-1, 1]) { C(CYAN); line(sd * .2, .12, sd * .2, .42, 1); line(sd * .12, .12, sd * .12, .42, 1);
+        for (let y = .15; y < .41; y += .06) { C((Math.round(y / .06)) % 2 ? YEL : PINK); path([[sd * .16, y - .025], [sd * .185, y], [sd * .16, y + .025], [sd * .135, y]], 4); } }
+      // side panels: purple / white starburst circles on dark squares
+      for (const sd of [-1, 1]) { const cx = sd * .41, cy = .24;
+        C("#5a4a8a"); path([[cx - .1, cy - .1], [cx + .1, cy - .1], [cx + .1, cy + .1], [cx - .1, cy + .1]], 2);
+        for (let i = 0; i < 22; i++) { const a = i / 22 * 6.283, L = .04 + (i % 3) * .015; C(i % 2 ? PURPLE : WHITE); line(cx + Math.cos(a) * .015, cy + Math.sin(a) * .015, cx + Math.cos(a) * L, cy + Math.sin(a) * L, 12, .02); } }
+      // spire: blue / white ribs rising to the top, beaded edges, a fan canopy, the cross
+      const apex = [0, 1.12];
+      for (let k = -3; k <= 3; k++) { const bx = k * .06; C(k % 2 ? BLUE : WHITE); line(bx, .75, apex[0] + bx * .12, apex[1] - .02, 11, .024); }
+      for (let y = .8; y < 1.05; y += .06) { const w = .2 * (1 - (y - .75) / .4); for (let x = -w + .03; x < w; x += .06) { C(Math.round((x + y) / .06) % 2 ? PINK : YEL); add(x, y + .015, 10); } }
+      for (const sd of [-1, 1]) for (let i = 0; i <= 7; i++) { const tt = i / 7, x = sd * (.22 - .19 * tt), y = .75 + tt * .36; C(CYAN); ell(x + sd * .015, y, .016, .016, 4); }
+      C(WHITE); line(-.22, .75, 0, 1.12, 1); line(.22, .75, 0, 1.12, 1);
+      for (let i = 0; i <= 8; i++) { const a = Math.PI * (.15 + .7 * i / 8); C([PINK, YEL, CYAN][i % 3]); line(0, 1.12, Math.cos(a) * .08, 1.12 + Math.sin(a) * .05, 7, .02); }
+      C(WHITE); line(0, 1.17, 0, 1.37, 7); line(-.07, 1.3, .07, 1.3, 7);
+      curC = null; top = 1.37; focus = [0, .5, .42];
     } else if (kind === 9) {                    // തേര് 2 — modelled on the "LED frames" ther (heart sun, angels, triangles)
       const C = c => { curC = c; };
       const BLUE = "#3d6bff", PINK = "#ff3fd2", WHITE = "#f4f8ff", CYAN = "#3df2ff";
@@ -271,6 +334,8 @@
   const PROG = {
     8:  [["hold", 2], ["rings", 3.2], ["swap", 3.6], ["rise", 2.4], ["all", 3], ["spin", 3.2], ["chase", 2.4]],   // തേര് 1: rings ripple, wings swap
     9:  [["hold", 1.6], ["spin", 4], ["all", 3], ["rise", 2.4], ["swap", 3.2], ["rings", 2.8]],                  // തേര് 2: the heart-sun rays spin
+    11: [["hold", 2], ["rings", 3], ["rise", 2.6], ["swap", 3.4], ["all", 3], ["chase", 2.6], ["spin", 3]],   // new തേര് 1
+    12: [["hold", 1.6], ["spin", 3.4], ["swap", 3], ["all", 3.2], ["rise", 2.4], ["rings", 3]],              // new തേര് 2
     10: [["hold", 1.4], ["all", 4.2], ["rings", 3], ["rise", 2.6], ["swap", 3], ["chase", 2.6], ["all", 2.4]],    // തേര് 3: whole colour scheme steps
     def: [["hold", 2], ["rise", 2.5], ["spin", 3], ["all", 3]]
   };
@@ -414,13 +479,13 @@
 
   /* ---------- crowd sound (recorded at the Kottapadi ther malsaram), one sound on the page at a time ---------- */
   const amb = new Audio("audio/ther-crowd.mp3?v=2"); amb.loop = true; amb.preload = "none"; amb.volume = 0;
-  let soundOn = true, ambWanted = false, fadeT = null;
+  let soundOn = true, ambWanted = false, fadeT = null, heard = false;
   function fadeTo(v, ms = 900) {
     clearInterval(fadeT); const v0 = amb.volume, t0 = performance.now();
     fadeT = setInterval(() => { const k = Math.min(1, (performance.now() - t0) / ms); try { amb.volume = v0 + (v - v0) * k; } catch (_) {} if (k >= 1) { clearInterval(fadeT); if (v === 0) amb.pause(); } }, 40);
   }
   function startAmb() {
-    if (!soundOn) return; ambWanted = true;
+    if (!soundOn || !heard) return; ambWanted = true;
     window.dispatchEvent(new CustomEvent("kp:audio", { detail: "ther" }));
     const p = amb.play(); if (p && p.catch) p.catch(() => {}); fadeTo(.55);
   }
@@ -461,6 +526,7 @@
     showJudge();
   });
 
+  window.KP_THER_DESIGN = design;   // shared with the angadi procession (ride.js)
   /* ---------- start when scrolled into view; stop drawing and sound when away ---------- */
   size();
   if (window.ResizeObserver) new ResizeObserver(() => size()).observe(stage);
@@ -469,6 +535,7 @@
     if (visible) { if (!started) { started = true; procession(); } else kick(); }
     else if (ambWanted) stopAmb();
   }), { threshold: .2 }).observe(stage);
+  new IntersectionObserver(es => es.forEach(e => { heard = e.isIntersecting; if (heard && soundOn) startAmb(); else if (!heard && ambWanted) stopAmb(); }), { rootMargin: "-40% 0px -40% 0px" }).observe(stage);
 
   /* tap a ther to spotlight it (and start the crowd sound) */
   stage.addEventListener("click", e => {

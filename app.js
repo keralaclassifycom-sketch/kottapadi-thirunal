@@ -615,6 +615,14 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
 
     function updateBot() { bot.classList.toggle("away", stageVisible); }
     new IntersectionObserver(es => { stageVisible = es[0].isIntersecting; updateBot(); }, { threshold: .3 }).observe(bigBtn);
+    // each section plays on its own: the band song starts when the band stage scrolls into view and stops when it leaves
+    let autoOn = false, autoWant = true;
+    new IntersectionObserver(es => {
+      const vis = es[0].isIntersecting;
+      if (vis && autoWant && !playing) { autoOn = true; mode === "synth" ? (playing = true, startSynth(), setUI()) : playSong(cur); }
+      else if (!vis) { if (playing) pause(); autoOn = false; autoWant = true; }
+    }, { rootMargin: "-40% 0px -40% 0px" }).observe(stageSec.querySelector(".bandstage"));
+    [bigBtn, $("#bsPlay")].forEach(b => b.addEventListener("click", () => { if (!playing) autoWant = false; }));   // a manual pause sticks while you stay here
     setTimeout(() => bubble.classList.add("hide"), 9000);
     renderList(); setTitle();
   }
@@ -808,7 +816,7 @@ function palm(scene, x, z, h, mat) {
    floodlit for the night, with LEDs running along its edges — the fireworks get the sky ---------- */
 {
   const host = $("#amStage");
-  if (host) {
+  if (host && host.dataset.church === "3d") {   // replaced by the photo sketch (amittu.js); set data-church="3d" to bring it back
     const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.setClearColor(0x000000, 0);
     r.domElement.className = "am-church3d"; r.domElement.setAttribute("aria-hidden", "true");
@@ -843,6 +851,22 @@ function palm(scene, x, z, h, mat) {
     const col = new Float32Array(pts.length); geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
     scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ size: 1.3, map: dotTex, vertexColors: true, transparent: true, depthWrite: false })));
     const n = grp.length;
+    // colours by part, like the real Kottapadi feast decoration: towers yellow/purple/green, front gable purple/blue,
+    // columns cyan, domes orange/gold, nave roofs green, side aisles pink/red, crosses white
+    const HC = h => new THREE.Color(h), P2 = [];
+    for (let i = 0; i < n; i++) {
+      const x = pts[i * 3], y = pts[i * 3 + 1], z = pts[i * 3 + 2], ax = Math.abs(x);
+      let pair;
+      if (y > 18.6) pair = ["#ffffff", "#fff3c8"];                                                   // crosses
+      else if (z > 9 && ax > 5.6 && ax < 10) pair = y > 16 ? ["#ff8a1f", "#ffd23f"] : [["#ffd23f", "#a46bff", "#3dff7a"][Math.floor(y / 1.3) % 3], "#a46bff"];   // towers
+      else if (z < -3 && y > 10.5) pair = ["#ff8a1f", "#ffd23f"];                                    // big dome
+      else if (z > 14) pair = ["#3df2ff", "#ffffff"];                                                // front columns / porch
+      else if (z > 11.4 && y > 11.2) pair = ["#8a5cff", "#3d7bff"];                                  // front gable
+      else if (z > 11.4) pair = ["#3d7bff", "#ffffff"];                                              // facade
+      else if (y > 7.5) pair = ["#3dff7a", "#ffd23f"];                                               // nave roof
+      else pair = ["#ff3fb4", "#ff3348"];                                                            // side aisles
+      P2.push([HC(pair[0]), HC(pair[1])]);
+    }
 
     // fixed three-quarter view; only the top of the church (roof, towers, domes, crosses) rises into the bottom of the frame
     const fit = () => {
@@ -860,10 +884,10 @@ function palm(scene, x, z, h, mat) {
       const t = clock.getElapsedTime(), th = .62 + Math.sin(t * .15) * .05, ph = 1.5;
       cam.position.set(view.d * Math.sin(ph) * Math.sin(th), view.ty + view.d * Math.cos(ph), view.d * Math.sin(ph) * Math.cos(th) - 2);
       cam.lookAt(0, view.ty, -2);
-      // running LEDs: a bright pulse chases along every edge; each part changes colour every few seconds
+      // running LEDs: a bright pulse chases along every edge; each part swaps between its two colours every few seconds
       const shift = Math.floor(t / 4);
       for (let i = 0; i < n; i++) {
-        const C = PALETTE[(grp[i] + shift) % PALETTE.length], run = ((i - t * 22) % 9 + 9) % 9, k = run < 3 ? 1.15 : .45;
+        const C = P2[i][(grp[i] + shift) % 2], run = ((i - t * 22) % 9 + 9) % 9, k = run < 3 ? 1.15 : .55;
         col[i * 3] = C.r * k; col[i * 3 + 1] = C.g * k; col[i * 3 + 2] = C.b * k;
       }
       geo.attributes.color.needsUpdate = true;

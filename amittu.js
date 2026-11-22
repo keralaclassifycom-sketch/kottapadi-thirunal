@@ -19,12 +19,27 @@
     // night sky painted once; each frame a thin layer of it is laid over the fireworks → trails without haze
     sky.width = fx.width; sky.height = fx.height;
     const k = sky.getContext("2d"); k.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const gr = k.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "#050c30"); gr.addColorStop(.55, "#0c1a55"); gr.addColorStop(.85, "#1c2270"); gr.addColorStop(1, "#3a2660");
+    const gr = k.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "#010104"); gr.addColorStop(.7, "#040309"); gr.addColorStop(1, "#0a0812");
     k.fillStyle = gr; k.fillRect(0, 0, W, H);
-    for (let i = 0; i < 70; i++) { k.globalAlpha = .2 + Math.random() * .6; k.fillStyle = "#fff"; k.fillRect(Math.random() * W, Math.random() * H * .45, Math.random() < .2 ? 1.6 : 1, 1); }
     k.globalAlpha = 1;
+    // the real feast-night photo of St. Lazarus Church — only its top (towers, domes, the lit gable) rising at the
+    // bottom of the frame, darkened; the rest of the sky is left to the fireworks
+    if (churchPhoto.complete && churchPhoto.naturalWidth) {
+      const sx = 520, sy = 232, sw = churchPhoto.naturalWidth - 520, sh = 190;   // photo crop: main tower, gable, front tower (black sky round it)
+      const dh = H * (W < 600 ? .36 : .4), sc = dh / sh, dw = sw * sc, dx = W / 2 - (705 - sx) * sc;   // church centred in the frame
+      k.drawImage(churchPhoto, sx, sy, sw, sh, dx, H - dh, dw, dh);
+      k.fillStyle = "rgba(0,0,0,.42)"; k.fillRect(dx, H - dh, dw, dh);
+      // feather the photo into the black sky on every side, so no box edge shows
+      const edge = (x0, y0, x1, y1, rx, ry, rw, rh) => { const e = k.createLinearGradient(x0, y0, x1, y1); e.addColorStop(0, "#010104"); e.addColorStop(1, "rgba(1,1,4,0)"); k.fillStyle = e; k.fillRect(rx, ry, rw, rh); };
+      const top = H - dh, fx = dw * .2;
+      edge(0, top, 0, top + dh * .45, dx, top, dw, dh * .45);              // top
+      edge(dx, 0, dx + fx, 0, dx, top, fx, dh);                              // left
+      edge(dx + dw, 0, dx + dw - fx, 0, dx + dw - fx, top, fx, dh);          // right
+      k.fillStyle = "#010104"; k.fillRect(0, top, Math.max(0, dx), dh); k.fillRect(dx + dw, top, Math.max(0, W - dx - dw), dh);
+    }
     paintSky(1);
   }
+  const churchPhoto = new Image(); churchPhoto.onload = () => size(); churchPhoto.src = "images/amittu-church-night.jpg";
   function paintSky(a) { if (!sky.width || !sky.height) return; g.globalCompositeOperation = "source-over"; g.globalAlpha = a; g.drawImage(sky, 0, 0, W, H); g.globalAlpha = 1; }
   size();
   if (window.ResizeObserver) new ResizeObserver(size).observe(stage); else window.addEventListener("resize", size);
@@ -49,7 +64,7 @@
     const balloons = [120, 340, 610, 900, 1150, 1420].map((x, i) => { const c = ["#ff3b5c", "#ffd60a", "#2ec4ff", "#7cff6b", "#ff8fd1", "#ff9f1c"][i], y = 30 + (i % 3) * 14;
       return `<g class="am-bal" style="animation-delay:${-i * .7}s"><path d="M${x} ${y + 16} q4 30 -2 70" stroke="rgba(255,255,255,.5)" fill="none"/><ellipse cx="${x}" cy="${y}" rx="11" ry="14" fill="${c}"/><ellipse cx="${x - 4}" cy="${y - 5}" rx="3" ry="4" fill="rgba(255,255,255,.55)"/></g>`; }).join("");
     stage.insertAdjacentHTML("beforeend", `<svg class="am-crowd" viewBox="0 0 1600 160" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      ${balloons}<g opacity=".72">${back}</g><g>${front}</g><g>${phones}</g></svg>`);
+      <g opacity=".72">${back}</g><g>${front}</g><g>${phones}</g></svg>`);
   })();
 
   /* ---------- colours (many, mixed freely) ---------- */
@@ -64,7 +79,7 @@
   /* ---------- sound: real shell launch + burst recorded at a Kerala church perunnal ---------- */
   const SND = { launch: ["audio/amittu-launch1.mp3", "audio/amittu-launch2.mp3", "audio/amittu-launch3.mp3"],
                 burst: ["audio/amittu-burst1.mp3", "audio/amittu-burst2.mp3", "audio/amittu-burst3.mp3", "audio/amittu-burst4.mp3"] };
-  const live = new Set(); let lastAnnounce = 0;
+  const live = new Set(); let lastAnnounce = 0, heard = false;   // heard: the stage is at the middle of the screen
   let ac = null, master = null, bufs = { launch: [], burst: [] }, loading = null, soundOn = true, voices = 0, lastLaunchSnd = 0;
   function initAudio() {
     if (!ac) {
@@ -78,7 +93,7 @@
       fetch(u).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => ac.decodeAudioData(b, ok, no))).then(buf => bufs[k].push(buf)).catch(() => {})))));
   }
   function play(kind, vol, x) {
-    if (!soundOn || !ac || !bufs[kind].length || voices > 14) return;
+    if (!soundOn || !heard || !ac || !bufs[kind].length || voices > 14) return;
     const src = ac.createBufferSource(), gn = ac.createGain();
     src.buffer = pick(bufs[kind]); src.playbackRate.value = rnd(.9, 1.08); gn.gain.value = vol;
     let out = gn;
@@ -119,7 +134,7 @@
     if (!running) { running = true; last = performance.now(); requestAnimationFrame(tick); }
   }
 
-  const TYPES = ["peony", "peony", "twotone", "willow", "ring", "glitter", "chrys", "multi"];
+  const TYPES = ["peony", "peony", "twotone", "willow", "ring", "glitter", "chrys", "multi", "comet", "crackle", "crackle"];
   function burst(sh) {
     const type = sh.type || pick(TYPES), x = sh.x, y = sh.y, big = sh.big;
     const c1 = COL[pick(NAMES)], c2 = COL[pick(NAMES)];
@@ -130,7 +145,13 @@
       r: o.r || 1.9, glit: o.glit || 0, trail: o.trail || 0, tip: o.tip || null });
     const sphere = () => { const a = Math.random() * 6.283, r = Math.sqrt(1 - Math.random() ** 2); return [Math.cos(a) * r, Math.sin(a) * r]; };
 
-    if (type === "willow") {
+    if (type === "comet") {          // comet: no big burst, just a crackling pop at the top of its trail
+      for (let i = 0; i < Math.min(n, 30); i++) { const [ux, uy] = sphere(); add(ux * base * .35, uy * base * .35, "#ffcf6b", { glit: 1, r: 1.5, decay: rnd(.03, .05) }); }
+    } else if (type === "crackle") {  // brown-orange-gold glitter that crackles as it dies, with a white heart (like the photos)
+      for (let i = 0; i < n; i++) { const [ux, uy] = sphere(); add(ux * base * .95, uy * base * .95, pick(["#ffb347", "#d98a3a", "#ffe0a0", "#ff7a3a"]), { glit: 1, trail: 1, r: 1.6, decay: rnd(.008, .012), drag: .968 }); }
+      for (let i = 0; i < 26; i++) { const [ux, uy] = sphere(); add(ux * base * .25, uy * base * .25, "#ffffff", { r: 2.4, decay: .03 }); }
+      for (let i = 0; i < 3; i++) smoke.push({ x: x + rnd(-10, 10), y: y + rnd(-10, 10), r: rnd(10, 18), gr: .3, a: .14, life: 1, decay: .004, vx: rnd(-.1, .1), vy: -.05, tint: "235,230,235" });
+    } else if (type === "willow") {
       for (let i = 0; i < n; i++) { const [ux, uy] = sphere(); add(ux * base * .9, uy * base * .9, "#ffcf6b", { decay: rnd(.0045, .0065), drag: .962, grav: .045, r: 1.6, trail: 1 }); }
     } else if (type === "ring") {
       const tilt = rnd(.35, 1), rot = rnd(0, 3.14);
@@ -174,7 +195,7 @@
     shells = shells.filter(sh => {
       sh.t += k / 60 / sh.dur; const e = 1 - Math.pow(1 - Math.min(1, sh.t), 2.2);
       sh.x = sh.sx + (sh.tx - sh.sx) * e + Math.sin(sh.wob + sh.t * 18) * 1.6; sh.y = sh.sy + (sh.ty - sh.sy) * e;
-      for (let i = 0; i < 2; i++) sparks.push({ x: sh.x + rnd(-1.5, 1.5), y: sh.y + rnd(0, 4), vx: rnd(-.35, .35), vy: rnd(.4, 1.4), life: 1, decay: rnd(.04, .07), col: Math.random() < .6 ? "#ffb347" : "#ffe7a3", r: 1.3 });
+      for (let i = 0; i < (sh.type === "comet" ? 6 : 2); i++) sparks.push({ x: sh.x + rnd(-1.5, 1.5), y: sh.y + rnd(0, 4), vx: rnd(-.35, .35), vy: rnd(.4, 1.4), life: 1, decay: rnd(.04, .07), col: Math.random() < .6 ? "#ffb347" : "#ffe7a3", r: 1.3 });
       g.globalAlpha = 1; g.fillStyle = "#fff2c4"; g.beginPath(); g.arc(sh.x, sh.y, 2.2, 0, 6.283); g.fill();
       if (sh.t >= 1) { burst(sh); return false; } return true;
     });
@@ -279,11 +300,27 @@
     volley: () => { const n = small ? 5 : 7; for (let i = 0; i < n; i++) later(rnd(0, 140), () => launch(W * (i + .5) / n + rnd(-20, 20), rnd(H * .15, H * .38))); },
     chain: () => { for (let i = 0; i < 10; i++) later(i * 420, () => launch(W * (.1 + .8 * i / 9), rnd(H * .14, H * .4))); },
     finale: () => {
+      for (let i = 0; i < 6; i++) later(i * 300 + 200, () => launch(skyX(), skyY(), { type: "comet" }));
       for (let i = 0; i < 34; i++) later(i * rnd(90, 150), () => launch(skyX(), skyY()));
       later(4300, () => { for (let i = 0; i < 6; i++) later(i * 60, () => launch(W * (i + .5) / 6, rnd(H * .12, H * .3), { big: 1.25 })); });
       later(6600, () => writeSky("കോട്ടപ്പടി തിരുനാൾ"));
     }
   };
+  // automatic show: while the section is on screen shells go up by themselves (pause with the ⏸ button)
+  let autoShow = true, autoT = null, onScreen = false;
+  const autoBtn = document.getElementById("amAuto");
+  function autoTick() {
+    clearTimeout(autoT); if (!autoShow || !onScreen) return;
+    const r = Math.random();
+    if (r < .12) ACTS.volley(); else if (r < .2) launch(skyX(), skyY(), { type: "comet" }); else { launch(skyX(), skyY()); if (Math.random() < .4) later(rnd(150, 400), () => launch(skyX(), skyY())); }
+    autoT = setTimeout(autoTick, rnd(900, 1900));
+  }
+  new IntersectionObserver(es => es.forEach(e => {
+    onScreen = e.isIntersecting;
+    if (onScreen && autoShow) { initAudio(); autoTick(); } else { clearTimeout(autoT); if (!onScreen) silence(); }
+  }), { threshold: .45 }).observe(stage);
+  new IntersectionObserver(es => es.forEach(e => { heard = e.isIntersecting; if (!heard) { live.forEach(src => { try { src.stop(); } catch (_) {} }); live.clear(); } }), { rootMargin: "-40% 0px -40% 0px" }).observe(stage);
+  autoBtn.addEventListener("click", () => { autoShow = !autoShow; autoBtn.textContent = autoShow ? "⏸ ഓട്ടോ" : "▶️ ഓട്ടോ"; if (autoShow) { initAudio(); autoTick(); } else { clearTimeout(autoT); silence(); } });
   document.querySelectorAll("[data-am]").forEach(b => b.addEventListener("click", () => {
     initAudio(); stage.scrollIntoView({ behavior: "smooth", block: "nearest" }); ACTS[b.dataset.am]();
   }));

@@ -736,3 +736,8 @@ html,body{max-width:100%}
 .ad-cta i{font-style:normal;color:#fff;font-weight:700;white-space:nowrap}
 .ad-cta .btn{flex:none;background:linear-gradient(135deg,#25d366,#128c4a);color:#fff;box-shadow:0 10px 26px rgba(37,211,102,.35)}
 @media (max-width:760px){.ad-cta{flex-direction:column;align-items:stretch;text-align:center}.ad-cta .btn{justify-content:center}}
+
+/* sponsor logos with transparent background: blend into the page */
+.logo.clear{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid rgba(255,207,74,.35);box-shadow:0 0 30px rgba(255,207,74,.08)}
+.logo.clear small{color:var(--dim)}
+.logo.clear img{filter:drop-shadow(0 4px 12px rgba(0,0,0,.35))}

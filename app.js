@@ -334,9 +334,9 @@ const adLink = slot => AD.whatsapp ? `https://wa.me/${AD.whatsapp}?text=${encode
 സ്ഥലം: ${slot}` : ""))}` : "";
 const logo = s => {
   if (s.open && AD.whatsapp) return `<a class="logo open" href="${adLink(s.sub)}" target="_blank" rel="noopener" aria-label="ഈ സ്ഥലത്ത് പരസ്യം ചെയ്യാൻ വാട്ട്സാപ്പ്">
-    <span class="plus">＋</span><span class="ph">നിങ്ങളുടെ ലോഗോ ഇവിടെ</span><small>${s.sub || ""} · ഒഴിവുണ്ട്</small><em>💬 പരസ്യം ചെയ്യാൻ</em></a>`;
+    <span class="ph">നിങ്ങളുടെ ലോഗോ ഇവിടെ</span><small>${s.sub || ""} · ഒഴിവുണ്ട്</small><em>💬 പരസ്യം ചെയ്യാൻ</em></a>`;
   const inner = s.logo ? `<img src="${s.logo}" alt="${s.name}">` : `<span class="ph">${s.name}</span>`;
-  const tag = s.link ? "a" : "div"; return `<${tag} class="logo" ${s.link ? `href="${s.link}" target="_blank" rel="noopener"` : ""}>${inner}<small>${s.sub || ""}</small></${tag}>`; };
+  const tag = s.link ? "a" : "div"; return `<${tag} class="logo${s.bg === "clear" ? " clear" : ""}" ${s.link ? `href="${s.link}" target="_blank" rel="noopener"` : ""}>${inner}<small>${s.sub || ""}</small></${tag}>`; };
 if (AD.whatsapp) { $("#adWa").href = adLink(""); $("#adNum").textContent = AD.show || ""; } else $("#adCta").remove();
 $("#spMain").innerHTML = window.SPONSORS.filter(s => s.tier === "main").map(logo).join("");
 $("#spGrid").innerHTML = window.SPONSORS.filter(s => s.tier !== "main").map(logo).join("");

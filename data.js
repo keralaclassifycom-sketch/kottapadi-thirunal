@@ -220,8 +220,9 @@ window.FLOW = [
 window.SPONSORS = [
   // open: true = ഒഴിവുള്ള സ്ഥലം ("നിങ്ങളുടെ ലോഗോ ഇവിടെ" — തൊട്ടാൽ പരസ്യത്തിന് വാട്ട്സാപ്പ്)
   // സ്പോൺസർ കിട്ടിയാൽ: name, logo, link ചേർത്ത് open: false ആക്കുക
+  // bg: "clear" = ലോഗോ ട്രാൻസ്പാരന്റ് ആണെങ്കിൽ, വെള്ള കാർഡ് ഇല്ലാതെ സൈറ്റിന്റെ ബാക്ക്ഗ്രൗണ്ടിൽ ചേർന്നു നിൽക്കും
   { name: "പ്രധാന സ്പോൺസർ", sub: "Title Sponsor", logo: "", tier: "main", link: "", open: true },
-  { name: "Motion Digital Ads", sub: "Co-Sponsor", logo: "images/sponsors/motion-digital-ads.png", tier: "co", link: "", open: false },
+  { name: "Motion Digital Ads", sub: "Co-Sponsor", logo: "images/sponsors/motion-digital-ads-light.png", bg: "clear", tier: "co", link: "", open: false },
   { name: "സ്പോൺസർ 3", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
   { name: "സ്പോൺസർ 4", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
   { name: "സ്പോൺസർ 5", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },

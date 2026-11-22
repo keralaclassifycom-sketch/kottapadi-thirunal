@@ -242,13 +242,11 @@ window.ADVERTISE = {
    -------------------------------------------------------------- */
 window.TEAM = {
   coordinators: [
-    { name: "പേര് 1", role: "കോർഡിനേറ്റർ", photo: "" },
-    { name: "പേര് 2", role: "കോർഡിനേറ്റർ", photo: "" },
-    { name: "പേര് 3", role: "കോർഡിനേറ്റർ", photo: "" },
+    { name: "Alvin Christopher", role: "കോർഡിനേറ്റർ", photo: "" },
+    { name: "Joel Kochu Lazar", role: "കോർഡിനേറ്റർ", photo: "" },
   ],
   designers: [
-    { name: "പേര് 1", role: "Design & Development", photo: "" },
-    { name: "പേര് 2", role: "Design", photo: "" },
+    { name: "Jopaul MJ", role: "Designed & Developed", photo: "" },
   ],
 };
 

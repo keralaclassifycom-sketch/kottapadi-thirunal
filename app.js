@@ -240,6 +240,72 @@ document.querySelectorAll(".scard").forEach(c => {
   c.addEventListener("keydown", e => { if (e.key === "Enter") c.classList.toggle("flip"); });
 });
 
+/* ---------- clubs & committees (programmes come from DAYS events tagged club:"id") ---------- */
+if (window.CLUBS && $("#cgrid")) {
+  const CL = window.CLUBS.map(c => {
+    const prog = [];
+    DAYS.forEach(d => d.events.forEach(e => { if (e.club === c.id) prog.push({ ...e, day: d.id }); }));
+    if (c.unit) { const u = SAM.find(s => s.name === c.unit);
+      if (u) prog.push({ day: u.day, t: u.tFrom, tEnd: u.tTo, type: u.melams[0].type, troupe: `അമ്പ്, വള എഴുന്നള്ളിപ്പ് — ${u.melams[0].troupe}`, sid: u.id }); }
+    prog.sort((a, b) => dayIdx(a.day) - dayIdx(b.day) || (mins(a.t) ?? 9999) - (mins(b.t) ?? 9999));
+    return { ...c, prog };
+  }).filter(c => c.prog.length);
+  let cDay = "all";
+  const cdays = DAYS.filter(d => CL.some(c => c.prog.some(p => p.day === d.id)));
+  function clubFilters() {
+    $("#clubF").innerHTML = `<span class="lbl">📅 ദിവസം:</span>` + [["all", `എല്ലാം (${CL.length})`], ...cdays.map(d => [d.id, `${dShort(d.id)} · ${d.name}`])]
+      .map(([k, l]) => `<button class="chip ${cDay === k ? "on" : ""}" data-cday="${k}">${l}</button>`).join("");
+  }
+  $("#cgrid").innerHTML = CL.map(c => {
+    const types = [...new Set(c.prog.map(p => p.type))];
+    const days = [...new Set(c.prog.map(p => p.day))];
+    const mainIcon = MT[types[0]] ? MT[types[0]].icon : "⭐";
+    return `<div class="ccard reveal" style="--c:${c.color}" tabindex="0" data-days="${days.join(" ")}">
+      <div class="face front">
+        <div class="coin-wrap"><div class="coin"><b>${c.logo ? `<img src="${c.logo}" alt="">` : c.mono}</b><span>${mainIcon}</span></div></div>
+        <h3>${c.name}</h3>${c.en ? `<div class="en">${c.en}</div>` : ""}
+        <div class="ctags">${types.map(t => `<span>${MT[t].icon} ${MT[t].name}</span>`).join("")}</div>
+        <div class="cdays">${days.map(d => `<i style="--dc:${dayOf(d).color}">${dShort(d)}</i>`).join("")}</div>
+        <div class="flip-hint">തൊട്ടാൽ പരിപാടികൾ ↻</div>
+      </div>
+      <div class="face back"><h4>${c.name}</h4>
+        <ul class="cprog">${c.prog.map(p => `<li><i>${MT[p.type] ? MT[p.type].icon : "⭐"}</i><div><b>${p.troupe || p.title}</b>
+          <small>${dLabel(p.day)} · ${p.t ? tf(p.t).full + (p.tEnd ? " – " + tf(p.tEnd).full : "") : "സമയം ഉടൻ"}${p.place ? " · 📍 " + p.place : ""}</small></div></li>`).join("")}</ul>
+        ${c.prog.some(p => p.sid) ? `<button class="btn" data-sid="${c.prog.find(p => p.sid).sid}" data-scroll="1">🗺️ എഴുന്നള്ളിപ്പ് റൂട്ട്</button>` : ""}
+        <button class="btn primary" data-goday="${days[0]}">📅 ${dShort(days[0])} പരിപാടികൾ</button>
+      </div></div>`;
+  }).join("");
+  clubFilters();
+  document.querySelectorAll(".ccard").forEach(c => {
+    c.addEventListener("click", e => { if (!e.target.closest("[data-sid],[data-goday]")) c.classList.toggle("flip"); });
+    c.addEventListener("keydown", e => { if (e.key === "Enter") c.classList.toggle("flip"); });
+  });
+  document.addEventListener("click", e => {
+    const f = e.target.closest("[data-cday]"); if (f) { cDay = f.dataset.cday; clubFilters();
+      document.querySelectorAll(".ccard").forEach(c => c.classList.toggle("hide", cDay !== "all" && !c.dataset.days.split(" ").includes(cDay))); }
+    const g = e.target.closest("[data-goday]"); if (g) { showDay(g.dataset.goday); $("#schedule").scrollIntoView({ behavior: "smooth" }); }
+  });
+}
+
+/* ---------- രാപകൽ തിരുനാൾ (data.js → RAPAKAL) ---------- */
+{
+  const R = window.RAPAKAL, sec = $("#rapakal");
+  if (R && R.show !== false && sec) {
+    sec.hidden = false;
+    $("#rpBy").textContent = R.by || "";
+    if (R.logo) $("#rpLogo").innerHTML = `<img src="${R.logo}" alt="${R.name} ${R.sub || ""}">`;
+    else { $("#rpName").textContent = R.name || "രാപകൽ"; $("#rpSub").textContent = R.sub || ""; }
+    $("#rpLogo").setAttribute("aria-label", `${R.name || ""} ${R.sub || ""}`);
+    $("#rpIntro").textContent = R.intro || "";
+    $("#rpMore").textContent = R.more || ""; if (!R.more) $("#rpMore").hidden = true;
+    $("#rpSessions").innerHTML = (R.sessions || []).map(s => `<article class="rp-card ${s.kind === "night" ? "night" : "day"}">
+      <div class="ch"><i>${s.kind === "night" ? "🌙" : "☀️"}</i><div><b>${s.label || ""}</b><span>${s.when || (s.day && dayOf(s.day) ? dLabel(s.day) : "")}</span></div></div>
+      <ul class="rp-items">${(s.items || []).map(it => { const ty = MT[it.type];
+        return `<li><i>${ty ? ty.icon : "⭐"}</i><div>${it.t ? `<span class="tm">${tf(it.t).full}</span>` : ""}<b>${it.title || ""}</b>${it.by ? `<small>${it.by}</small>` : ""}${it.note ? `<small>${it.note}</small>` : ""}</div></li>`; }).join("")
+        || `<li><i>⏳</i><div><b>വിവരങ്ങൾ ഉടൻ</b></div></li>`}</ul></article>`).join("");
+  } else { sec && sec.remove(); const n = document.querySelector("[data-rp-nav]"); n && n.remove(); }
+}
+
 /* ---------- gallery ---------- */
 $("#galleryGrid").innerHTML = window.GALLERY.map((g, i) => `<button data-gi="${i}"><img src="${g.src}" alt="${g.cap}" loading="lazy"><figcaption>${g.cap}</figcaption></button>`).join("");
 document.addEventListener("click", e => { const b = e.target.closest("[data-gi]"); if (!b) return; const g = window.GALLERY[+b.dataset.gi];

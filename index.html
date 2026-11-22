@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,400..800&family=Baloo+Chettan+2:wght@500;600;700;800&family=Manjari:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -27,8 +27,10 @@
       <a href="#schedule">പരിപാടികൾ</a>
       <a href="#liturgy" data-lit-nav>തിരുകർമ്മങ്ങൾ</a>
       <a href="#melam">മേളങ്ങൾ</a>
+      <a href="#rapakal" data-rp-nav>രാപകൽ</a>
       <a href="#map">3D മാപ്പ്</a>
       <a href="#samooham">യൂണിറ്റുകൾ</a>
+      <a href="#clubs">ക്ലബ്ബുകൾ</a>
       <a href="#church3d">3D പള്ളി</a>
       <a href="#about">പള്ളി</a>
       <a href="#gallery">ഗാലറി</a>
@@ -204,6 +206,25 @@
     </div>
   </section>
 
+  <!-- RAPAKAL THIRUNAL (data.js → RAPAKAL) -->
+  <section id="rapakal" hidden>
+    <div class="wrap">
+      <div class="rp">
+        <div class="rp-sky" aria-hidden="true"><i class="rp-sun"></i><i class="rp-moon"></i><b></b></div>
+        <header class="rp-head">
+          <p class="rp-by" id="rpBy"></p>
+          <div class="rp-logo" id="rpLogo" role="img">
+            <span class="rp-emb" aria-hidden="true"><i></i></span>
+            <span class="rp-word"><span class="rp-name" id="rpName"></span><span class="rp-sub" id="rpSub"></span></span>
+          </div>
+          <p class="rp-intro" id="rpIntro"></p>
+        </header>
+        <div class="rp-sessions" id="rpSessions"></div>
+        <p class="rp-more" id="rpMore"></p>
+      </div>
+    </div>
+  </section>
+
   <!-- 3D MAP -->
   <section id="map">
     <div class="wrap">
@@ -251,6 +272,21 @@
         </div>
       </div>
       <div class="sgrid" id="sgrid"></div>
+    </div>
+  </section>
+
+  <!-- CLUBS -->
+  <section id="clubs">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Clubs &amp; Committees</p>
+          <h2>ക്ലബ്ബുകളും <em>കൂട്ടായ്മകളും</em></h2>
+          <p>തിരുനാളിന് മാറ്റുകൂട്ടുന്നവർ — ബാൻഡ് മേളം, ഗാനമേള, ദീപാലങ്കാരം, നില പന്തൽ, വർണ്ണമഴ, കാരുണ്യം. കാർഡിൽ തൊട്ടാൽ അവരുടെ മുഴുവൻ പരിപാടികളും കാണാം.</p>
+        </div>
+      </div>
+      <div class="filters" id="clubF"></div>
+      <div class="cgrid" id="cgrid"></div>
     </div>
   </section>
 
@@ -624,8 +660,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="data.js?v=5"></script>
-<script src="data-liturgy.js?v=5"></script>
-<script src="app.js?v=5"></script>
+<script src="data.js?v=7"></script>
+<script src="data-liturgy.js?v=7"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>

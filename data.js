@@ -63,40 +63,41 @@ window.DAYS = [
     id: "dec31", date: "2026-12-31", color: "#5ec8ff",
     name: "ഗാനമേള", sub: "വർഷാവസാന രാവ്",
     events: [
-      { t: "", title: "KINGS OF SOUTH", troupe: "പാല കമ്മ്യൂണിക്കേഷൻ ഗാനമേള", type: "ganamela", place: "", highlight: true },
+      { club: "kos", t: "", title: "KINGS OF SOUTH", troupe: "പാല കമ്മ്യൂണിക്കേഷൻ ഗാനമേള", type: "ganamela", place: "", highlight: true },
     ],
   },
   {
     id: "jan1", date: "2027-01-01", color: "#ff3b5c",
     name: "നില പന്തൽ & ദീപക്കാഴ്ച", sub: "പുതുവത്സര ദിനം",
     events: [
-      { t: "", title: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ (K.P.K U.A.E)", troupe: "അതിഗംഭീര രൂപക്കൂട് നില പന്തൽ — ഭാരത് പന്തൽ വർക്ക്സ് ചെറുതുരുത്തി", type: "pandal", place: "", highlight: true },
-      { t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "Alappuzha Blue Diamonds 2.0 · പ്രദക്ഷിണവീഥി ദീപാലങ്കാരം", type: "ganamela", place: "" },
-      { t: "", title: "SEHION FEST (സെഹിയോൻ കുടുംബ കൂട്ടായ്മ)", troupe: "യുവജന പോർക്കുളം", type: "lights", place: "" },
-      { t: "", title: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി", troupe: "പ്രദക്ഷിണവീഥി ദീപാലങ്കാരം", type: "lights", place: "പ്രദക്ഷിണവീഥി" },
-      { t: "", title: "KINGS OF SOUTH", troupe: "തിരുനാൾ വീഥി ദീപാലങ്കാരം", type: "lights", place: "തിരുനാൾ വീഥി" },
+      { club: "kpk", t: "", title: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ (K.P.K U.A.E)", troupe: "അതിഗംഭീര രൂപക്കൂട് നില പന്തൽ — ഭാരത് പന്തൽ വർക്ക്സ് ചെറുതുരുത്തി", type: "pandal", place: "", highlight: true },
+      { club: "kcc", t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "Alappuzha Blue Diamonds 2.0", type: "ganamela", place: "" },
+      { club: "kcc", t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "പ്രദക്ഷിണവീഥി ദീപാലങ്കാരം", type: "lights", place: "പ്രദക്ഷിണവീഥി" },
+      { club: "sehion", t: "", title: "SEHION FEST (സെഹിയോൻ കുടുംബ കൂട്ടായ്മ)", troupe: "യുവജന പോർക്കുളം", type: "lights", place: "" },
+      { club: "westgate", t: "", title: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി", troupe: "പ്രദക്ഷിണവീഥി ദീപാലങ്കാരം", type: "lights", place: "പ്രദക്ഷിണവീഥി" },
+      { club: "kos", t: "", title: "KINGS OF SOUTH", troupe: "തിരുനാൾ വീഥി ദീപാലങ്കാരം", type: "lights", place: "തിരുനാൾ വീഥി" },
     ],
   },
   {
     id: "jan2", date: "2027-01-02", color: "#ffd60a", units: true,
     name: "അമ്പ് – വള എഴുന്നള്ളിപ്പ്", sub: "21 യൂണിറ്റുകൾ · ബാൻഡ് മേളം",
     events: [
-      { t: "", title: "കോട്ടപ്പടി സ്റ്റോറീസ് കമ്മിറ്റി ഒരുക്കുന്ന രാപകൽ തിരുനാൾ", troupe: "GRACE MUSIC BAND TVM · AMEN MUSIC BAND TVM", type: "band", place: "", highlight: true },
+      { club: "stories", t: "", title: "കോട്ടപ്പടി സ്റ്റോറീസ് കമ്മിറ്റി ഒരുക്കുന്ന രാപകൽ തിരുനാൾ", troupe: "GRACE MUSIC BAND TVM · AMEN MUSIC BAND TVM", type: "band", place: "", highlight: true },
     ],
   },
   {
     id: "jan3", date: "2027-01-03", color: "#3b82f6",
     name: "ബാൻഡ് മേളം & വർണ്ണമഴ", sub: "ക്ലബ്ബുകളുടെ ബാൻഡ് · വെടിക്കെട്ട്",
     events: [
-      { t: "", title: "MACKSOLZ KOTTAPPADI", troupe: "NEW VOICE PALA", type: "band", place: "" },
-      { t: "", title: "BLACKORPZ KOTTAPADI", troupe: "RAGADEEPAM MUNDATHIKODE", type: "band", place: "" },
-      { t: "", title: "RADOX KOTTAPADI", troupe: "YOUNG STARS THIRUVANANTHAPURAM", type: "band", place: "" },
-      { t: "", title: "SZ FEST", troupe: "VOICE OF PALAKKAD", type: "band", place: "" },
-      { t: "", title: "കോട്ടപ്പടി സ്റ്റോറീസ് — രാപകൽ തിരുനാൾ 2027", troupe: "GRACE MUSIC BAND TVM (അച്ഛനും പിള്ളേരും)", type: "band", place: "", highlight: true },
-      { t: "", title: "TEASERS KOTTAPADI", troupe: "ST. MARY'S VARANDARAPPILLY", type: "band", place: "" },
-      { t: "19:00", title: "Christian Brothers Kottapadi", troupe: "അതിഗംഭീര വർണ്ണവിസ്മയം", type: "fireworks", place: "", highlight: true },
-      { t: "21:30", title: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി", troupe: "വർണ്ണമഴ", type: "fireworks", place: "", highlight: true },
-      { t: "", title: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി", troupe: "നന്മ 2027", type: "charity", place: "" },
+      { club: "macksolz", t: "", title: "MACKSOLZ KOTTAPPADI", troupe: "NEW VOICE PALA", type: "band", place: "" },
+      { club: "blackorpz", t: "", title: "BLACKORPZ KOTTAPADI", troupe: "RAGADEEPAM MUNDATHIKODE", type: "band", place: "" },
+      { club: "radox", t: "", title: "RADOX KOTTAPADI", troupe: "YOUNG STARS THIRUVANANTHAPURAM", type: "band", place: "" },
+      { club: "szfest", t: "", title: "SZ FEST", troupe: "VOICE OF PALAKKAD", type: "band", place: "" },
+      { club: "stories", t: "", title: "കോട്ടപ്പടി സ്റ്റോറീസ് — രാപകൽ തിരുനാൾ 2027", troupe: "GRACE MUSIC BAND TVM (അച്ഛനും പിള്ളേരും)", type: "band", place: "", highlight: true },
+      { club: "teasers", t: "", title: "TEASERS KOTTAPADI", troupe: "ST. MARY'S VARANDARAPPILLY", type: "band", place: "" },
+      { club: "cb", t: "19:00", title: "Christian Brothers Kottapadi", troupe: "അതിഗംഭീര വർണ്ണവിസ്മയം", type: "fireworks", place: "", highlight: true },
+      { club: "westgate", t: "", title: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി", troupe: "വർണ്ണമഴ", type: "fireworks", place: "", highlight: true },
+      { club: "palliyangadi", t: "", title: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി", troupe: "നന്മ 2027", type: "charity", place: "" },
     ],
   },
   {
@@ -140,6 +141,63 @@ window.UNITS = [
   { n: "യൂദയ",                from: "09:00", to: "16:00", type: "chenda",     troupe: "നിഖിൽ പാവറട്ടി & ടീം" },
 ];
 
+/* --------------------------------------------------------------
+   ക്ലബ്ബുകളും കമ്മിറ്റികളും
+   ഓരോ ക്ലബ്ബിന്റെയും പരിപാടികൾ മുകളിലെ DAYS-ൽ  club: "id"  എന്ന്
+   ചേർത്തവയിൽ നിന്ന് തനിയെ വരും.
+   mono  : ബാഡ്ജിൽ കാണിക്കുന്ന ചുരുക്കപ്പേര് (2–3 അക്ഷരം)
+   logo  : ക്ലബ്ബിന്റെ ലോഗോ ഉണ്ടെങ്കിൽ "images/clubs/peru.png"
+   unit  : ജനുവരി 2-ലെ എഴുന്നള്ളിപ്പ് യൂണിറ്റുമായി ബന്ധമുണ്ടെങ്കിൽ യൂണിറ്റിന്റെ പേര്
+   -------------------------------------------------------------- */
+window.CLUBS = [
+  { id: "kos",          name: "KINGS OF SOUTH",                   mono: "KoS", color: "#ffd60a", logo: "" },
+  { id: "kpk",          name: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ",      en: "K.P.K U.A.E", mono: "KPK", color: "#22c55e", logo: "" },
+  { id: "kcc",          name: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി",   en: "K.C.C", mono: "KCC", color: "#5ec8ff", logo: "" },
+  { id: "sehion",       name: "SEHION FEST",                      en: "സെഹിയോൻ കുടുംബ കൂട്ടായ്മ", mono: "SF", color: "#e4167f", logo: "", unit: "സെഹിയോൻ ഫെസ്റ്റ്" },
+  { id: "westgate",     name: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി",   en: "Westgate Club", mono: "WG", color: "#a855f7", logo: "" },
+  { id: "stories",      name: "കോട്ടപ്പടി സ്റ്റോറീസ്",              en: "Kottapadi Stories Committee", mono: "KS", color: "#ff8a00", logo: "" },
+  { id: "macksolz",     name: "MACKSOLZ KOTTAPPADI",              mono: "MZ", color: "#ff3b5c", logo: "" },
+  { id: "blackorpz",    name: "BLACKORPZ KOTTAPADI",              mono: "BZ", color: "#94a3b8", logo: "" },
+  { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "" },
+  { id: "szfest",       name: "SZ FEST",                          mono: "SZ", color: "#14b8a6", logo: "" },
+  { id: "teasers",      name: "TEASERS KOTTAPADI",                mono: "TZ", color: "#facc15", logo: "" },
+  { id: "cb",           name: "Christian Brothers Kottapadi",     mono: "CB", color: "#3b82f6", logo: "" },
+  { id: "palliyangadi", name: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി",      en: "Team Palliyangadi", mono: "TP", color: "#10b981", logo: "" },
+];
+
+/* --------------------------------------------------------------
+   രാപകൽ തിരുനാൾ 2027 — കോട്ടപ്പടി സ്റ്റോറീസ് ഒരുക്കുന്നത്
+   ഇവിടെ പരിപാടികൾ ചേർക്കുക / മാറ്റുക. (സമയം അറിയില്ലെങ്കിൽ t: "")
+   items-ലെ ഓരോ വരിയും:
+     { t: "09:00", title: "പരിപാടിയുടെ പേര്", by: "ടീം / ആര്", type: "band", note: "" }
+   type: band / nadaswaram / chenda / ganamela / fireworks / lights / pandal / charity / church
+   logo: ലോഗോ ചിത്രം കിട്ടിയാൽ "images/rapakal-logo.png" — ഇപ്പോൾ "" (ടെക്സ്റ്റ് ലോഗോ)
+   -------------------------------------------------------------- */
+window.RAPAKAL = {
+  show: true,
+  name: "രാപകൽ",
+  sub: "തിരുനാൾ 2027",
+  by: "കോട്ടപ്പടി സ്റ്റോറീസ് ഒരുക്കുന്ന",
+  logo: "",
+  intro: "പകലും രാവും നിറയുന്ന തിരുനാൾ ആഘോഷം — ജനുവരി 2 രാവിലെ മുതൽ ജനുവരി 3 രാത്രി വരെ.",
+  sessions: [
+    {
+      kind: "day", day: "jan2", label: "പകൽ", when: "ജനുവരി 2 · രാവിലെ",
+      items: [
+        { t: "", title: "ബാൻഡ് മേളം", by: "GRACE MUSIC BAND TVM", type: "band" },
+        { t: "", title: "ബാൻഡ് മേളം", by: "AMEN MUSIC BAND TVM", type: "band" },
+      ],
+    },
+    {
+      kind: "night", day: "jan3", label: "രാവ്", when: "ജനുവരി 3 · രാത്രി",
+      items: [
+        { t: "", title: "ബാൻഡ് മേളം", by: "GRACE MUSIC BAND TVM (അച്ഛനും പിള്ളേരും)", type: "band" },
+      ],
+    },
+  ],
+  more: "കൂടുതൽ പരിപാടികൾ ഉടൻ അറിയിക്കും",
+};
+
 /* പെരുന്നാൾ — തുടക്കം മുതൽ ഒടുക്കം വരെ */
 window.FLOW = [
   { d: "ഡിസം 25", t: "കൊടിയേറ്റം", i: "🚩" },
@@ -150,7 +208,7 @@ window.FLOW = [
   { d: "ജനു 2", t: "ബാൻഡ്, നാദസ്വരം, ചെണ്ട", i: "🥁" },
   { d: "ജനു 3", t: "ക്ലബ്ബുകളുടെ ബാൻഡ് മേളം", i: "🎺" },
   { d: "ജനു 3 · 7PM", t: "വർണ്ണവിസ്മയം", i: "✨" },
-  { d: "ജനു 3 · 9:30PM", t: "വർണ്ണമഴ", i: "🎇" },
+  { d: "ജനു 3", t: "വർണ്ണമഴ", i: "🎇" },
   { d: "ജനു 4", t: "സമാപനം", i: "🙏" },
 ];
 

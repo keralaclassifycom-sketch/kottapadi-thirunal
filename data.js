@@ -221,7 +221,7 @@ window.SPONSORS = [
   // open: true = ഒഴിവുള്ള സ്ഥലം ("നിങ്ങളുടെ ലോഗോ ഇവിടെ" — തൊട്ടാൽ പരസ്യത്തിന് വാട്ട്സാപ്പ്)
   // സ്പോൺസർ കിട്ടിയാൽ: name, logo, link ചേർത്ത് open: false ആക്കുക
   { name: "പ്രധാന സ്പോൺസർ", sub: "Title Sponsor", logo: "", tier: "main", link: "", open: true },
-  { name: "സ്പോൺസർ 2", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
+  { name: "Motion Digital Ads", sub: "Co-Sponsor", logo: "images/sponsors/motion-digital-ads.png", tier: "co", link: "", open: false },
   { name: "സ്പോൺസർ 3", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
   { name: "സ്പോൺസർ 4", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
   { name: "സ്പോൺസർ 5", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },

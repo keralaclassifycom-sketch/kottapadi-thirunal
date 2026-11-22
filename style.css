@@ -888,3 +888,10 @@ html,body{max-width:100%}
 
 /* amittu: no drawn crowd — just the church top and the fireworks */
 .am-crowd{display:none}
+
+/* visitor counter at the very bottom */
+.visits{text-align:center;margin:0;padding:14px 16px 22px;font-size:12px;color:var(--dim);border-top:1px solid var(--line)}
+.visits b{color:var(--gold);font-weight:700;margin-left:4px}
+.visits i{font-style:normal;margin:0 10px;opacity:.6}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3dff7a;box-shadow:0 0 6px #3dff7a;margin-right:4px;vertical-align:1px;animation:livePulse 1.6s ease-in-out infinite}
+@keyframes livePulse{50%{opacity:.35}}

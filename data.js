@@ -23,6 +23,7 @@ window.FEAST = {
   ],
   liveFrom: "2026-12-31", liveTo: "2027-01-04",
   updated: "20-11-2026",
+  siteUrl: "https://keralaclassifycom-sketch.github.io/kottapadi-thirunal/",   // QR കോഡ് ഈ ലിങ്കിലേക്ക്
   mapsLink: "https://www.google.com/maps/search/?api=1&query=St+Lazarus+Church+Kottapadi",
   whatsappNumber: "918086833031",          // ലിസ്റ്റിൽ ചേർക്കാൻ
   whatsappShow: "80868 33031",

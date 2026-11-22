@@ -306,6 +306,18 @@ if (window.CLUBS && $("#cgrid")) {
   } else { sec && sec.remove(); const n = document.querySelector("[data-rp-nav]"); n && n.remove(); }
 }
 
+/* ---------- QR code section ---------- */
+if ($("#qr")) {
+  const url = F.siteUrl || location.href.split("#")[0].split("?")[0];
+  const msg = `⛪ ${F.title} ${F.year} — പരിപാടികൾ, മേളങ്ങൾ, 3D റൂട്ട് മാപ്പ്: ${url}`;
+  $("#qrUrl").textContent = url;
+  $("#qrWa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
+  $("#qrCopy").onclick = async () => { try { await navigator.clipboard.writeText(url); $("#qrCopy").textContent = "✅ കോപ്പി ആയി"; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($("#qrUrl")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#qrCopy").textContent = "Ctrl+C അമർത്തുക"; }
+    setTimeout(() => $("#qrCopy").textContent = "📋 കോപ്പി", 2200); };
+  if (navigator.share) { const b = $("#qrShare"); b.hidden = false; b.onclick = () => navigator.share({ title: `${F.title} ${F.year}`, text: msg, url }).catch(() => {}); }
+}
+
 /* ---------- gallery ---------- */
 $("#galleryGrid").innerHTML = window.GALLERY.map((g, i) => `<button data-gi="${i}"><img src="${g.src}" alt="${g.cap}" loading="lazy"><figcaption>${g.cap}</figcaption></button>`).join("");
 document.addEventListener("click", e => { const b = e.target.closest("[data-gi]"); if (!b) return; const g = window.GALLERY[+b.dataset.gi];

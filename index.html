@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,400..800&family=Baloo+Chettan+2:wght@500;600;700;800&family=Manjari:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -34,6 +34,7 @@
       <a href="#church3d">3D പള്ളി</a>
       <a href="#about">പള്ളി</a>
       <a href="#gallery">ഗാലറി</a>
+      <a href="#qr">QR</a>
       <a href="#sponsors">സ്പോൺസർമാർ</a>
     </nav>
   </div>
@@ -355,6 +356,27 @@
       </div>
     </div>
   </section>
+  <!-- QR CODE -->
+  <section id="qr">
+    <div class="wrap">
+      <div class="qr-card reveal">
+        <div class="qr-img"><img src="images/qr-kottapadi-thirunal.png" alt="കോട്ടപ്പടി തിരുനാൾ വെബ്സൈറ്റ് — QR കോഡ്" width="260" height="260"><span class="qr-scan" aria-hidden="true"></span></div>
+        <div class="qr-text">
+          <p class="eyebrow">Scan &amp; Share</p>
+          <h2>ഈ സൈറ്റിന്റെ <em>QR കോഡ്</em></h2>
+          <p>ഫോണിലെ ക്യാമറ കൊണ്ട് സ്കാൻ ചെയ്താൽ ഈ സൈറ്റ് നേരെ തുറക്കും. നോട്ടീസിലും ഫ്ലെക്സിലും ബോർഡിലും പ്രിന്റ് ചെയ്യാം, വാട്ട്സാപ്പിൽ ഷെയർ ചെയ്യാം.</p>
+          <div class="qr-link"><code id="qrUrl"></code><button id="qrCopy">📋 കോപ്പി</button></div>
+          <div class="btns">
+            <a class="btn primary" href="images/qr-kottapadi-thirunal.png" download="kottapadi-thirunal-qr.png">⬇ QR ഡൗൺലോഡ്</a>
+            <a class="btn" href="images/qr-kottapadi-thirunal-poster.png" download="kottapadi-thirunal-qr-poster.png">🖼 പോസ്റ്റർ ഡൗൺലോഡ്</a>
+            <a class="btn" href="images/qr-kottapadi-thirunal.svg" download="kottapadi-thirunal-qr.svg">🖨 SVG (ഫ്ലെക്സ് പ്രിന്റിന്)</a>
+            <a class="btn" id="qrWa" href="#" target="_blank" rel="noopener">💬 WhatsApp-ൽ ഷെയർ</a>
+            <button class="btn" id="qrShare" hidden>📤 ഷെയർ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -660,8 +682,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="data.js?v=7"></script>
-<script src="data-liturgy.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<script src="data.js?v=8"></script>
+<script src="data-liturgy.js?v=8"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

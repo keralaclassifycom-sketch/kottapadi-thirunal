@@ -963,3 +963,17 @@ html,body{max-width:100%}
 
 /* keep club logos inside the badge (percent heights do not apply inside the grid cell) */
 .coin b img{width:auto;height:auto;max-width:140px;max-height:84px}
+
+/* ganamela section */
+.gm-troupes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 14px}
+.gm-t small{opacity:.75;font-size:.8em;margin-left:4px}
+.gm-t.on{background:var(--gold);color:#2a1600;border-color:var(--gold)}
+#gmSong:disabled{opacity:.6;cursor:default}
+
+/* ganamela: the stage takes taps (balloons fly from where you touch) */
+#gmFx{cursor:pointer;-webkit-tap-highlight-color:transparent}
+[data-gm="go"]{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+.gm-tip{text-align:center;font-size:12px;color:var(--dim);margin:8px 0 0}
+
+.gm-now{align-self:center;font-family:var(--ml-display);font-weight:700;font-size:13px;color:var(--gold);padding:0 6px}
+[data-gm-skip]{min-width:46px}

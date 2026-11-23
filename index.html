@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,400..800&family=Baloo+Chettan+2:wght@500;600;700;800&family=Manjari:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=56">
+<link rel="stylesheet" href="style.css?v=59">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -45,9 +45,10 @@
       <a href="#liturgy" data-lit-nav>തിരുകർമ്മങ്ങൾ</a>
       <a href="#amittu">അമിട്ട്</a>
       <a href="#melam">മേളങ്ങൾ</a>
-      <a href="#ther">തേര്</a>
+      <a href="#ganamela" data-gm-nav>ഗാനമേള</a>
       <a href="#rapakal" data-rp-nav>രാപകൽ</a>
       <a href="#angadi">അങ്ങാടി</a>
+      <a href="#ther">തേര്</a>
     </nav>
   </div>
 </header>
@@ -223,27 +224,26 @@
     </div>
   </section>
 
-  <!-- THER MALSARAM: LED chariots from every samooham line up in front of the church -->
-  <section class="ther-sec" id="ther">
+  <!-- GANAMELA stage (ganamela.js, data.js → GANAMELA) — draft until GANAMELA.show is true -->
+  <section class="ride-sec" id="ganamela" hidden>
     <div class="wrap">
       <div class="am-head">
-        <p class="eyebrow">Ther Malsaram · തേര് മത്സരം</p>
-        <h2>സമൂഹങ്ങളുടെ <em>തേര് മത്സരം</em></h2>
-        <p class="am-help">ദീപാലങ്കാരത്തിൽ തിളങ്ങുന്ന മൂന്ന് മികച്ച തേരുകൾ · <b>തേരിൽ തൊട്ടാൽ</b> അത് തിളങ്ങും · <b>നിങ്ങളും ജഡ്ജിയാകാം</b></p>
+        <p class="eyebrow">Ganamela · ഗാനമേള</p>
+        <h2>തിരുനാൾ രാവിലെ <em>ഗാനമേള</em></h2>
+        <p class="am-help">സ്റ്റേജിൽ പാട്ടും ലൈറ്റും — ബലൂണുകളുമായി ആൾക്കൂട്ടം · ഡിസംബർ 31 · ജനുവരി 1</p>
       </div>
-      <div class="th-stage" id="thStage">
-        <canvas class="th-fx" id="thFx" role="img" aria-label="തേര് മത്സരം — ദീപാലങ്കാര തേരുകൾ വണ്ടികളിൽ വന്ന് അണിനിരക്കുന്നു"></canvas>
-        <span class="th-mode" id="thMode">💡 ലൈറ്റ് പ്രോഗ്രാം</span>
-        <span class="th-name" id="thName" aria-live="polite"></span>
-        <div class="th-judge" id="thJudge" aria-live="polite"></div>
+      <div class="rd-stage" id="gmStage">
+        <canvas class="rd-fx" id="gmFx" role="img" aria-label="ഗാനമേള സ്റ്റേജ്: പാട്ടുകാർ, ലൈറ്റുകൾ, ബലൂണുകളുമായി ആൾക്കൂട്ടം"></canvas>
       </div>
       <div class="am-ctrl">
-        <button class="btn primary" data-th="replay">🚚 തേരുകൾ വരട്ടെ</button>
-        <button class="btn th-next" data-th="next">➡️ അടുത്ത തേര്</button>
-        <button class="btn" data-th="judge">⭐ ഞാൻ ജഡ്ജി</button>
-        <button class="btn" data-th="mode">💡 അടുത്ത ലൈറ്റ്</button>
-        <button class="btn am-snd" id="thSnd" aria-pressed="true" aria-label="ആൾക്കൂട്ട ശബ്ദം ഓൺ / ഓഫ്">🔊</button>
+        <button class="btn" data-gm-skip="-1" aria-label="മുമ്പത്തെ ഗാനം">⏮</button>
+        <button class="btn primary" id="gmSong">🎵 പാട്ട് ഉടൻ</button>
+        <button class="btn" data-gm-skip="1" aria-label="അടുത്ത ഗാനം">⏭</button>
+        <span class="gm-now" id="gmNow"></span>
+        <button class="btn" data-gm="go">🎈 ബലൂൺ വിടുക (അമർത്തിപ്പിടിക്കുക)</button>
+        <button class="btn" data-gm="stage">🎆 സ്റ്റേജ് മാറ്റുക</button>
       </div>
+      <p class="gm-tip">🎈 ബട്ടൺ അമർത്തിപ്പിടിച്ചാൽ ബലൂണുകൾ നിറയും · സ്റ്റേജിൽ തൊട്ടാലും അമർത്തിപ്പിടിച്ചാലും ഡബിൾ ടാപ്പ് ചെയ്താലും ബലൂണുകൾ പറക്കും</p>
     </div>
   </section>
 
@@ -285,6 +285,30 @@
         <button class="btn" data-rd="boom">🧨 പടക്കം</button>
         <button class="btn" data-rd="speed">🛵 സാധാരണ</button>
         <button class="btn" id="rdSnd" data-rd="snd">🔇 പാട്ട്</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- THER MALSARAM: LED chariots from every samooham line up in front of the church -->
+  <section class="ther-sec" id="ther">
+    <div class="wrap">
+      <div class="am-head">
+        <p class="eyebrow">Ther Malsaram · തേര് മത്സരം</p>
+        <h2>സമൂഹങ്ങളുടെ <em>തേര് മത്സരം</em></h2>
+        <p class="am-help">ദീപാലങ്കാരത്തിൽ തിളങ്ങുന്ന മൂന്ന് മികച്ച തേരുകൾ · <b>തേരിൽ തൊട്ടാൽ</b> അത് തിളങ്ങും · <b>നിങ്ങളും ജഡ്ജിയാകാം</b></p>
+      </div>
+      <div class="th-stage" id="thStage">
+        <canvas class="th-fx" id="thFx" role="img" aria-label="തേര് മത്സരം — ദീപാലങ്കാര തേരുകൾ വണ്ടികളിൽ വന്ന് അണിനിരക്കുന്നു"></canvas>
+        <span class="th-mode" id="thMode">💡 ലൈറ്റ് പ്രോഗ്രാം</span>
+        <span class="th-name" id="thName" aria-live="polite"></span>
+        <div class="th-judge" id="thJudge" aria-live="polite"></div>
+      </div>
+      <div class="am-ctrl">
+        <button class="btn primary" data-th="replay">🚚 തേരുകൾ വരട്ടെ</button>
+        <button class="btn th-next" data-th="next">➡️ അടുത്ത തേര്</button>
+        <button class="btn" data-th="judge">⭐ ഞാൻ ജഡ്ജി</button>
+        <button class="btn" data-th="mode">💡 അടുത്ത ലൈറ്റ്</button>
+        <button class="btn am-snd" id="thSnd" aria-pressed="true" aria-label="ആൾക്കൂട്ട ശബ്ദം ഓൺ / ഓഫ്">🔊</button>
       </div>
     </div>
   </section>
@@ -765,12 +789,13 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="data.js?v=36"></script>
+<script src="data.js?v=42"></script>
 <script src="data-liturgy.js?v=19"></script>
-<script src="app.js?v=38"></script>
+<script src="app.js?v=39"></script>
 <script src="amittu.js?v=23"></script>
 <script src="ther.js?v=40"></script>
 <script src="ride.js?v=27"></script>
+<script src="ganamela.js?v=15"></script>
 <script src="visits.js?v=3"></script>
 </body>
 </html>

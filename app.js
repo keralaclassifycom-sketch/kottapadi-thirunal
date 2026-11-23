@@ -602,7 +602,9 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
       if (!audio.src.endsWith(s.file)) { audio.src = s.file; audio.currentTime = 0; avg = 0; }
       try {
         if (!mediaSrc) { mediaSrc = ctx.createMediaElementSource(audio); mediaSrc.connect(analyser); }
-        await audio.play(); mode = "file"; setUI();
+        await audio.play(); mode = "file";
+        if (!playing) { audio.pause(); return; }   // stopped (scrolled away / another section's sound) while the song was still loading
+        setUI();
       } catch (e) {
         if (!playing) return;                    // paused while loading
         if (e && e.name === "NotAllowedError") { playing = false; setUI(); return; }   // browser blocked sound, keep the song
@@ -610,7 +612,7 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
         if (songs.length) playSong(cur); else { mode = null; startSynth(); setUI(); }
       }
     }
-    function pause() { playing = false; if (mode === "file") audio.pause(); if (mode === "synth") stopSynth();
+    function pause() { playing = false; audio.pause(); if (mode === "synth") stopSynth();
       bars.forEach(b => b.style.height = "12%"); setUI(); }
     // only one sound on the page at a time: the band song stops when amittu is fired, and silences amittu when it starts
     window.addEventListener("kp:audio", e => { if (e.detail !== "band" && playing) pause(); });

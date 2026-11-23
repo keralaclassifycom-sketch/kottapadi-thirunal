@@ -73,7 +73,6 @@ window.DAYS = [
     events: [
       { club: "kpk", t: "", title: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ (K.P.K U.A.E)", troupe: "അതിഗംഭീര രൂപക്കൂട് നില പന്തൽ — ഭാരത് പന്തൽ വർക്ക്സ് ചെറുതുരുത്തി", type: "pandal", place: "", highlight: true },
       { club: "kcc", t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "Alappuzha Blue Diamonds 2.0", type: "ganamela", place: "" },
-      { club: "kcc", t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "പ്രദക്ഷിണവീഥി ദീപാലങ്കാരം", type: "lights", place: "പ്രദക്ഷിണവീഥി" },
       { club: "sehion", t: "", title: "SEHION FEST (സെഹിയോൻ കുടുംബ കൂട്ടായ്മ)", troupe: "യുവജന പോർക്കുളം", type: "lights", place: "" },
       { club: "westgate", t: "", title: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി", troupe: "പ്രദക്ഷിണവീഥി ദീപാലങ്കാരം", type: "lights", place: "പ്രദക്ഷിണവീഥി" },
       { club: "kos", t: "", title: "KINGS OF SOUTH", troupe: "തിരുനാൾ വീഥി ദീപാലങ്കാരം", type: "lights", place: "തിരുനാൾ വീഥി" },
@@ -157,7 +156,7 @@ window.CLUBS = [
   { id: "sehion",       name: "SEHION FEST",                      en: "സെഹിയോൻ കുടുംബ കൂട്ടായ്മ", mono: "SF", color: "#e4167f", logo: "", unit: "സെഹിയോൻ ഫെസ്റ്റ്" },
   { id: "westgate",     name: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി",   en: "Westgate Club", mono: "WG", color: "#a855f7", logo: "" },
   { id: "stories",      name: "കോട്ടപ്പടി സ്റ്റോറീസ്",              en: "Kottapadi Stories Committee", mono: "KS", color: "#ff8a00", logo: "images/logos/kottapadi-stories-white.webp" },
-  { id: "macksolz",     name: "MACKSOLZ KOTTAPPADI",              mono: "MZ", color: "#ff3b5c", logo: "" },
+  { id: "macksolz",     name: "MACKSOLZ KOTTAPPADI",              mono: "MZ", color: "#ff3b5c", logo: "images/clubs/macksolz.webp" },
   { id: "blackorpz",    name: "BLACKORPZ KOTTAPADI",              mono: "BZ", color: "#94a3b8", logo: "" },
   { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "" },
   { id: "szfest",       name: "SZ FEST",                          mono: "SZ", color: "#14b8a6", logo: "" },
@@ -224,8 +223,8 @@ window.SPONSORS = [
   // bg: "clear" = ലോഗോ ട്രാൻസ്പാരന്റ് ആണെങ്കിൽ, വെള്ള കാർഡ് ഇല്ലാതെ സൈറ്റിന്റെ ബാക്ക്ഗ്രൗണ്ടിൽ ചേർന്നു നിൽക്കും
   { name: "പ്രധാന സ്പോൺസർ", sub: "Title Sponsor", logo: "", tier: "main", link: "", open: true },
   { name: "Motion Digital Ads", sub: "Co-Sponsor", logo: "images/sponsors/motion-digital-ads-light.png", bg: "clear", tier: "co", link: "", open: false },
-  { name: "സ്പോൺസർ 3", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
-  { name: "സ്പോൺസർ 4", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
+  { name: "SL Media", sub: "Co-Sponsor", logo: "images/sponsors/sl-media.webp", bg: "clear", shape: "round", tier: "co", link: "", open: false },
+  { name: "കോട്ടപ്പടി വാർത്തകൾ", sub: "Co-Sponsor", logo: "images/sponsors/kottapadi-varthakal.webp", bg: "clear", shape: "round", tier: "co", link: "", open: false },
   { name: "സ്പോൺസർ 5", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
   { name: "സ്പോൺസർ 6", sub: "Co-Sponsor", logo: "", tier: "co", link: "", open: true },
 ];

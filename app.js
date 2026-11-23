@@ -275,7 +275,7 @@ if (window.CLUBS && $("#cgrid")) {
     const mainIcon = MT[types[0]] ? MT[types[0]].icon : "⭐";
     return `<div class="ccard reveal" style="--c:${c.color}" tabindex="0" data-days="${days.join(" ")}">
       <div class="face front">
-        <div class="coin-wrap"><div class="coin"><b>${c.logo ? `<img src="${c.logo}" alt="">` : c.mono}</b><span>${mainIcon}</span></div></div>
+        <div class="coin-wrap"><div class="coin"><b${c.logo ? ' class="has-logo"' : ""}>${c.logo ? `<img src="${c.logo}" alt="${c.name}">` : c.mono}</b><span>${mainIcon}</span></div></div>
         <h3>${c.name}</h3>${c.en ? `<div class="en">${c.en}</div>` : ""}
         <div class="ctags">${types.map(t => `<span>${MT[t].icon} ${MT[t].name}</span>`).join("")}</div>
         <div class="cdays">${days.map(d => `<i style="--dc:${dayOf(d).color}">${dShort(d)}</i>`).join("")}</div>

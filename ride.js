@@ -35,6 +35,9 @@
   let camX = 0, speed = 1, playing = true, t = 0, last = 0, rideX = -260, bikeWait = 1, seeded = false;
   const people = [], booms = [], sparks = [], smoke = [];
   let balloons = [{ col: "#ff3b5c", len: 1, x: 0, y: 0, vx: 0, vy: 0 }];
+  // "ബലൂൺ" button: the bike comes by and the boy on the back lets a whole bunch of balloons go into the sky
+  const BCOL = ["#ffd60a", "#2ec4ff", "#7cff6b", "#ff8fd1", "#ff9f1c", "#9b5cff", "#ff3b5c", "#ffffff"];
+  let loose = [], toRelease = 0, releaseT = 0, hand = null;
   const SPEEDS = [.6, 1, 1.6];
   let speedI = 1;
 
@@ -304,7 +307,7 @@
     };
     kid(bx - 22 * s, "#2f8f4e", "#6b4429", 3 * s, false);
     // pillion's arm up holding the balloon strings
-    const handX = bx - 24 * s, handY = by - 84 * s;
+    const handX = bx - 24 * s, handY = by - 84 * s; hand = { x: handX, y: handY, s };
     g.strokeStyle = "#6b4429"; g.lineWidth = 3 * s; g.beginPath(); g.moveTo(bx - 19 * s, by - 58 * s); g.lineTo(handX, handY); g.stroke();
     kid(bx + 2 * s, "#ffcf4a", "#7a5034", 6 * s, true);
     g.strokeStyle = "#7a5034"; g.lineWidth = 3 * s; g.beginPath(); g.moveTo(bx + 9 * s, by - 56 * s); g.lineTo(bx + 18 * s, by - 50 * s); g.stroke();   // rider's arm on the handle
@@ -318,6 +321,27 @@
       g.fillStyle = "rgba(255,255,255,.55)"; g.beginPath(); g.ellipse(b.x - 3.5 * s, b.y - 5 * s, 2.5 * s, 3.5 * s, 0, 0, 6.283); g.fill();
       g.fillStyle = b.col; g.beginPath(); g.moveTo(b.x - 2 * s, b.y + 13 * s); g.lineTo(b.x + 2 * s, b.y + 13 * s); g.lineTo(b.x, b.y + 16 * s); g.fill();
     });
+  }
+
+  // balloons let go from the bike: they float up, sway, lag behind the moving bike and drift off the top
+  function drawLoose(dt) {
+    const onScreen = hand && rideX > 20 * u && rideX < W - 20 * u;
+    if (toRelease > 0 && onScreen && playing) {
+      releaseT -= dt;
+      while (releaseT <= 0 && toRelease > 0) { releaseT += rnd(.04, .11); toRelease--;
+        const s = hand.s;
+        loose.push({ x: hand.x + rnd(-14, 6) * s, y: hand.y - rnd(20, 50) * s, vx: rnd(-80, 40) * u, vy: rnd(-150, -70) * u, ph: Math.random() * 6, col: pick(BCOL), r: rnd(.8, 1.15), str: rnd(16, 26) }); }
+    }
+    for (let i = loose.length - 1; i >= 0; i--) { const b = loose[i];
+      if (playing) { b.vx += (-30 * u * SPEEDS[speedI] - b.vx) * .6 * dt; b.vy = Math.max(b.vy - 8 * u * dt, -130 * u); b.x += (b.vx + Math.sin(t * 2.2 + b.ph) * 22 * u) * dt; b.y += b.vy * dt; }
+      if (b.y < -60 * u || b.x < -60 * u) { loose.splice(i, 1); continue; }
+      const s = u * 1.1 * b.r, tilt = Math.sin(t * 2 + b.ph) * .2;
+      g.strokeStyle = "rgba(255,255,255,.55)"; g.lineWidth = 1; g.beginPath(); g.moveTo(b.x, b.y + 13 * s);
+      g.quadraticCurveTo(b.x + Math.sin(t * 3 + b.ph) * 6 * s, b.y + (13 + b.str / 2) * s, b.x - Math.sin(t * 2 + b.ph) * 4 * s, b.y + (13 + b.str) * s); g.stroke();
+      g.fillStyle = b.col; g.beginPath(); g.ellipse(b.x, b.y, 10 * s, 13 * s, tilt, 0, 6.283); g.fill();
+      g.fillStyle = "rgba(255,255,255,.55)"; g.beginPath(); g.ellipse(b.x - 3.5 * s, b.y - 5 * s, 2.5 * s, 3.5 * s, 0, 0, 6.283); g.fill();
+      g.fillStyle = b.col; g.beginPath(); g.moveTo(b.x - 2 * s, b.y + 13 * s); g.lineTo(b.x + 2 * s, b.y + 13 * s); g.lineTo(b.x, b.y + 16 * s); g.fill();
+    }
   }
 
   /* ---------- procession: band set in front, the ther behind, umbrellas, fairy-light curtain ---------- */
@@ -558,6 +582,7 @@
     band(bandX);                                      // (a few dance among the players too)
     dancers(bandEnd + 18 * u, 110 * u, 8, 0);        // in front of the band
     bike(t);
+    drawLoose(dt);
     fairyCurtain();
     if (visible) requestAnimationFrame(frame); else running = false;
   }
@@ -574,7 +599,11 @@
     if (a === "snd") { music.want = !music.on; if (!soundOn) soundStart(); music.on ? musicStop() : musicStart(); kick(); return; }
     if (a === "play") { playing = !playing; playBtn.textContent = playing ? "⏸ നിർത്തുക" : "▶️ യാത്ര തുടരുക"; if (!playing) { musicStop(); kick(); return; } updateAmb(); }
     if (!soundOn) musicStart();
-    if (a === "balloon") { if (balloons.length < 5) balloons.push({ col: pick(["#ffd60a", "#2ec4ff", "#7cff6b", "#ff8fd1", "#ff9f1c", "#9b5cff"]), len: Math.random(), x: 0, y: 0, vx: 0, vy: 0 }); else balloons.shift(); }
+    if (a === "balloon") {                // call the bike over (if it is not already on the road) and let 40 balloons go
+      if (rideX < -40 * u || rideX > W * .7) { rideX = -140 * u; bikeWait = 0; }
+      toRelease += 40; releaseT = 0;
+      balloons = BCOL.slice(0, 5).map((col, i) => ({ col, len: Math.random(), x: 0, y: 0, vx: 0, vy: 0 }));   // a fresh bunch in his hand
+    }
     else if (a === "boom") { spawnCracker(camX + W * .82, true); booms[booms.length - 1].t = -.35; }
     else if (a === "ther") { therKind = (therKind + 1) % THER_KINDS.length; therDesign = null; }
     else if (a === "speed") { speedI = (speedI + 1) % SPEEDS.length; b.textContent = ["🐢 പതുക്കെ", "🛵 സാധാരണ", "⚡ വേഗം"][speedI]; }

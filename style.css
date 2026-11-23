@@ -929,3 +929,8 @@ html,body{max-width:100%}
 /* header: the white feast logo in place of the cross + church name */
 .brand-logo img{display:block;height:46px;width:auto}
 @media (max-width:600px){.brand-logo img{height:38px}}
+
+/* the Rapakal logo must fit inside its card on phones */
+.rp-logo{max-width:100%}
+.rp-logo img{max-width:100%;height:auto}
+@media (max-width:600px){.rp-logo img{max-height:none;width:100%}}

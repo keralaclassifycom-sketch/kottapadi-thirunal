@@ -44,11 +44,11 @@
       <a href="#schedule">പരിപാടികൾ</a>
       <a href="#liturgy" data-lit-nav>തിരുകർമ്മങ്ങൾ</a>
       <a href="#amittu">അമിട്ട്</a>
+      <a href="#ther">തേര്</a>
       <a href="#melam">മേളങ്ങൾ</a>
       <a href="#ganamela" data-gm-nav>ഗാനമേള</a>
       <a href="#rapakal" data-rp-nav>രാപകൽ</a>
       <a href="#angadi">അങ്ങാടി</a>
-      <a href="#ther">തേര്</a>
     </nav>
   </div>
 </header>
@@ -200,6 +200,30 @@
     </div>
   </section>
 
+  <!-- THER MALSARAM: LED chariots from every samooham line up in front of the church -->
+  <section class="ther-sec" id="ther">
+    <div class="wrap">
+      <div class="am-head">
+        <p class="eyebrow">Ther Malsaram · തേര് മത്സരം</p>
+        <h2>സമൂഹങ്ങളുടെ <em>തേര് മത്സരം</em></h2>
+        <p class="am-help">ദീപാലങ്കാരത്തിൽ തിളങ്ങുന്ന മൂന്ന് മികച്ച തേരുകൾ · <b>തേരിൽ തൊട്ടാൽ</b> അത് തിളങ്ങും · <b>നിങ്ങളും ജഡ്ജിയാകാം</b></p>
+      </div>
+      <div class="th-stage" id="thStage">
+        <canvas class="th-fx" id="thFx" role="img" aria-label="തേര് മത്സരം — ദീപാലങ്കാര തേരുകൾ വണ്ടികളിൽ വന്ന് അണിനിരക്കുന്നു"></canvas>
+        <span class="th-mode" id="thMode">💡 ലൈറ്റ് പ്രോഗ്രാം</span>
+        <span class="th-name" id="thName" aria-live="polite"></span>
+        <div class="th-judge" id="thJudge" aria-live="polite"></div>
+      </div>
+      <div class="am-ctrl">
+        <button class="btn primary" data-th="replay">🚚 തേരുകൾ വരട്ടെ</button>
+        <button class="btn th-next" data-th="next">➡️ അടുത്ത തേര്</button>
+        <button class="btn" data-th="judge">⭐ ഞാൻ ജഡ്ജി</button>
+        <button class="btn" data-th="mode">💡 അടുത്ത ലൈറ്റ്</button>
+        <button class="btn am-snd" id="thSnd" aria-pressed="true" aria-label="ആൾക്കൂട്ട ശബ്ദം ഓൺ / ഓഫ്">🔊</button>
+      </div>
+    </div>
+  </section>
+
   <!-- MELAM -->
   <section id="melam">
     <div class="wrap">
@@ -285,30 +309,6 @@
         <button class="btn" data-rd="boom">🧨 പടക്കം</button>
         <button class="btn" data-rd="speed">🛵 സാധാരണ</button>
         <button class="btn" id="rdSnd" data-rd="snd">🔇 പാട്ട്</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- THER MALSARAM: LED chariots from every samooham line up in front of the church -->
-  <section class="ther-sec" id="ther">
-    <div class="wrap">
-      <div class="am-head">
-        <p class="eyebrow">Ther Malsaram · തേര് മത്സരം</p>
-        <h2>സമൂഹങ്ങളുടെ <em>തേര് മത്സരം</em></h2>
-        <p class="am-help">ദീപാലങ്കാരത്തിൽ തിളങ്ങുന്ന മൂന്ന് മികച്ച തേരുകൾ · <b>തേരിൽ തൊട്ടാൽ</b> അത് തിളങ്ങും · <b>നിങ്ങളും ജഡ്ജിയാകാം</b></p>
-      </div>
-      <div class="th-stage" id="thStage">
-        <canvas class="th-fx" id="thFx" role="img" aria-label="തേര് മത്സരം — ദീപാലങ്കാര തേരുകൾ വണ്ടികളിൽ വന്ന് അണിനിരക്കുന്നു"></canvas>
-        <span class="th-mode" id="thMode">💡 ലൈറ്റ് പ്രോഗ്രാം</span>
-        <span class="th-name" id="thName" aria-live="polite"></span>
-        <div class="th-judge" id="thJudge" aria-live="polite"></div>
-      </div>
-      <div class="am-ctrl">
-        <button class="btn primary" data-th="replay">🚚 തേരുകൾ വരട്ടെ</button>
-        <button class="btn th-next" data-th="next">➡️ അടുത്ത തേര്</button>
-        <button class="btn" data-th="judge">⭐ ഞാൻ ജഡ്ജി</button>
-        <button class="btn" data-th="mode">💡 അടുത്ത ലൈറ്റ്</button>
-        <button class="btn am-snd" id="thSnd" aria-pressed="true" aria-label="ആൾക്കൂട്ട ശബ്ദം ഓൺ / ഓഫ്">🔊</button>
       </div>
     </div>
   </section>

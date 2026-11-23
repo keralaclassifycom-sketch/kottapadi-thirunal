@@ -925,3 +925,7 @@ html,body{max-width:100%}
 /* the full feast line from the notice is long: smaller, two lines */
 #heroKicker{font-size:clamp(15px,1.7vw,21px);line-height:1.45;max-width:34em}
 @media (max-width:980px){#heroKicker{margin-inline:auto}}
+
+/* header: the white feast logo in place of the cross + church name */
+.brand-logo img{display:block;height:46px;width:auto}
+@media (max-width:600px){.brand-logo img{height:38px}}

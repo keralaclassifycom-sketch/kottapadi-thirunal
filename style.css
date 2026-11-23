@@ -977,3 +977,19 @@ html,body{max-width:100%}
 
 .gm-now{align-self:center;font-family:var(--ml-display);font-weight:700;font-size:13px;color:var(--gold);padding:0 6px}
 [data-gm-skip]{min-width:46px}
+
+/* unit cards: one sliding row on desktop too (arrows + dots), not six rows of cards */
+@media (min-width:701px){
+  .sgrid{display:flex;grid-template-columns:none;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 12px;scrollbar-width:none;overscroll-behavior-x:contain}
+  .sgrid::-webkit-scrollbar{display:none}
+  .sgrid .scard{flex:0 0 calc((100% - 54px) / 4);scroll-snap-align:start}
+  .sgrid .scard.reveal{opacity:1;transform:none}
+  .sgrid .scard.reveal.flip{transform:rotateY(180deg)}
+  .s-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px}
+  .s-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:360px}
+  .s-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:width .25s,background .25s}
+  .s-dots button.on{width:22px;border-radius:999px;background:var(--gold)}
+  .s-arrow{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font-size:24px;line-height:1;cursor:pointer}
+  .s-nav[data-at=start] .s-arrow[data-s="-1"],.s-nav[data-at=end] .s-arrow[data-s="1"]{opacity:.3}
+}
+@media (min-width:701px) and (max-width:1000px){ .sgrid .scard{flex-basis:calc((100% - 36px) / 3)} }

@@ -43,7 +43,7 @@ const byTime = [...SAM].sort((a, b) => a.from - b.from || a.to - b.to);
 /* ---------- static text ---------- */
 $("#heroTitle").textContent = F.churchName;
 $("#heroPlace").textContent = F.place;
-$("#heroKicker").textContent = "വിശുദ്ധ ലാസറിന്റെ തിരുനാൾ";
+$("#heroKicker").textContent = "വി. ലാസറിന്റെയും വി. സെബാസ്ത്യനോസിന്റെയും പരിശുദ്ധ കന്യകാമറിയത്തിന്റെയും തിരുനാൾ മഹാമഹം";
 { const g = document.querySelector(".kt-dots"), cols = ["#ffcf4a", "#ff3b5c", "#22c55e", "#5ec8ff", "#e4167f", "#ff8a00"];
   if (g) for (let i = 0; i < 28; i++) { const a = i / 28 * Math.PI * 2, c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     c.setAttribute("cx", (60 + Math.cos(a) * 54).toFixed(1)); c.setAttribute("cy", (60 + Math.sin(a) * 54).toFixed(1)); c.setAttribute("r", i % 2 ? 2 : 3);

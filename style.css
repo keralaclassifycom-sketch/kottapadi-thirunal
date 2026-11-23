@@ -904,11 +904,7 @@ html,body{max-width:100%}
 .rp-logo img{max-height:150px;max-width:min(520px,90vw);filter:drop-shadow(0 4px 14px rgba(0,0,0,.45))}
 .rp-card .ch img.rp-sl{display:block;height:46px;width:auto;margin-bottom:2px}
 .lit-badge img{display:block;height:58px;width:auto;margin-bottom:2px}
-.logo-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:22px 38px;padding:34px 16px 6px}
-.logo-row img{height:84px;width:auto;opacity:.92}
-@media (max-width:600px){.logo-row{gap:16px 24px}.logo-row img{height:56px}}
 
-.logo-row + .team{border-top:0}   /* no divider lines around the logo row */
 
 /* unit cards: a swipe slider on phones instead of one long column */
 .s-nav{display:none}
@@ -925,3 +921,7 @@ html,body{max-width:100%}
   .s-arrow{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font-size:22px;line-height:1;cursor:pointer}
   .s-nav[data-at=start] .s-arrow[data-s="-1"],.s-nav[data-at=end] .s-arrow[data-s="1"]{opacity:.3}
 }
+
+/* the full feast line from the notice is long: smaller, two lines */
+#heroKicker{font-size:clamp(15px,1.7vw,21px);line-height:1.45;max-width:34em}
+@media (max-width:980px){#heroKicker{margin-inline:auto}}

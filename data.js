@@ -190,7 +190,7 @@ window.RAPAKAL = {
       ],
     },
     {
-      kind: "night", day: "jan3", label: "രാവ്", when: "ജനുവരി 3 · രാത്രി",
+      kind: "night", day: "jan3", label: "രാത്രി തിരുനാൾ", when: "ജനുവരി 3 · രാത്രി",
       items: [
         { t: "", title: "ബാൻഡ് മേളം", by: "GRACE MUSIC BAND TVM (അച്ഛനും പിള്ളേരും)", type: "band" },
       ],

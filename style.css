@@ -890,7 +890,7 @@ html,body{max-width:100%}
 .am-crowd{display:none}
 
 /* visitor counter at the very bottom */
-.visits{text-align:center;margin:0;padding:14px 16px 22px;font-size:12px;color:var(--dim);border-top:1px solid var(--line)}
+.visits{text-align:center;margin:0;padding:8px 16px 22px;font-size:12px;color:var(--dim)}
 .visits b{color:var(--gold);font-weight:700;margin-left:4px}
 .visits i{font-style:normal;margin:0 10px;opacity:.6}
 .live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3dff7a;box-shadow:0 0 6px #3dff7a;margin-right:4px;vertical-align:1px;animation:livePulse 1.6s ease-in-out infinite}
@@ -934,3 +934,6 @@ html,body{max-width:100%}
 .rp-logo{max-width:100%}
 .rp-logo img{max-width:100%;height:auto}
 @media (max-width:600px){.rp-logo img{max-height:none;width:100%}}
+
+/* not-official note at the very bottom */
+.disclaimer{max-width:760px;margin:0 auto;padding:16px 16px 4px;text-align:center;font-size:12px;line-height:1.6;color:var(--dim);border-top:1px solid var(--line)}

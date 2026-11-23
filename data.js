@@ -1,5 +1,5 @@
 /* =====================================================================
-   ചരിത്ര പ്രസിദ്ധമായ കോട്ടപ്പടി തിരുനാൾ 2027 — സെന്റ് ലാസർ ചർച്ച്
+   ചരിത്ര പ്രസിദ്ധമായ കോട്ടപ്പടി തിരുനാൾ 2027 — സെന്റ് ലാസേഴ്സ് ചർച്ച്
    ---------------------------------------------------------------------
    വെബ്സൈറ്റിലെ എല്ലാ വിവരങ്ങളും ഈ ഫയലിൽ നിന്നാണ് വരുന്നത്.
    ഇവിടെ മാറ്റിയാൽ സൈറ്റിൽ തനിയെ മാറും.
@@ -9,10 +9,10 @@
    ===================================================================== */
 
 window.FEAST = {
-  churchName: "സെന്റ് ലാസർ ചർച്ച്",
-  churchNameEn: "St. Lazarus Church",
+  churchName: "സെന്റ് ലാസേഴ്സ് ചർച്ച്",
+  churchNameEn: "St.Lazer's Church",
   place: "കോട്ടപ്പടി",
-  placeEn: "Kottapadi",
+  placeEn: "Kottappadi",
   diocese: "തൃശ്ശൂർ അതിരൂപത (സീറോ മലബാർ)",
   title: "ചരിത്ര പ്രസിദ്ധമായ കോട്ടപ്പടി തിരുനാൾ",
   year: 2027,
@@ -156,7 +156,7 @@ window.CLUBS = [
   { id: "kcc",          name: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി",   en: "K.C.C", mono: "KCC", color: "#5ec8ff", logo: "" },
   { id: "sehion",       name: "SEHION FEST",                      en: "സെഹിയോൻ കുടുംബ കൂട്ടായ്മ", mono: "SF", color: "#e4167f", logo: "", unit: "സെഹിയോൻ ഫെസ്റ്റ്" },
   { id: "westgate",     name: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി",   en: "Westgate Club", mono: "WG", color: "#a855f7", logo: "" },
-  { id: "stories",      name: "കോട്ടപ്പടി സ്റ്റോറീസ്",              en: "Kottapadi Stories Committee", mono: "KS", color: "#ff8a00", logo: "" },
+  { id: "stories",      name: "കോട്ടപ്പടി സ്റ്റോറീസ്",              en: "Kottapadi Stories Committee", mono: "KS", color: "#ff8a00", logo: "images/logos/kottapadi-stories-white.webp" },
   { id: "macksolz",     name: "MACKSOLZ KOTTAPPADI",              mono: "MZ", color: "#ff3b5c", logo: "" },
   { id: "blackorpz",    name: "BLACKORPZ KOTTAPADI",              mono: "BZ", color: "#94a3b8", logo: "" },
   { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "" },
@@ -179,11 +179,12 @@ window.RAPAKAL = {
   name: "രാപകൽ",
   sub: "തിരുനാൾ 2027",
   by: "കോട്ടപ്പടി സ്റ്റോറീസ് ഒരുക്കുന്ന",
-  logo: "",
+  byLogo: "images/logos/kottapadi-stories-white.webp",   // "ഒരുക്കുന്നത്" — the organisers' logo
+  logo: "images/logos/rapakal-thirunal-white.webp",
   intro: "പകലും രാവും നിറയുന്ന തിരുനാൾ ആഘോഷം — ജനുവരി 2 രാവിലെ മുതൽ ജനുവരി 3 രാത്രി വരെ.",
   sessions: [
     {
-      kind: "day", day: "jan2", label: "പകൽ", when: "ജനുവരി 2 · രാവിലെ",
+      kind: "day", day: "jan2", label: "പകൽ", logo: "images/logos/pakal-thirunal.webp", when: "ജനുവരി 2 · രാവിലെ",
       items: [
         { t: "", title: "ബാൻഡ് മേളം", by: "GRACE MUSIC BAND TVM", type: "band" },
         { t: "", title: "ബാൻഡ് മേളം", by: "AMEN MUSIC BAND TVM", type: "band" },
@@ -244,7 +245,8 @@ window.TEAM = {
   coordinators: [
     { name: "Alvin Christopher", role: "കോർഡിനേറ്റർ", photo: "" },
     { name: "Joel Kochu Lazar", role: "കോർഡിനേറ്റർ", photo: "" },
-    { name: "പേര് 3", role: "കോർഡിനേറ്റർ", photo: "" },
+    { name: "Siril V. O", role: "കോർഡിനേറ്റർ", photo: "" },
+    { name: "Adham Antony", role: "കോർഡിനേറ്റർ", photo: "" },
   ],
   designers: [
     { name: "Jopaul MJ", role: "Designed & Developed", photo: "" },
@@ -253,7 +255,7 @@ window.TEAM = {
 
 window.GALLERY = [
   { src: "images/church-lights.jpg", cap: "തിരുനാൾ ദീപാലങ്കാരം" },
-  { src: "images/church-day.jpg", cap: "സെന്റ് ലാസർ ചർച്ച്, കോട്ടപ്പടി" },
+  { src: "images/church-day.jpg", cap: "സെന്റ് ലാസേഴ്സ് ചർച്ച്, കോട്ടപ്പടി" },
   { src: "images/church-golden.jpg", cap: "സ്വർണ്ണ ദീപങ്ങളിൽ പള്ളി" },
   { src: "images/light-tower.jpg", cap: "ദീപഗോപുരം" },
   { src: "images/street-lights.jpg", cap: "തിരുനാൾ വീഥി — ദീപക്കാഴ്ച" },

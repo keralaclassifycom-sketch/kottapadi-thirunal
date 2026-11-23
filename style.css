@@ -895,3 +895,33 @@ html,body{max-width:100%}
 .visits i{font-style:normal;margin:0 10px;opacity:.6}
 .live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3dff7a;box-shadow:0 0 6px #3dff7a;margin-right:4px;vertical-align:1px;animation:livePulse 1.6s ease-in-out infinite}
 @keyframes livePulse{50%{opacity:.35}}
+
+/* ---------- feast logos (images/logos) ---------- */
+.kt-logo-img{display:block;width:min(460px,100%);height:auto;margin:0 0 14px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55)) drop-shadow(0 0 26px rgba(255,207,74,.22));animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
+@media (max-width:980px){.kt-logo-img{margin-inline:auto}}
+.rp-by img{display:block;height:64px;width:auto;margin:0 auto 2px}
+.rp-by span{display:block}
+.rp-logo img{max-height:150px;max-width:min(520px,90vw);filter:drop-shadow(0 4px 14px rgba(0,0,0,.45))}
+.rp-card .ch img.rp-sl{display:block;height:46px;width:auto;margin-bottom:2px}
+.lit-badge img{display:block;height:58px;width:auto;margin-bottom:2px}
+.logo-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:22px 38px;padding:34px 16px 6px}
+.logo-row img{height:84px;width:auto;opacity:.92}
+@media (max-width:600px){.logo-row{gap:16px 24px}.logo-row img{height:56px}}
+
+.logo-row + .team{border-top:0}   /* no divider lines around the logo row */
+
+/* unit cards: a swipe slider on phones instead of one long column */
+.s-nav{display:none}
+@media (max-width:700px){
+  .sgrid{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 11%;padding:6px 11% 10px;margin:0 -16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .sgrid::-webkit-scrollbar{display:none}
+  .sgrid .scard{flex:0 0 78%;scroll-snap-align:center;height:330px}
+  .sgrid .scard.reveal{opacity:1;transform:none}
+  .sgrid .scard.reveal.flip{transform:rotateY(180deg)}
+  .s-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px}
+  .s-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:220px}
+  .s-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:width .25s,background .25s}
+  .s-dots button.on{width:22px;border-radius:999px;background:var(--gold)}
+  .s-arrow{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+  .s-nav[data-at=start] .s-arrow[data-s="-1"],.s-nav[data-at=end] .s-arrow[data-s="1"]{opacity:.3}
+}

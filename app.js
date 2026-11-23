@@ -48,7 +48,7 @@ $("#heroKicker").textContent = "വിശുദ്ധ ലാസറിന്റ�
   if (g) for (let i = 0; i < 28; i++) { const a = i / 28 * Math.PI * 2, c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     c.setAttribute("cx", (60 + Math.cos(a) * 54).toFixed(1)); c.setAttribute("cy", (60 + Math.sin(a) * 54).toFixed(1)); c.setAttribute("r", i % 2 ? 2 : 3);
     c.setAttribute("fill", cols[i % cols.length]); c.style.animationDelay = (-(i % 7) * .26) + "s"; g.appendChild(c); } }
-$("#heroEn").textContent = `${F.churchNameEn.toUpperCase()} · ${F.placeEn.toUpperCase()} · THIRUNAL ${F.year}`;
+$("#heroEn").textContent = `${F.churchNameEn.toUpperCase()}, ${F.placeEn.toUpperCase()} · THIRUNAL ${F.year}`;
 $("#mapsLink").href = F.mapsLink;
 if (F.liveLink) { const l = $("#liveLink"); l.href = F.liveLink; l.hidden = false; $("#liveText").textContent = "തിരുകർമ്മങ്ങൾ തത്സമയം കാണാം."; }
 if (F.whatsappNumber) { $("#waLink").href = `https://wa.me/${F.whatsappNumber}`; $("#waNum").textContent = F.whatsappShow; }
@@ -239,6 +239,19 @@ document.querySelectorAll(".scard").forEach(c => {
   c.addEventListener("click", e => { if (!e.target.closest("[data-sid]")) c.classList.toggle("flip"); });
   c.addEventListener("keydown", e => { if (e.key === "Enter") c.classList.toggle("flip"); });
 });
+// phones: the unit cards become a sideways slider (swipe, dots, arrows) instead of one long column
+{
+  const grid = $("#sgrid"), dots = $("#sDots"), cards = [...grid.querySelectorAll(".scard")];
+  dots.innerHTML = cards.map((_, i) => `<button aria-label="${i + 1}"></button>`).join("");
+  const db = [...dots.children], step = () => cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : grid.clientWidth;
+  const cur = () => Math.round(grid.scrollLeft / step());
+  const go = i => grid.scrollTo({ left: Math.max(0, Math.min(cards.length - 1, i)) * step(), behavior: "smooth" });
+  const mark = () => { const c = cur(); db.forEach((d, i) => d.classList.toggle("on", i === c)); $("#sNav").dataset.at = c === 0 ? "start" : c >= cards.length - 1 ? "end" : ""; };
+  grid.addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true });
+  db.forEach((d, i) => d.addEventListener("click", () => go(i)));
+  $("#sNav").querySelectorAll("[data-s]").forEach(b => b.addEventListener("click", () => go(cur() + +b.dataset.s)));
+  mark();
+}
 
 /* ---------- clubs & committees (programmes come from DAYS events tagged club:"id") ---------- */
 if (window.CLUBS && $("#cgrid")) {
@@ -292,14 +305,14 @@ if (window.CLUBS && $("#cgrid")) {
   const R = window.RAPAKAL, sec = $("#rapakal");
   if (R && R.show !== false && sec) {
     sec.hidden = false;
-    $("#rpBy").textContent = R.by || "";
+    if (R.byLogo) $("#rpBy").innerHTML = `<img src="${R.byLogo}" alt="കോട്ടപ്പടി സ്റ്റോറീസ്"><span>ഒരുക്കുന്ന</span>`; else $("#rpBy").textContent = R.by || "";
     if (R.logo) $("#rpLogo").innerHTML = `<img src="${R.logo}" alt="${R.name} ${R.sub || ""}">`;
     else { $("#rpName").textContent = R.name || "രാപകൽ"; $("#rpSub").textContent = R.sub || ""; }
     $("#rpLogo").setAttribute("aria-label", `${R.name || ""} ${R.sub || ""}`);
     $("#rpIntro").textContent = R.intro || "";
     $("#rpMore").textContent = R.more || ""; if (!R.more) $("#rpMore").hidden = true;
     $("#rpSessions").innerHTML = (R.sessions || []).map(s => `<article class="rp-card ${s.kind === "night" ? "night" : "day"}">
-      <div class="ch"><i>${s.kind === "night" ? "🌙" : "☀️"}</i><div><b>${s.label || ""}</b><span>${s.when || (s.day && dayOf(s.day) ? dLabel(s.day) : "")}</span></div></div>
+      <div class="ch"><i>${s.kind === "night" ? "🌙" : "☀️"}</i><div>${s.logo ? `<img class="rp-sl" src="${s.logo}" alt="${s.label || ""}">` : `<b>${s.label || ""}</b>`}<span>${s.when || (s.day && dayOf(s.day) ? dLabel(s.day) : "")}</span></div></div>
       <ul class="rp-items">${(s.items || []).map(it => { const ty = MT[it.type];
         return `<li><i>${ty ? ty.icon : "⭐"}</i><div>${it.t ? `<span class="tm">${tf(it.t).full}</span>` : ""}<b>${it.title || ""}</b>${it.by ? `<small>${it.by}</small>` : ""}${it.note ? `<small>${it.note}</small>` : ""}</div></li>`; }).join("")
         || `<li><i>⏳</i><div><b>വിവരങ്ങൾ ഉടൻ</b></div></li>`}</ul></article>`).join("");
@@ -390,7 +403,7 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
         ${(d.after || []).map(blockHTML).join("")}
         ${d.highlight ? `<p class="lit-hl">${esc(d.highlight)}</p>` : ""}
         ${(d.notes || []).map(n => `<p class="lit-note">${esc(n)}</p>`).join("")}
-        ${d.badges ? `<div class="lit-badges">${d.badges.map(b => `<div class="lit-badge"><b>${esc(b.name)}</b>${b.t ? `<span>${b.t2 ? tf(b.t).main + " – " + tf(b.t2).full : tf(b.t).full}</span>` : ""}</div>`).join("")}</div>` : ""}
+        ${d.badges ? `<div class="lit-badges">${d.badges.map(b => `<div class="lit-badge">${b.logo ? `<img src="${esc(b.logo)}" alt="${esc(b.name)}">` : `<b>${esc(b.name)}</b>`}${b.t ? `<span>${b.t2 ? tf(b.t).main + " – " + tf(b.t2).full : tf(b.t).full}</span>` : ""}</div>`).join("")}</div>` : ""}
       </article>`;
     }
     $("#litStrip").addEventListener("click", e => { const b = e.target.closest("[data-lit]"); if (b) show(b.dataset.lit); });

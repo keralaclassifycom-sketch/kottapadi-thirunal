@@ -299,3 +299,13 @@ window.BAND_PLAYER = {
   demoTitle: "ബാൻഡ് താളം",
   hint: "🎺 തൊട്ടാൽ ബാൻഡ് മേളം!",
 };
+
+/* --------------------------------------------------------------
+   സന്ദർശകരുടെ എണ്ണം (ആകെ / ഇപ്പോൾ സൈറ്റിൽ) — Firebase Realtime Database
+   Firebase കൺസോളിലെ "Your apps → Web app" ലെ firebaseConfig ഇവിടെ ഒട്ടിക്കുക.
+   null ആയിരിക്കുമ്പോൾ 300 എന്ന തുടക്ക സംഖ്യ മാത്രം കാണിക്കും.
+   -------------------------------------------------------------- */
+window.FIREBASE_CONFIG = {
+  projectId: "kottapadi-thirunal",
+  databaseURL: "https://kottapadi-thirunal-default-rtdb.asia-southeast1.firebasedatabase.app",
+};

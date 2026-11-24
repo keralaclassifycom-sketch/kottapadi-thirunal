@@ -55,7 +55,7 @@ if (F.whatsappNumber) { $("#waLink").href = `https://wa.me/${F.whatsappNumber}`;
 if (F.whatsappGroup) $("#waGroup").href = F.whatsappGroup; else $("#waGroup").hidden = true;
 $("#updated").textContent = F.updated ? `അവസാനം പുതുക്കിയത്: ${F.updated}` : "";
 $("#heroDates").innerHTML = DAYS.map(d => { const dt = pd(d.date);
-  return `<a class="date-pill" href="#schedule" data-day="${d.id}" style="--c:${d.color}"><b>${dt.getDate()}</b><span>${ML_SHORT[dt.getMonth()]}<br>${d.name}</span></a>`; }).join("");
+  return `<a class="date-pill" href="#schedule" data-day="${d.id}" style="--c:${d.color}"><b>${dt.getDate()}</b><span>${ML_MONTHS[dt.getMonth()]}<br>${d.name}</span></a>`; }).join("");
 
 /* ---------- countdown ---------- */
 function tick() {

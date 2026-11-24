@@ -1017,3 +1017,7 @@ html,body{max-width:100%}
 @media (max-width:640px){.gm-list{grid-template-columns:1fr;gap:8px}.gm-card{flex-direction:row;flex-wrap:wrap;justify-content:center;column-gap:8px}}
 .am-list{grid-template-columns:repeat(auto-fit,minmax(220px,280px));justify-content:center}
 @media (max-width:640px){.am-list{grid-template-columns:1fr}}
+
+/* top date cards: month and title both left-aligned, number centred beside them */
+.date-pill{align-items:center;gap:10px;text-align:left}
+.date-pill span{text-align:left;line-height:1.35}

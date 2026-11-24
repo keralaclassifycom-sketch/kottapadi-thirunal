@@ -319,6 +319,14 @@ if (window.CLUBS && $("#cgrid")) {
   } else { sec && sec.remove(); const n = document.querySelector("[data-rp-nav]"); n && n.remove(); }
 }
 
+/* ---------- അമിട്ട്: who does the fireworks (every DAYS event of type "fireworks"), as cards under the heading ---------- */
+{
+  const box = $("#amList"), fw = [];
+  DAYS.forEach(d => d.events.forEach(e => { if (e.type === "fireworks") fw.push({ ...e, day: d.id }); }));
+  if (box && fw.length) box.innerHTML = fw.map(e => `<div class="gm-card"><span class="gm-date">${dLabel(e.day)}${e.t ? " · " + tf(e.t).main : ""}</span><b>${e.troupe || MT[e.type].name}</b><small>${e.title || ""}</small></div>`).join("");
+  else if (box) box.remove();
+}
+
 /* ---------- QR code section ---------- */
 if ($("#qr")) {
   const url = F.siteUrl || location.href.split("#")[0].split("?")[0];

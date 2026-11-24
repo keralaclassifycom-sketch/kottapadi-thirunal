@@ -96,7 +96,6 @@ window.DAYS = [
       { club: "stories", t: "", title: "കോട്ടപ്പടി സ്റ്റോറീസ് — രാപകൽ തിരുനാൾ 2027", troupe: "GRACE MUSIC BAND TVM (അച്ഛനും പിള്ളേരും)", type: "band", place: "", highlight: true },
       { club: "teasers", t: "", title: "TEASERS KOTTAPADI", troupe: "ST. MARY'S VARANDARAPPILLY", type: "band", place: "" },
       { club: "cb", t: "19:00", title: "Christian Brothers Kottapadi", troupe: "അതിഗംഭീര വർണ്ണവിസ്മയം", type: "fireworks", place: "", highlight: true },
-      { club: "westgate", t: "", title: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി", troupe: "വർണ്ണമഴ", type: "fireworks", place: "", highlight: true },
       { club: "palliyangadi", t: "", title: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി", troupe: "നന്മ 2027", type: "charity", place: "" },
     ],
   },
@@ -229,7 +228,6 @@ window.FLOW = [
   { d: "ജനു 2", t: "ബാൻഡ്, നാദസ്വരം, ചെണ്ട", i: "🥁" },
   { d: "ജനു 3", t: "ക്ലബ്ബുകളുടെ ബാൻഡ് മേളം", i: "🎺" },
   { d: "ജനു 3 · 7PM", t: "വർണ്ണവിസ്മയം", i: "✨" },
-  { d: "ജനു 3", t: "വർണ്ണമഴ", i: "🎇" },
   { d: "ജനു 4", t: "ഗാനമേള", i: "🎻" },
   { d: "ജനു 4", t: "സമാപനം", i: "🙏" },
 ];

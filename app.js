@@ -323,7 +323,7 @@ if (window.CLUBS && $("#cgrid")) {
 {
   const box = $("#amList"), fw = [];
   DAYS.forEach(d => d.events.forEach(e => { if (e.type === "fireworks") fw.push({ ...e, day: d.id }); }));
-  if (box && fw.length) box.innerHTML = fw.map(e => `<div class="gm-card"><span class="gm-date">${dLabel(e.day)}${e.t ? " · " + tf(e.t).main : ""}</span><b>${e.troupe || MT[e.type].name}</b><small>${e.title || ""}</small></div>`).join("");
+  if (box && fw.length) box.innerHTML = fw.map(e => `<div class="gm-card"><span class="gm-date">${dLabel(e.day)}</span><b>${e.troupe || MT[e.type].name}</b><small>${e.title || ""}</small></div>`).join("");
   else if (box) box.remove();
 }
 

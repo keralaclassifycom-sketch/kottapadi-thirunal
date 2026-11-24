@@ -1021,3 +1021,5 @@ html,body{max-width:100%}
 /* top date cards: month and title both left-aligned, number centred beside them */
 .date-pill{align-items:center;gap:10px;text-align:left}
 .date-pill span{text-align:left;line-height:1.35}
+.date-pill .dp-hl{display:block;margin-top:2px;font-family:var(--ml-display);font-weight:500;font-size:11.5px;color:var(--dim);line-height:1.35}
+@media (max-width:600px){.dates{flex-direction:column}.date-pill{width:100%;box-sizing:border-box}.date-pill b{min-width:40px;text-align:center}}

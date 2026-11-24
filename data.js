@@ -55,21 +55,21 @@ window.MELAM_TYPES = {
 window.DAYS = [
   {
     id: "dec25", date: "2026-12-25", color: "#e4167f",
-    name: "കൊടിയേറ്റം", sub: "തിരുനാൾ കൊടിയേറ്റം",
+    name: "കൊടിയേറ്റം", sub: "തിരുനാൾ കൊടിയേറ്റം", hl: "തിരുനാൾ കൊടിയേറ്റം · വൈകീട്ട് 5:00",
     events: [
       { t: "", title: "തിരുനാൾ കൊടിയേറ്റം", troupe: "", type: "church", place: "പള്ളി മുറ്റം", highlight: true },
     ],
   },
   {
     id: "dec31", date: "2026-12-31", color: "#5ec8ff",
-    name: "ഗാനമേള", sub: "വർഷാവസാന രാവ്",
+    name: "ഗാനമേള", sub: "വർഷാവസാന രാവ്", hl: "പാല കമ്മ്യൂണിക്കേഷൻ · വർഷാവസാന രാവ്",
     events: [
       { club: "kos", t: "", title: "KINGS OF SOUTH", troupe: "പാല കമ്മ്യൂണിക്കേഷൻ ഗാനമേള", type: "ganamela", place: "", highlight: true },
     ],
   },
   {
     id: "jan1", date: "2027-01-01", color: "#ff3b5c",
-    name: "നില പന്തൽ, ദീപക്കാഴ്ച & കലാസന്ധ്യ", sub: "പുതുവത്സര ദിനം",
+    name: "നില പന്തൽ, ദീപക്കാഴ്ച & കലാസന്ധ്യ", sub: "പുതുവത്സര ദിനം", hl: "ഗാനമേള · Alappuzha Blue Diamonds 2.0",
     events: [
       { club: "kpk", t: "", title: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ (K.P.K U.A.E)", troupe: "അതിഗംഭീര രൂപക്കൂട് നില പന്തൽ — ഭാരത് പന്തൽ വർക്ക്സ് ചെറുതുരുത്തി", type: "pandal", place: "", highlight: true },
       { club: "kcc", t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "Alappuzha Blue Diamonds 2.0", type: "ganamela", place: "" },
@@ -80,14 +80,14 @@ window.DAYS = [
   },
   {
     id: "jan2", date: "2027-01-02", color: "#ffd60a", units: true,
-    name: "അമ്പ് – വള എഴുന്നള്ളിപ്പ്", sub: "21 യൂണിറ്റുകൾ · ബാൻഡ് മേളം",
+    name: "അമ്പ് – വള എഴുന്നള്ളിപ്പ്", sub: "21 യൂണിറ്റുകൾ · ബാൻഡ് മേളം", hl: "21 യൂണിറ്റുകൾ · ബാൻഡ് മേളം · പകൽ തിരുനാൾ",
     events: [
       { club: "stories", t: "", title: "കോട്ടപ്പടി സ്റ്റോറീസ് കമ്മിറ്റി ഒരുക്കുന്ന രാപകൽ തിരുനാൾ", troupe: "GRACE MUSIC BAND TVM · AMEN MUSIC BAND TVM", type: "band", place: "", highlight: true },
     ],
   },
   {
     id: "jan3", date: "2027-01-03", color: "#3b82f6",
-    name: "ബാൻഡ് മേളം & വർണ്ണമഴ", sub: "ക്ലബ്ബുകളുടെ ബാൻഡ് · വെടിക്കെട്ട്",
+    name: "ബാൻഡ് മേളം & വർണ്ണവിസ്മയം", hl: "ക്ലബ്ബുകളുടെ ബാൻഡ് · വെടിക്കെട്ട് · രാത്രി തിരുനാൾ", sub: "ക്ലബ്ബുകളുടെ ബാൻഡ് · വെടിക്കെട്ട്",
     events: [
       { club: "macksolz", t: "", title: "MACKSOLZ KOTTAPPADI", troupe: "NEW VOICE PALA", type: "band", place: "" },
       { club: "blackorpz", t: "", title: "BLACKORPZ KOTTAPADI", troupe: "RAGADEEPAM MUNDATHIKODE", type: "band", place: "" },
@@ -101,7 +101,7 @@ window.DAYS = [
   },
   {
     id: "jan4", date: "2027-01-04", color: "#22c55e",
-    name: "തിരുനാൾ സമാപനം", sub: "ഗാനമേള",
+    name: "തിരുനാൾ സമാപനം", sub: "ഗാനമേള", hl: "ഗാനമേള · Star Blue Mound Music Band",
     events: [
       { club: "united", t: "", title: "UNITED CLUB KOTTAPADI", troupe: "STAR BLUE MOUND MUSIC BAND COCHIN — ഗാനമേള", type: "ganamela", place: "", highlight: true },
     ],

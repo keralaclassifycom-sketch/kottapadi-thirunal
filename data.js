@@ -69,7 +69,7 @@ window.DAYS = [
   },
   {
     id: "jan1", date: "2027-01-01", color: "#ff3b5c",
-    name: "നില പന്തൽ & ദീപക്കാഴ്ച", sub: "പുതുവത്സര ദിനം",
+    name: "നില പന്തൽ, ദീപക്കാഴ്ച & കലാസന്ധ്യ", sub: "പുതുവത്സര ദിനം",
     events: [
       { club: "kpk", t: "", title: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ (K.P.K U.A.E)", troupe: "അതിഗംഭീര രൂപക്കൂട് നില പന്തൽ — ഭാരത് പന്തൽ വർക്ക്സ് ചെറുതുരുത്തി", type: "pandal", place: "", highlight: true },
       { club: "kcc", t: "", title: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)", troupe: "Alappuzha Blue Diamonds 2.0", type: "ganamela", place: "" },
@@ -102,9 +102,9 @@ window.DAYS = [
   },
   {
     id: "jan4", date: "2027-01-04", color: "#22c55e",
-    name: "തിരുനാൾ സമാപനം", sub: "വിവരങ്ങൾ ഉടൻ",
+    name: "തിരുനാൾ സമാപനം", sub: "ഗാനമേള",
     events: [
-      { t: "", title: "പരിപാടികളുടെ വിവരങ്ങൾ ഉടൻ ചേർക്കും", troupe: "", type: "church", place: "" },
+      { club: "united", t: "", title: "UNITED CLUB KOTTAPADI", troupe: "STAR BLUE MOUND MUSIC BAND COCHIN — ഗാനമേള", type: "ganamela", place: "", highlight: true },
     ],
   },
 ];
@@ -163,6 +163,7 @@ window.CLUBS = [
   { id: "teasers",      name: "TEASERS KOTTAPADI",                mono: "TZ", color: "#facc15", logo: "" },
   { id: "cb",           name: "Christian Brothers Kottapadi",     mono: "CB", color: "#3b82f6", logo: "" },
   { id: "palliyangadi", name: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി",      en: "Team Palliyangadi", mono: "TP", color: "#10b981", logo: "" },
+  { id: "united",       name: "UNITED CLUB KOTTAPADI",            mono: "UC", color: "#0ea5e9", logo: "" },
 ];
 
 /* --------------------------------------------------------------
@@ -207,7 +208,13 @@ window.RAPAKAL = {
 window.GANAMELA = {
   show: true,
   title: "ഗാനമേള",
-  dates: "ഡിസംബർ 31 · ജനുവരി 1",
+  dates: "ഡിസംബർ 31 · ജനുവരി 1 · ജനുവരി 4",
+  // the three ganamelas, shown as cards under the heading
+  list: [
+    { date: "ഡിസംബർ 31", troupe: "പാല കമ്മ്യൂണിക്കേഷൻ", by: "KINGS OF SOUTH" },
+    { date: "ജനുവരി 1", troupe: "Alappuzha Blue Diamonds 2.0", by: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി (കെ.സി.സി)" },
+    { date: "ജനുവരി 4", troupe: "Star Blue Mound Music Band Cochin", by: "UNITED CLUB KOTTAPADI" },
+  ],
   songs: [1, 2, 3, 4].map(n => ({ file: "audio/ganamela-" + n + ".mp3?v=2", title: "ഗാനമേള " + n })),   // played one after another
 }
 
@@ -217,11 +224,13 @@ window.FLOW = [
   { d: "ഡിസം 31", t: "ഗാനമേള", i: "🎻" },
   { d: "ജനു 1", t: "രൂപക്കൂട് നില പന്തൽ", i: "🎪" },
   { d: "ജനു 1", t: "വീഥി ദീപാലങ്കാരം", i: "💡" },
+  { d: "ജനു 1", t: "കലാസന്ധ്യ", i: "🎭" },
   { d: "ജനു 2", t: "അമ്പ് – വള എഴുന്നള്ളിപ്പ്", i: "🏹" },
   { d: "ജനു 2", t: "ബാൻഡ്, നാദസ്വരം, ചെണ്ട", i: "🥁" },
   { d: "ജനു 3", t: "ക്ലബ്ബുകളുടെ ബാൻഡ് മേളം", i: "🎺" },
   { d: "ജനു 3 · 7PM", t: "വർണ്ണവിസ്മയം", i: "✨" },
   { d: "ജനു 3", t: "വർണ്ണമഴ", i: "🎇" },
+  { d: "ജനു 4", t: "ഗാനമേള", i: "🎻" },
   { d: "ജനു 4", t: "സമാപനം", i: "🙏" },
 ];
 

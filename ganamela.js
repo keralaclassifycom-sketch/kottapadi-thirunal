@@ -7,6 +7,9 @@
   const preview = /[?&]preview\b/.test(location.search);
   if (!GM.show && !preview) { sec.remove(); const n = document.querySelector("[data-gm-nav]"); n && n.remove(); return; }
   sec.hidden = false;
+  // the three ganamelas as small cards under the heading
+  const lst = document.getElementById("gmList");
+  if (lst && GM.list) lst.innerHTML = GM.list.map(x => `<div class="gm-card"><span class="gm-date">${x.date}</span><b>${x.troupe}</b><small>${x.by}</small></div>`).join("");
 
   const stage = document.getElementById("gmStage"), cv = document.getElementById("gmFx"), g = cv.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;

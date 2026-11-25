@@ -257,17 +257,18 @@ window.ADVERTISE = {
 
 /* --------------------------------------------------------------
    Designed, Developed & Coordinated by
-   photo: "images/team/peru.jpg" — ഇല്ലെങ്കിൽ "" (ആദ്യാക്ഷരം കാണിക്കും)
+   photo: "images/team/peru.jpg?v=2" — ഇല്ലെങ്കിൽ "" (ആദ്യാക്ഷരം കാണിക്കും)
    -------------------------------------------------------------- */
 window.TEAM = {
   coordinators: [
-    { name: "Alvin Christopher", role: "കോർഡിനേറ്റർ", photo: "" },
-    { name: "Joel Kochu Lazar", role: "കോർഡിനേറ്റർ", photo: "" },
-    { name: "Siril V. O", role: "കോർഡിനേറ്റർ", photo: "" },
-    { name: "Adham Antony", role: "കോർഡിനേറ്റർ", photo: "" },
+    { name: "Alwin Christopher M. S", role: "കോർഡിനേറ്റർ", photo: "images/team/alwin.jpg?v=2" },
+    { name: "Lenson K. L", role: "കോർഡിനേറ്റർ", photo: "images/team/lenson.jpg?v=2" },
+    { name: "Adham Antony", role: "കോർഡിനേറ്റർ", photo: "images/team/adham.jpg?v=2" },
+    { name: "Siril V. O", role: "കോർഡിനേറ്റർ", photo: "images/team/siril.jpg?v=2" },
+    { name: "Joel Kochulazar", role: "കോർഡിനേറ്റർ", photo: "images/team/joel.jpg?v=2" },
   ],
   designers: [
-    { name: "Jopaul MJ", role: "Designed & Developed", photo: "" },
+    { name: "Jopaul MJ", role: "Designed & Developed", photo: "images/team/jopaul.jpg?v=2" },
   ],
 };
 

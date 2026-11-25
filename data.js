@@ -151,7 +151,7 @@ window.UNITS = [
    -------------------------------------------------------------- */
 window.CLUBS = [
   { id: "kos",          name: "KINGS OF SOUTH",                   mono: "KoS", color: "#ffd60a", logo: "" },
-  { id: "kpk",          name: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ",      en: "K.P.K U.A.E", mono: "KPK", color: "#22c55e", logo: "" },
+  { id: "kpk",          name: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ",      en: "K.P.K U.A.E", mono: "KPK", color: "#22c55e", logo: "images/clubs/kpk-uae.webp" },
   { id: "kcc",          name: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി",   en: "K.C.C", mono: "KCC", color: "#5ec8ff", logo: "" },
   { id: "sehion",       name: "SEHION FEST",                      en: "സെഹിയോൻ കുടുംബ കൂട്ടായ്മ", mono: "SF", color: "#e4167f", logo: "", unit: "സെഹിയോൻ ഫെസ്റ്റ്" },
   { id: "westgate",     name: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി",   en: "Westgate Club", mono: "WG", color: "#a855f7", logo: "" },

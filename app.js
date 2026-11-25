@@ -36,7 +36,7 @@ const SAM = window.UNITS.map((u, i) => {
   via.forEach((v, k) => stops.push({ i: Math.min(path.length - 2, k + 1), p: v, t: "", n: "" }));
   stops.push({ i: path.length - 1, p: "പള്ളി", t: u.to, n: "അമ്പ്, വള സമർപ്പണം · സമാപനം" });
   return { id: "u" + i, no: i + 1, name: u.n, sub: u.sub || "", color, path, stops, from: mins(u.from), to: mins(u.to), tFrom: u.from, tTo: u.to,
-    melams: [{ type: u.type, troupe: u.troupe }], day: UDAY, auto: !u.path };
+    melams: [{ type: u.type, troupe: u.troupe }], ther: u.ther || "", day: UDAY, auto: !u.path };
 });
 const byTime = [...SAM].sort((a, b) => a.from - b.from || a.to - b.to);
 
@@ -75,7 +75,7 @@ tick(); setInterval(tick, 1000);
 /* ---------- day gates + schedule ---------- */
 function dayEvents(d) {
   const ev = d.events.map(e => ({ ...e }));
-  if (d.units) byTime.forEach(s => ev.push({ t: s.tFrom, tEnd: s.tTo, title: `${s.no}. ${s.name}${s.sub ? " (" + s.sub + ")" : ""}`,
+  if (d.units) byTime.forEach(s => ev.push({ t: s.tFrom, tEnd: s.tTo, title: `${s.name}${s.sub ? " (" + s.sub + ")" : ""}`,
     troupe: `${MT[s.melams[0].type].icon} ${s.melams[0].troupe}`, type: s.melams[0].type, sid: s.id, unit: true }));
   return ev;
 }
@@ -172,9 +172,9 @@ function panel(force) {
   }
   const r = SAM.find(x => x.id === selected);
   p.style.setProperty("--c", r.color);
-  p.innerHTML = `<h3>${r.no}. ${r.name}</h3><div class="sub">${r.sub ? r.sub + " · " : ""}${dLabel(r.day)} · ${tf(r.tFrom).full} – ${tf(r.tTo).full}</div>
+  p.innerHTML = `<h3>${r.name}</h3><div class="sub">${r.sub ? r.sub + " · " : ""}${dLabel(r.day)} · ${tf(r.tFrom).full} – ${tf(r.tTo).full}</div>
   <ul class="rail">${r.stops.map(s => `<li><time>${tf(s.t).main === "—" ? "" : tf(s.t).main}</time><span class="pt"></span><div><b>${s.p}</b><span>${s.t ? tf(s.t).part : ""}${s.n ? " · " + s.n : ""}</span></div></li>`).join("")}</ul>
-  <div class="rp-melams">${r.melams.map(m => `<span>${MT[m.type].icon} ${MT[m.type].name}: ${m.troupe}</span>`).join("")}<span>🏹 അമ്പ്</span><span>⭕ വള</span></div>
+  <div class="rp-melams">${r.melams.map(m => `<span>${MT[m.type].icon} ${MT[m.type].name}: ${m.troupe}</span>`).join("")}${r.ther ? `<span>✨ തേര്: ${r.ther}</span>` : ""}<span>🏹 അമ്പ്</span><span>⭕ വള</span></div>
   ${r.auto ? `<p class="note">ℹ️ മാപ്പിലെ വഴി ഏകദേശ രൂപം മാത്രം. യഥാർത്ഥ റൂട്ട് data.js-ൽ ചേർക്കാം.</p>` : ""}`;
 }
 function selectRoute(id) {
@@ -222,16 +222,17 @@ $("#sgrid").innerHTML = byTime.map((s, i) => {
   const ty = MT[s.melams[0].type];
   const icons = ["🏹", "⭕", ty.icon, "✝", "⛪", ty.icon];
   return `<div class="scard reveal" style="--c:${s.color}" tabindex="0">
-  <div class="face front"><span class="badge">${s.no}</span><div class="cube-wrap"><div class="cube" style="animation-delay:${-i * 1.3}s">${icons.map(x => `<div>${x}</div>`).join("")}</div></div>
-    <h3>${s.name}</h3><div class="en">${s.sub || ty.name}</div><div class="troupe">${ty.icon} ${s.melams[0].troupe}</div>
+  <div class="face front"><div class="cube-wrap"><div class="cube" style="animation-delay:${-i * 1.3}s">${icons.map(x => `<div>${x}</div>`).join("")}</div></div>
+    <h3>${s.name}</h3><div class="en">${s.sub || ty.name}</div><div class="troupe">${ty.icon} ${s.melams[0].troupe}</div>${s.ther ? `<div class="troupe">✨ തേര്: ${s.ther}</div>` : ""}
     <div class="tm"><span>🚩 ${tf(s.tFrom).full}</span><span>⛪ ${tf(s.tTo).main}</span></div>
     <div class="flip-hint">തൊട്ടാൽ വിവരങ്ങൾ ↻</div></div>
-  <div class="face back"><h4>${s.no}. ${s.name}</h4>
+  <div class="face back"><h4>${s.name}</h4>
     ${s.sub ? `<div class="row">🏘️ <b>${s.sub}</b></div>` : ""}
     <div class="row">📅 <b>${dLabel(s.day)}</b></div>
     <div class="row">🚩 തുടക്കം: <b>${tf(s.tFrom).full}</b></div>
     <div class="row">⛪ സമാപനം: <b>${tf(s.tTo).full}</b></div>
     <div class="row">${ty.icon} ${ty.name}: <b>${s.melams[0].troupe}</b></div>
+    ${s.ther ? `<div class="row">✨ തേര്: <b>${s.ther}</b></div>` : ""}
     <div class="row">🏹 അമ്പ് · ⭕ വള എഴുന്നള്ളിപ്പ്</div>
     <button class="btn primary" data-sid="${s.id}" data-scroll="1">🗺️ 3D റൂട്ട് കാണുക</button></div></div>`;
 }).join("");
@@ -989,7 +990,7 @@ function palm(scene, x, z, h, mat) {
   const label = (txt, pos, cls, color, id) => { const el = document.createElement("div"); el.className = "lb " + (cls || ""); el.textContent = txt; if (color) el.style.setProperty("--c", color);
     labelsEl.appendChild(el); const o = { el, pos, id }; labels.push(o); return o; };
   label("⛪ " + F.churchName, new V3(0, 9, -2), "church");
-  SAM.forEach(r => { label(`${r.no}. ${r.name}`, new V3(r.path[0][0], 9, r.path[0][1]), "", r.color, r.id); });
+  SAM.forEach(r => { label(`${r.name}`, new V3(r.path[0][0], 9, r.path[0][1]), "", r.color, r.id); });
 
   const O = orbit(S.r.domElement, S.cam, { theta: .25, phi: .82, r: 210, minR: 30, maxR: 290, maxPhi: 1.35, target: new V3(0, 0, 0) });
   let goal = { target: new V3(0, 0, 0), r: 210 }, follow = false, night = false, sel = "all";

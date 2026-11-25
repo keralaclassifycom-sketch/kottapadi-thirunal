@@ -18,7 +18,7 @@ window.FEAST = {
   year: 2027,
   // കൗണ്ട്ഡൗൺ: ആദ്യം കൊടിയേറ്റത്തിലേക്ക്, പിന്നെ തിരുനാളിലേക്ക്
   countdown: [
-    { at: "2026-12-25T17:00", label: "കൊടിയേറ്റത്തിന്" },
+    { at: "2026-12-25T00:00", label: "കൊടിയേറ്റത്തിന്" },   // സമയം ഉറപ്പായിട്ടില്ല — തിയ്യതി മാത്രം
     { at: "2026-12-31T17:00", label: "തിരുനാളിന്" },
   ],
   liveFrom: "2026-12-31", liveTo: "2027-01-04",
@@ -55,7 +55,7 @@ window.MELAM_TYPES = {
 window.DAYS = [
   {
     id: "dec25", date: "2026-12-25", color: "#e4167f",
-    name: "കൊടിയേറ്റം", sub: "തിരുനാൾ കൊടിയേറ്റം", hl: "തിരുനാൾ കൊടിയേറ്റം · വൈകീട്ട് 5:00",
+    name: "കൊടിയേറ്റം", sub: "തിരുനാൾ കൊടിയേറ്റം", hl: "തിരുനാൾ കൊടിയേറ്റം",
     events: [
       { t: "", title: "തിരുനാൾ കൊടിയേറ്റം", troupe: "", type: "church", place: "പള്ളി മുറ്റം", highlight: true },
     ],
@@ -114,6 +114,7 @@ window.DAYS = [
    type      : band / nadaswaram / chenda
    start     : എഴുന്നള്ളിപ്പ് തുടങ്ങുന്ന സ്ഥലം (അറിയാമെങ്കിൽ എഴുതുക)
    via       : വഴിയിലെ പ്രധാന സ്ഥലങ്ങൾ ["സ്ഥലം 1", "സ്ഥലം 2"] (അറിയാമെങ്കിൽ)
+   ther      : ആ യൂണിറ്റിന്റെ തേര് — "തേരിന്റെ പേര്, സ്ഥലം" (ഉണ്ടെങ്കിൽ)
    path      : 3D മാപ്പിലെ വഴി [[x,z],...] — ഇല്ലെങ്കിൽ ഏകദേശ വഴി തനിയെ വരച്ചുകൊള്ളും
    -------------------------------------------------------------- */
 window.UNITS = [
@@ -125,7 +126,7 @@ window.UNITS = [
   { n: "സിയോൺ",              from: "17:30", to: "24:00", type: "band",       troupe: "ആമേൻ മ്യൂസിക് ബാൻഡ് തിരുവനന്തപുരം" },
   { n: "മോറിയ",               from: "08:30", to: "13:00", type: "band",       troupe: "ന്യൂ രാഗം തിരൂർ" },
   { n: "ഇസ്രായേൽ",           from: "13:30", to: "24:00", type: "band",       troupe: "ന്യൂ സംഗീത് തിരൂർ" },
-  { n: "നായിം",               from: "14:30", to: "24:00", type: "band",       troupe: "ഡോൺ ബോസ്കോ കൊച്ചി" },
+  { n: "നായിം",               from: "14:30", to: "24:00", type: "band",       troupe: "ഡോൺ ബോസ്കോ കൊച്ചി", ther: "സ്വർഗ്ഗനാഥൻ, പുതുശേരി" },
   { n: "ബത് ലേഹം",           from: "13:00", to: "17:00", type: "band",       troupe: "ആമേൻ മ്യൂസിക് ബാൻഡ് തിരുവനന്തപുരം" },
   { n: "ടൗൺ വള",              from: "14:00", to: "24:00", type: "band",       troupe: "ജെസ്ന മ്യൂസിക് ബാൻഡ് തിരുവനന്തപുരം" },
   { n: "ജെറുസേലം",            from: "08:30", to: "12:30", type: "band",       troupe: "ഡ്രീംസ് ഓഫ് ഏഞ്ചൽ തിരുവനന്തപുരം" },
@@ -157,7 +158,7 @@ window.CLUBS = [
   { id: "stories",      name: "കോട്ടപ്പടി സ്റ്റോറീസ്",              en: "Kottapadi Stories Committee", mono: "KS", color: "#ff8a00", logo: "images/logos/kottapadi-stories-white.webp" },
   { id: "macksolz",     name: "MACKSOLZ KOTTAPPADI",              mono: "MZ", color: "#ff3b5c", logo: "images/clubs/macksolz.webp" },
   { id: "blackorpz",    name: "BLACKORPZ KOTTAPADI",              mono: "BZ", color: "#94a3b8", logo: "" },
-  { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "" },
+  { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "images/clubs/radox.webp?v=2" },
   { id: "szfest",       name: "SZ FEST",                          mono: "SZ", color: "#14b8a6", logo: "" },
   { id: "teasers",      name: "TEASERS KOTTAPADI",                mono: "TZ", color: "#facc15", logo: "" },
   { id: "cb",           name: "Christian Brothers Kottapadi",     mono: "CB", color: "#3b82f6", logo: "" },

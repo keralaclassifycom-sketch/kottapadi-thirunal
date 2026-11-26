@@ -363,6 +363,12 @@ $("#spMain").innerHTML = window.SPONSORS.filter(s => s.tier === "main").map(logo
 $("#spGrid").innerHTML = window.SPONSORS.filter(s => s.tier !== "main").map(logo).join("");
 const person = p => `<div class="person"><div class="av">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : [...p.name][0]}</div><b>${p.name}</b><span>${p.role}</span></div>`;
 $("#coordinators").innerHTML = window.TEAM.coordinators.map(person).join("");
+if ((window.CLERGY || []).length) {
+  $("#wishes").hidden = false;
+  $("#clergy").innerHTML = window.CLERGY.map(c => `<figure class="priest reveal${c.main ? " main" : ""}">
+    <div class="pp"><img src="${c.photo}" alt="${c.en || c.name}" loading="lazy"></div>
+    <figcaption><b>${c.name}</b>${c.en ? `<i>${c.en}</i>` : ""}${(c.roles || []).map(r => `<span>${r}</span>`).join("")}</figcaption></figure>`).join("");
+}
 $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
 
 /* ---------- vicar message + liturgy schedule (data-liturgy.js) ---------- */

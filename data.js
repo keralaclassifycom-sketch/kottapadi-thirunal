@@ -260,6 +260,17 @@ window.ADVERTISE = {
    Designed, Developed & Coordinated by
    photo: "images/team/peru.jpg?v=2" — ഇല്ലെങ്കിൽ "" (ആദ്യാക്ഷരം കാണിക്കും)
    -------------------------------------------------------------- */
+/* --------------------------------------------------------------
+   ആശംസകളോടെ — വികാരിയച്ചനും അസി. വികാരിയച്ചനും (പരിപാടികൾക്ക് മുകളിൽ)
+   main: true ഉള്ളയാൾ വലിയ കാർഡിൽ
+   -------------------------------------------------------------- */
+window.CLERGY = [
+  { main: true, name: "ഫാ. ഷാജി കൊച്ചുപുരയ്ക്കൽ", en: "Rev. Fr. Shaji Kochupurakal",
+    roles: ["വികാരി, സെൻറ് ലാസേഴ്സ് ചർച്ച്, കോട്ടപ്പടി", "(SL MEDIA DIRECTOR)"], photo: "images/vicar-shaji.jpg" },
+  { name: "ഫാ. വിബി പൊറത്തൂക്കാരൻ", en: "Rev. Fr. Vibi Porthukaran",
+    roles: ["അസി. വികാരി, സെൻറ് ലാസേഴ്സ് ചർച്ച്, കോട്ടപ്പടി", "(SL MEDIA ASST. DIRECTOR)"], photo: "images/asst-vicar-vibi.jpg" },
+];
+
 window.TEAM = {
   coordinators: [
     { name: "Alwin Christopher M. S", role: "കോർഡിനേറ്റർ", photo: "images/team/alwin.jpg?v=2" },

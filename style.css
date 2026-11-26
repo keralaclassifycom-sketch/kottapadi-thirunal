@@ -1023,3 +1023,24 @@ html,body{max-width:100%}
 .date-pill span{text-align:left;line-height:1.35}
 .date-pill .dp-hl{display:block;margin-top:2px;font-family:var(--ml-display);font-weight:500;font-size:11.5px;color:var(--dim);line-height:1.35}
 @media (max-width:600px){.dates{flex-direction:column}.date-pill{width:100%;box-sizing:border-box}.date-pill b{min-width:40px;text-align:center}}
+
+/* ---------- ആശംസകളോടെ: vicar + asst. vicar ---------- */
+#wishes{padding-bottom:8px}
+.clergy{display:grid;grid-template-columns:1.35fr 1fr;gap:22px;align-items:end;max-width:980px;margin:0 auto}
+.priest{margin:0;display:flex;align-items:center;gap:20px;padding:22px;border-radius:26px;
+  background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 50px rgba(0,0,0,.32)}
+.priest.main{border-color:rgba(255,207,74,.55);background:linear-gradient(160deg,rgba(255,207,74,.16),rgba(255,255,255,.03))}
+.priest .pp{flex:none;width:130px;aspect-ratio:4/5;border-radius:18px;overflow:hidden;border:3px solid #5ec8ff;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.priest.main .pp{width:190px;border:4px solid var(--gold)}
+.priest .pp img{width:100%;height:100%;object-fit:cover;display:block}
+.priest figcaption b{display:block;font-family:var(--ml-display);font-weight:800;font-size:24px;line-height:1.3}
+.priest.main figcaption b{font-size:32px;color:var(--gold)}
+.priest figcaption i{display:block;font-style:normal;font-size:13px;letter-spacing:.04em;color:var(--dim);margin:2px 0 8px;text-transform:uppercase}
+.priest figcaption span{display:block;color:var(--muted);font-size:14.5px;line-height:1.5}
+.priest.main figcaption span:first-of-type{color:#fff;font-weight:600;font-size:16px}
+@media (max-width:760px){
+  .clergy{grid-template-columns:1fr}
+  .priest.main{flex-direction:column;text-align:center}
+  .priest.main .pp{width:min(220px,60vw)}
+  .priest .pp{width:104px}
+}

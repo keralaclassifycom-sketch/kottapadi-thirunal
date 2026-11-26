@@ -150,19 +150,19 @@ window.UNITS = [
    unit  : ജനുവരി 2-ലെ എഴുന്നള്ളിപ്പ് യൂണിറ്റുമായി ബന്ധമുണ്ടെങ്കിൽ യൂണിറ്റിന്റെ പേര്
    -------------------------------------------------------------- */
 window.CLUBS = [
-  { id: "kos",          name: "KINGS OF SOUTH",                   mono: "KoS", color: "#ffd60a", logo: "" },
+  { id: "kos",          name: "KINGS OF SOUTH",                   mono: "KoS", color: "#ffd60a", logo: "images/clubs/kings-of-south.webp" },
   { id: "kpk",          name: "കോട്ടപ്പടി പ്രവാസി കൂട്ടായ്മ",      en: "K.P.K U.A.E", mono: "KPK", color: "#22c55e", logo: "images/clubs/kpk-uae.webp" },
   { id: "kcc",          name: "കോട്ടപ്പടി സെലിബ്രേഷൻ കമ്മിറ്റി",   en: "K.C.C", mono: "KCC", color: "#5ec8ff", logo: "" },
-  { id: "sehion",       name: "SEHION FEST",                      en: "സെഹിയോൻ കുടുംബ കൂട്ടായ്മ", mono: "SF", color: "#e4167f", logo: "", unit: "സെഹിയോൻ ഫെസ്റ്റ്" },
-  { id: "westgate",     name: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി",   en: "Westgate Club", mono: "WG", color: "#a855f7", logo: "" },
+  { id: "sehion",       name: "SEHION FEST",                      en: "സെഹിയോൻ കുടുംബ കൂട്ടായ്മ", mono: "SF", color: "#e4167f", logo: "images/clubs/sehion-fest.webp", unit: "സെഹിയോൻ ഫെസ്റ്റ്" },
+  { id: "westgate",     name: "വെസ്റ്റ്ഗേറ്റ് ക്ലബ്ബ് കോട്ടപ്പടി",   en: "Westgate Club", mono: "WG", color: "#a855f7", logo: "images/clubs/westgate.webp" },
   { id: "stories",      name: "കോട്ടപ്പടി സ്റ്റോറീസ്",              en: "Kottapadi Stories Committee", mono: "KS", color: "#ff8a00", logo: "images/logos/kottapadi-stories-white.webp" },
   { id: "macksolz",     name: "MACKSOLZ KOTTAPPADI",              mono: "MZ", color: "#ff3b5c", logo: "images/clubs/macksolz.webp" },
-  { id: "blackorpz",    name: "BLACKORPZ KOTTAPADI",              mono: "BZ", color: "#94a3b8", logo: "" },
+  { id: "blackorpz",    name: "BLACKORPZ KOTTAPADI",              mono: "BZ", color: "#94a3b8", logo: "images/clubs/blackorpz.webp" },
   { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "images/clubs/radox.webp?v=2" },
-  { id: "szfest",       name: "SZ FEST",                          mono: "SZ", color: "#14b8a6", logo: "" },
+  { id: "szfest",       name: "SZ FEST",                          mono: "SZ", color: "#14b8a6", logo: "images/clubs/sparkerz.webp" },
   { id: "teasers",      name: "TEASERS KOTTAPADI",                mono: "TZ", color: "#facc15", logo: "" },
   { id: "cb",           name: "Christian Brothers Kottapadi",     mono: "CB", color: "#3b82f6", logo: "" },
-  { id: "palliyangadi", name: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി",      en: "Team Palliyangadi", mono: "TP", color: "#10b981", logo: "" },
+  { id: "palliyangadi", name: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി",      en: "Team Palliyangadi", mono: "TP", color: "#10b981", logo: "images/clubs/palliyangadi.webp" },
   { id: "united",       name: "UNITED CLUB KOTTAPADI",            mono: "UC", color: "#0ea5e9", logo: "" },
 ];
 

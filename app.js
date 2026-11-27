@@ -378,7 +378,7 @@ $("#designers").innerHTML = window.TEAM.designers.map(person).join("");
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   // "പേര് & ഫാമിലി (കൂട്ടായ്മ)" → highlight the koottayma in brackets
   const fam = s => esc(s).replace(/\(([^)]+)\)\s*$/, '<em>($1)</em>');
-  const tt = (a, b) => b ? `${tf(a).main} & ${tf(b).main}` : tf(a).full;
+  const tt = (a, b) => !a ? "" : b ? `${tf(a).main} & ${tf(b).main}` : tf(a).full;
 
   const M = window.MESSAGE;
   if (M && (M.published || preview)) {

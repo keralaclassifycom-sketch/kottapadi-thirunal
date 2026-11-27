@@ -161,7 +161,7 @@ window.CLUBS = [
   { id: "radox",        name: "RADOX KOTTAPADI",                  mono: "RX", color: "#f43f5e", logo: "images/clubs/radox.webp?v=2" },
   { id: "szfest",       name: "SZ FEST",                          mono: "SZ", color: "#14b8a6", logo: "images/clubs/sparkerz.webp" },
   { id: "teasers",      name: "TEASERS KOTTAPADI",                mono: "TZ", color: "#facc15", logo: "" },
-  { id: "cb",           name: "Christian Brothers Kottapadi",     mono: "CB", color: "#3b82f6", logo: "" },
+  { id: "cb",           name: "Christian Brothers Kottapadi",     mono: "CB", color: "#3b82f6", logo: "images/clubs/christian-brothers.webp" },
   { id: "palliyangadi", name: "ടീം പള്ളിയങ്ങാടി കോട്ടപ്പടി",      en: "Team Palliyangadi", mono: "TP", color: "#10b981", logo: "images/clubs/palliyangadi.webp" },
   { id: "united",       name: "UNITED CLUB KOTTAPADI",            mono: "UC", color: "#0ea5e9", logo: "" },
 ];

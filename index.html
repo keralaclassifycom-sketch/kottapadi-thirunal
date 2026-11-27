@@ -44,8 +44,8 @@
     <a class="brand brand-logo" href="#top"><img src="images/logos/kottapadi-thirunal-white.webp" width="900" height="398" alt="കോട്ടപ്പടി തിരുനാൾ 2027 — സെൻറ് ലാസേഴ്സ് ചർച്ച്, കോട്ടപ്പടി"></a>
     <button class="menu-btn" id="menuBtn" aria-label="മെനു">☰</button>
     <nav class="links" id="links">
-      <a href="#schedule">പരിപാടികൾ</a>
       <a href="#liturgy" data-lit-nav>തിരുകർമ്മങ്ങൾ</a>
+      <a href="#schedule">പരിപാടികൾ</a>
       <a href="#amittu">അമിട്ട്</a>
       <a href="#ther">തേര്</a>
       <a href="#melam">മേളങ്ങൾ</a>
@@ -145,6 +145,22 @@
     </div>
   </section>
 
+  <!-- LITURGY (data-liturgy.js → LITURGY) -->
+  <section id="liturgy" hidden>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Novena &amp; Holy Mass</p>
+          <h2>തിരുകർമ്മ <em>ക്രമം</em></h2>
+          <p>നൊവേന, വി. കുർബ്ബാന, കാർമ്മികർ, നിയോഗം — ദിവസം തിരിച്ച്.</p>
+        </div>
+        <span class="sample-tag" id="litSample" hidden></span>
+      </div>
+      <div class="lit-strip" id="litStrip" role="tablist"></div>
+      <div class="lit-panel" id="litPanel"></div>
+    </div>
+  </section>
+
   <!-- SCHEDULE -->
   <section id="schedule">
     <div class="wrap">
@@ -157,22 +173,6 @@
       </div>
       <div class="tabs" id="dayTabs" role="tablist"></div>
       <div class="day-panel" id="dayPanel"></div>
-    </div>
-  </section>
-
-  <!-- LITURGY (data-liturgy.js → LITURGY) -->
-  <section id="liturgy" hidden>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <p class="eyebrow">Novena &amp; Holy Mass</p>
-          <h2>തിരുകർമ്മ <em>ക്രമം</em></h2>
-          <p>നൊവേന, വി. കുർബ്ബാന, കാർമ്മികർ, നിയോഗം, സമർപ്പണം — ദിവസം തിരിച്ച്.</p>
-        </div>
-        <span class="sample-tag" id="litSample" hidden></span>
-      </div>
-      <div class="lit-strip" id="litStrip" role="tablist"></div>
-      <div class="lit-panel" id="litPanel"></div>
     </div>
   </section>
 
@@ -804,9 +804,9 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="data.js?v=63"></script>
-<script src="data-liturgy.js?v=19"></script>
-<script src="app.js?v=46"></script>
+<script src="data.js?v=64"></script>
+<script src="data-liturgy.js?v=21"></script>
+<script src="app.js?v=47"></script>
 <script src="amittu.js?v=23"></script>
 <script src="ther.js?v=40"></script>
 <script src="ride.js?v=27"></script>
